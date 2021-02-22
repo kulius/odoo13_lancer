@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-from . import account
-
+from . import payment_term
+from . import lancer_incoterms
