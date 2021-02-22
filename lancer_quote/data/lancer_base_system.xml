@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="lancer_base_security_root" model="ir.module.category">
+            <field name="name">義成基礎設定</field>
+            <field name="sequence" eval="1"/>
+        </record>
+       <record id="group_lancer_base_user" model="res.groups">
+           <field name="name">義成基礎設定一般人員</field>
+           <field name="category_id" ref="lancer_base_security_root"/>
+           <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+       </record>
+        <record id="group_lancer_base_manage" model="res.groups">
+           <field name="name">義成基礎設定管理人員</field>
+           <field name="category_id" ref="lancer_base_security_root"/>
+           <field name="implied_ids" eval="[(4, ref('lancer_quote.group_lancer_base_user'))]"/>
+       </record>
+
+    </data>
+</odoo>
