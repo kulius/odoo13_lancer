@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_upload_amazon_products" model="ir.ui.view">
+			<field name="name">upload amazon products</field>
+			<field name="model">upload.amazon.products</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="upload amazon products">
+					<sheet>
+						<group>
+							<field name="name" />
+							<field name="reprice_min" />
+							<field name="last_repriced" />
+							<field name="last_inventory_feed" />
+							<!-- <field name="shop_id" domain="[('amazon_shop','=', True)]"/> -->
+							<field name="last_price_feed" colspan="4" />
+						</group>
+						<group col="4" colspan="4" string="Listing Details">
+							<button name="%(action_add_listing)d" type="action"
+								string="Add" />
+							<field name="prod_listing_ids" colspan="4" nolabel="1"
+								mode="tree">
+								<tree editable="bottom" string="Amazon Products Listing">
+									<field name="product_id" />
+									<!-- <field name="product_asin" domain="[('product_id','=',product_id)]" 
+										/> -->
+									<field name="is_new_listing" />
+									<field name="fulfillment_by" />
+									<!-- <field name="price" required="1"/> -->
+
+								</tree>
+							</field>
+						</group>
+						<group col="4" colspan="4" string="Product Data">
+							<field name="product_data" />
+							<field name="product_type_ce" attrs="{'invisible':[('product_data','!=','CE')]}" />
+							<field name="product_type_com"
+								attrs="{'invisible':[('product_data','!=','Computers')]}" />
+							<field name="product_type_auto_accessory"
+								attrs="{'invisible':[('product_data','!=','AutoAccessory')]}" />
+							<field name="product_type_toys_baby"
+								attrs="{'invisible':[('product_data','!=','ToysBaby')]}" />
+							<field name="product_type_beauty"
+								attrs="{'invisible':[('product_data','!=','Beauty')]}" />
+							<field name="product_type_cameraphoto"
+								attrs="{'invisible':[('product_data','!=','CameraPhoto')]}" />
+							<field name="product_type_wirelessaccessories"
+								attrs="{'invisible':[('product_data','!=','Wireless')]}" />
+							<field name="product_type_giftcard"
+								attrs="{'invisible':[('product_data','!=','GiftCards')]}" />
+							<field name="product_type_foodandbeverages"
+								attrs="{'invisible':[('product_data','!=','FoodAndBeverages')]}" />
+							<field name="product_type_home" attrs="{'invisible':[('product_data','!=','Home')]}" />
+							<field name="product_type_health"
+								attrs="{'invisible':[('product_data','!=','Health')]}" />
+							<field name="product_type_jewelry"
+								attrs="{'invisible':[('product_data','!=','Jewelry')]}" />
+							<field name="product_type_miscellaneous"
+								attrs="{'invisible':[('product_data','!=','Miscellaneous')]}" />
+							<field name="product_type_musicalinstruments"
+								attrs="{'invisible':[('product_data','!=','MusicalInstruments')]}" />
+							<field name="product_type_music" attrs="{'invisible':[('product_data','!=','Music')]}" />
+							<field name="product_type_office"
+								attrs="{'invisible':[('product_data','!=','Office')]}" />
+							<field name="product_type_petsupplies"
+								attrs="{'invisible':[('product_data','!=','PetSupplies')]}" />
+							<field name="product_type_shoes" attrs="{'invisible':[('product_data','!=','Shoes')]}" />
+							<field name="product_type_softwarevideoGames" attrs="{'invisible':[('product_data','!=','SWVG')]}" />
+							<field name="product_type_sports"
+								attrs="{'invisible':[('product_data','!=','Sports')]}" />
+							<field name="product_type_sportsmemorabilia"
+								attrs="{'invisible':[('product_data','!=','SportsMemorabilia')]}" />
+							<field name="product_type_tiresandwheels"
+								attrs="{'invisible':[('product_data','!=','TiresAndWheels')]}" />
+							<field name="product_type_tools" attrs="{'invisible':[('product_data','!=','Tools')]}" />
+							<field name="product_type_toys" attrs="{'invisible':[('product_data','!=','Toys')]}" />
+							<field name="product_type_Video" attrs="{'invisible':[('product_data','!=','Video')]}" />
+							<field name="product_type_clothingaccessories"
+								attrs="{'invisible':[('product_data','!=','ClothingAccessories')]}" />
+							<field name="product_type_light"
+								attrs="{'invisible':[('product_data','!=','Lighting')]}" />
+						</group>
+						<group attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"
+							string="KeyBoard Attributes" colspan="4">
+							<field name="variation_data" />
+							<field name="hand_orientation" />
+							<field name="input_device_design_style" />
+							<field name="keyboard_description" />
+							<field name="model_number" />
+							<field name="voltage" />
+							<field name="wattage_com" />
+							<field name="wireless_input_device_protocol" />
+							<field name="wireless_input_device_technology" />
+						</group>
+
+						<group attrs="{'invisible':[('product_type_ce','!=','CEBattery')]}"
+							string="CEBattery Attributes" colspan="4">
+							<field name="battery_chargecycles" />
+							<field name="battery_celltype" />
+							<field name="power_plugtype" />
+							<field name="power_source" />
+							<field name="wattage" />
+							<field name="product_sub_type_ce" />
+						</group>
+
+						<group
+							attrs="{'invisible':[('product_type_ce','!=','GPSOrNavigationAccessory')]}"
+							string="GPSOrNavigation Accessory" colspan="4">
+							<field name="cablelength" />
+							<field name="operating_system" />
+							<field name="power_source_gp" />
+							<field name="screen_size" />
+							<field name="total_ethernet_ports" />
+							<field name="wireless_type" />
+						</group>
+
+						<group attrs="{'invisible':[('product_type_ce','!=','HandheldOrPDA')]}"
+							string="Handheld OrPDA" colspan="4">
+							<field name="colorscreen_hpda" />
+							<field name="hardrivesize_hpda" />
+							<field name="memory_slots_available_hpda" />
+							<field name="operating_system_hpda" />
+							<field name="power_source_hpda" />
+							<field name="processor_type_hpda" />
+							<field name="processor_speed_hpda" />
+							<field name="RAMsize_hpda" />
+							<field name="screen_size_hpda" />
+							<field name="screen_resolution_hpda" />
+							<field name="softwareincluded_hpda" />
+							<field name="wirelesstechnology_hpda" />
+						</group>
+
+
+						<group
+							attrs="{'invisible':[('product_type_ce','!=','GPSOrNavigationSystem')]}"
+							string="GPSOrNavigation System" colspan="4">
+							<field name="battery_cell_type_gp" />
+							<field name="battery_charge_cycles_gp" />
+							<field name="battery_power_gpnav" />
+							<field name="box_contents_gp" />
+							<field name="cable_length_gp" />
+							<field name="color_screen_gp" />
+							<field name="duration_ofmap_service_gp" />
+							<field name="operatingsystem_gp" />
+							<field name="video_processor_gp" />
+							<field name="efficiencys_gp" />
+							<field name="finish_typeh_gp" />
+							<field name="internet_applications_gp" />
+							<field name="memory_slots_available_gp" />
+							<field name="power_plug_type_gp" />
+							<field name="powersource_gpnav" />
+							<field name="processorbrand_gp" />
+							<field name="screensize_gp" />
+							<field name="remotecontroldescription_gp" />
+							<field name="removablememory_gp" />
+							<field name="screenresolution_gp" />
+							<field name="subscriptiontermnamer_gp" />
+							<field name="trafficfeatures_gp" />
+							<field name="softwareincluded_gp" />
+							<field name="totalethernetports_gp" />
+							<field name="totalfirewireports_gp" />
+							<field name="totalhdmiports_gp" />
+							<field name="totalsvideooutports_gp" />
+							<field name="wirelesstechnology_gp" />
+							<field name="total_usb_ports_gp" />
+							<field name="waypointstype_gp" />
+						</group>
+
+						<group attrs="{'invisible':[('product_type_ce','!=','Headphones')]}"
+							string="Headphones" colspan="4">
+							<field name="amplifiertype_headphone" />
+							<field name="battery_celltype_headphone" />
+							<field name="batterychargecycles_headphone" />
+							<field name="batterypower_headphone" />
+							<field name="cable_length_headphone" />
+							<field name="controltype_headphone" />
+							<field name="fittype_headphone" />
+							<field name="headphoneearcupmotion_headphone" />
+							<field name="noisereductionlevel_headphone" />
+							<field name="power_plug_type_headphone" />
+							<field name="shape_headphone" />
+							<field name="powersource_headphone" />
+							<field name="totalcomponentinports_headphone" />
+							<field name="wirelesstechnology_headphone" />
+						</group>
+
+						<group
+							attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"
+							string="Networking Device" colspan="4">
+							<field name="variationdata_net" />
+							<field name="additional_features_net" />
+							<field name="additional_functionality_net" />
+							<field name="ipprotocol_standards_net" />
+							<field name="lanportbandwidth_net" />
+							<field name="lan_port_number_net" />
+							<field name="maxdownstreamtransmissionrate_net" />
+							<field name="maxupstreamtransmissionRate_net" />
+							<field name="model_number_net" />
+							<field name="modem_type_net" />
+							<field name="network_adapter_type_type_net" />
+							<field name="operating_system_compatability_net" />
+							<field name="securityprotocol_net" />
+							<field name="simultaneous_sessions_net" />
+							<field name="voltage_net" />
+							<field name="wattage_net" />
+							<field name="wirelessdatatransferrate_net" />
+							<field name="wirelessroutertransmissionband_net" />
+							<field name="wirelesstechnology_net" />
+						</group>
+
+						<group attrs="{'invisible':[('product_type_com','!=','Scanner')]}"
+							string="Scanner" colspan="4">
+							<field name="variationdata_scanner" />
+							<field name="hasgreyscale_scanner" />
+							<field name="lightsourcetype_scanner" />
+							<field name="maxinputsheetcapacity_scanner" />
+							<field name="maxprintresolutionblackwhite_scanner" />
+							<field name="maxprintresolutioncolor_scanner" />
+							<field name="maxprintspeedblackwhite_scanner" />
+							<field name="maxprintspeedcolor_scanner" />
+							<field name="maxscanningsize_scanner" />
+							<field name="minscanningsize_scanner" />
+							<field name="printermediasizemaximum_scanner" />
+							<field name="printeroutputtype_scanner" />
+							<field name="printerwirelesstype_scanner" />
+							<field name="printing_media_type_scanner" />
+							<field name="printingtechnology_scanner" />
+							<field name="scanrate_scanner_scanner" />
+							<field name="scannerresolution_scanner" />
+						</group>
+
+						<group attrs="{'invisible':[('product_type_com','!=','Printer')]}"
+							string="Printer" colspan="4">
+							<field name="variationdata_printer" />
+							<field name="hasgreyscale_printer" />
+							<field name="lightsourcetype_printer" />
+							<field name="maxinputsheetcapacity_printer" />
+							<field name="maxprintresolutionblackwhite_printer" />
+							<field name="maxprintresolutioncolor_printer" />
+							<field name="maxprintspeedblackwhite_printer" />
+							<field name="maxprintspeedcolor_printer" />
+							<field name="maxscanningsize_printer" />
+							<field name="minscanningsize_printer" />
+							<field name="printermediasizemaximum_printer" />
+							<field name="printeroutputtype_printer" />
+							<field name="printerwirelesstype_printer" />
+							<field name="printing_media_type_printer" />
+							<field name="printingtechnology_printer" />
+							<field name="scanrate_scanner_printer" />
+							<field name="scannerresolution_printer" />
+						</group>
+
+
+						<group col="2" colspan="4">
+							<button name="upload_amazon_products" string="1.Upload Amazon Products"
+								type="object" icon="gtk-apply" confirm="Are you sure?" />
+							<button name="upload_pricing" string="2.Upload Pricing"
+								type="object" icon="gtk-apply" confirm="Are you sure?" />
+							<button name="upload_inventory" string="3.Upload Inventory"
+								type="object" icon="gtk-apply" confirm="Are you sure?" />
+							<button name="import_image" string="4.Update/Add Images"
+								icon="gtk-go-forward" type="object" confirm="Are you sure?" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+
+
+		<record id="view_upload_amazon_products_listing_tree" model="ir.ui.view">
+			<field name="name">view upload amazon products listing tree</field>
+			<field name="model">upload.amazon.products</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Attributes">
+					<!-- <field name="is_new_listing"/> -->
+					<field name="name" />
+					<field name="product_data" />
+					<field name="last_repriced" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_amazon_manage_listing" model="ir.actions.act_window">
+			<field name="name">Update Amazon Listings</field>
+			<field name="res_model">upload.amazon.products</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_upload_amazon_products_listing_tree" />
+		</record>
+
+	</data>
+</odoo>

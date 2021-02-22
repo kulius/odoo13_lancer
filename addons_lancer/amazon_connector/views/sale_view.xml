@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_amazon_sale_order_form1" model="ir.ui.view">
+			<field name="name">view.amazon.sale.order.form1</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="priority" eval="3"/>
+			<field name="arch" type="xml">
+				<xpath expr="//tree/field[@name='price_unit']" position="after">
+					<field name="new_tax_amount" invisible="1" />
+				</xpath>
+<!--				<xpath expr="//field[@name='company_id']" position="after">-->
+<!--					<field name="updated" invisible="1" />-->
+<!--				</xpath>-->
+<!--				<xpath expr="//field[@name='company_id']" position="after">-->
+<!--					<field name="confirmation_date"/>-->
+<!--				</xpath>-->
+<!--				VIEW_TYPE AND FILED COMMENT-->
+				<xpath expr="//page" position="after">
+					<page string="Amazon Information" attrs="{'invisible':[('amazon_order','=',False)]}">
+						<group>
+							<field name="amazon_order" invisible="1" />
+							<field name="amazon_order_id" attrs="{'invisible':[('amazon_order','=',False)]}" />
+							<field name="faulty_order" attrs="{'invisible':[('amazon_order','=',False)]}" />
+							<field name="journal_id" attrs="{'invisible':[('amazon_order','=',False)]}" />
+							<field name="confirmed" attrs="{'invisible':[('amazon_order','=',False)]}" />
+							<field name="fullfillment_method" attrs="{'invisible':[('amazon_order','=',False)]}" />
+						</group>
+						<separator/>
+						<group string="Shipping Information">
+							<field name="order_type" />
+							<field name="amazonstate_id" />
+							<field name="amazon_order_status" />
+							<field name="ship_service" />
+							<field name="ship_category"/>
+							<field name="shipped_by_amazon" />
+							<field name="earlier_ship_date" />
+							<field name="late_ship_date" />
+							<field name="amazon_payment_method" />
+							<field name="shipping_submission_feedid" attrs="{'invisible':[('amazon_order','=',False)]}" />
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="amazon_sale_order_tree_view" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <tree string="Amazon Sale Order">
+                    <field name="name"/>
+                    <field name="date_order" />
+                    <field name="shop_id"/>
+					<field name="partner_id"/>
+					<field name='warehouse_id' invisible="1"/>
+					<field name="shipped_by_amazon" />
+                    <field name="user_id" />
+                    <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+                    <field name="currency_id"/>
+                    <field name="invoice_status"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+		<record id="view_sales_order_filter_inherit111" model="ir.ui.view">
+			<field name="name">sale.order.list.select111</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_sales_order_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="fullfillment_method" />
+					<filter string="Fullfillment By Merchant" domain="[('fullfillment_method','=','MFN')]"
+						help="MFN Orders" icon="terp-personal" name="merchant_sale_orders_filter" />
+					<filter string="Fullfillment By Amazon" domain="[('fullfillment_method','=','AFN')]"
+						help="AFN Orders" icon="terp-personal" name="amazon_sale_orders_filter" />
+				</xpath>
+				<xpath expr="//field[@name='name']" position="after">
+					<filter string="Pending Orders" name="draft"
+						domain="[('amazon_order','!=',False),('state','!=','done')]" help="Sales Order that haven't yet been confirmed" />
+					<filter string="Done Orders" name="confirm"
+						domain="[('amazon_order','=',True),('state','=','done')]" help="Sales Order that have been confirmed" />
+					<filter string="Cancel Order" name="cancel"
+						domain="[('amazon_order','=',True),('state','=','cancel')]" help="Sales Order that have been cancelled" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="amazon_action_picking_tree" model="ir.actions.act_window">
+			<field name="name">Transfers</field>
+			<field name="res_model">stock.picking</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form,calendar</field>
+			<field name="domain">[('product_id.amazon_product','=',True)]</field>
+			<field name="search_view_id" ref="stock.view_picking_internal_search" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to create a stock operation.
+				</p>
+				<p>
+					Most operations are prepared automatically by Odoo according
+					to your preconfigured logistics rules, but you can also record
+					manual stock movements.
+				</p>
+			</field>
+		</record>
+
+		<!-- Amazon all Orders -->
+		<record model="ir.actions.act_window" id="action_amazon_sale_view">
+			<field name="name">Amazon Sale Orders</field>
+			<field name="res_model">sale.order</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<field name="domain" eval="[('amazon_order','=',True)]" />
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_amazon_order_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="amazon_sale_order_tree_view"/>
+            <field name="act_window_id" ref="action_amazon_sale_view"/>
+        </record>
+
+		<!-- Amazon Pending Orders -->
+		<record model="ir.actions.act_window" id="action_amazon_sale_pending">
+			<field name="name">Amazon Pending Orders</field>
+			<field name="res_model">sale.order</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<field name="domain"
+				eval="[('amazon_order','=',True),('state','!=','done')]" />
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_amazon_pending_order_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="amazon_sale_order_tree_view"/>
+            <field name="act_window_id" ref="action_amazon_sale_pending"/>
+        </record>
+
+		<!-- Amazon Done Orders -->
+		<record model="ir.actions.act_window" id="action_amazon_sale_done">
+			<field name="name">Amazon Done Orders</field>
+			<field name="res_model">sale.order</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<field name="domain" eval="[('amazon_order','=',True),('state','=','done')]"/>
+		</record>
+		
+		<record model="ir.actions.act_window.view" id="action_amazon_done_order_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="amazon_sale_order_tree_view"/>
+            <field name="act_window_id" ref="action_amazon_sale_done"/>
+        </record>
+
+
+		<!-- Amazon Updated orders -->
+		<record model="ir.actions.act_window" id="action_amazon_updated">
+			<field name="name">Amazon Updated Order Status</field>
+			<field name="res_model">sale.order</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<field name="domain"
+				eval="[('amazon_order','!=',False),('updated','!=',False)]" />
+		</record>
+
+		<!-- Amazon Not Updated Orders -->
+		<record model="ir.actions.act_window" id="action_amazon_not_updated">
+			<field name="name">Orders Status to be Updated</field>
+			<field name="res_model">sale.order</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<field name="domain"
+				eval="[('amazon_order','!=',False),('updated','!=',True)]" />
+		</record>
+
+		<!-- Amazon Cancelled Orders -->
+		<record model="ir.actions.act_window" id="action_amazon_orders_cancel">
+			<field name="name">Cancelled Orders</field>
+			<field name="res_model">sale.order</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<field name="domain"
+				eval="[('amazon_order','=',True),('state','=','cancel')]" />
+		</record>
+
+		<!-- Amazon Invoices -->
+<!--		<record id="action_amazon_invoice_orders" model="ir.actions.act_window">-->
+<!--			<field name="name">Amazon Invoices</field>-->
+<!--			<field name="res_model">account.invoice</field>-->
+<!--&lt;!&ndash;			<field name="view_type">form</field>&ndash;&gt;-->
+<!--			<field name="view_mode">tree,form,calendar,graph</field>-->
+<!--&lt;!&ndash;			<field name="view_id" ref="account.invoice_tree" />&ndash;&gt;-->
+<!--			<field name="context">{'type':'out_invoice'}</field>-->
+<!--			<field name="domain" eval="[('is_amazon','=',True)]" />-->
+<!--			<field name="search_view_id" ref="account.view_account_invoice_filter"/>-->
+<!--		</record>-->
+
+<!--		<record id="action_invoice_refund_invoice_orders" model="ir.actions.act_window">-->
+<!--			<field name="name">Refund Invoices</field>-->
+<!--			<field name="res_model">account.invoice</field>-->
+<!--&lt;!&ndash;			<field name="view_type">form</field>&ndash;&gt;-->
+<!--			<field name="view_mode">tree,form,kanban,calendar,graph,pivot</field>-->
+<!--			<field name="view_id" ref="account.invoice_tree" />-->
+<!--			<field name="domain">[('type','=', 'out_refund'),('is_amazon','=',True)]</field>-->
+<!--			<field name="search_view_id" ref="account.view_account_invoice_filter"/>-->
+<!--		</record>-->
+		
+		
+
+	</data>
+</odoo>

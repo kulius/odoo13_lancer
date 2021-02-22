@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<record forcecreate="True" id="ir_cron_scedular_amazon_import_products" model="ir.cron">
+           <field name="name">Import Amazon Product</field>
+           <field name="model_id" ref="model_sale_shop"/>
+           <field name="state">code</field>
+           <field name="code">model.import_product_scheduler()</field>
+           <field eval="False" name="active"/>
+           <field name="interval_number">1</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+           <field eval="False" name="doall"/>
+       </record>
+		
+		<record forcecreate="True" id="ir_cron_scedular_amazon_import_inventory" model="ir.cron">
+           <field name="name">Import Amazon Inventory</field>
+           <field name="model_id" ref="model_sale_shop"/>
+           <field name="state">code</field>
+           <field name="code">model.import_Inventory_scheduler()</field>
+           <field eval="False" name="active"/>
+           <field name="interval_number">1</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+           <field eval="False" name="doall"/>
+       </record>
+        
+         <record forcecreate="True" id="ir_cron_scedular_amazon_import_FBAinventory" model="ir.cron">
+           <field name="name">Import Amazon FBA-Inventory</field>
+           <field name="model_id" ref="model_sale_shop"/>
+           <field name="state">code</field>
+           <field name="code">model.import_FBAInventory_scheduler()</field>
+           <field eval="False" name="active"/>
+           <field name="interval_number">1</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+           <field eval="False" name="doall"/>
+       </record>
+		
+		<record forcecreate="True" id="ir_cron_scedular_amazon_import_orders" model="ir.cron">
+           <field name="name">Import Amazon Order</field>
+           <field name="model_id" ref="model_sale_shop"/>
+           <field name="state">code</field>
+           <field name="code">model.import_orders_amazon_scheduler()</field>
+           <field eval="False" name="active"/>
+           <field name="interval_number">1</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+           <field eval="False" name="doall"/>
+       </record>
+       
+        
+        <record forcecreate="True" id="ir_cron_scedular_amazon_update_order" model="ir.cron">
+           <field name="name">Update Amazon Orders</field>
+           <field name="model_id" ref="model_sale_shop"/>
+           <field name="state">code</field>
+           <field name="code">model.update_amazon_orders_scheduler()</field>
+           <field eval="False" name="active"/>
+           <field name="interval_number">1</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+           <field eval="False" name="doall"/>
+       </record>
+
+        <record forcecreate="True" id="ir_cron_scedular_amazon_update_inventory" model="ir.cron">
+           <field name="name">Update Amazon Inventory</field>
+           <field name="model_id" ref="model_sale_shop"/>
+           <field name="state">code</field>
+           <field name="code">model.upload_inventory_scheduler()</field>
+           <field eval="False" name="active"/>
+           <field name="interval_number">1</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+           <field eval="False" name="doall"/>
+       </record>
+        
+        <record forcecreate="True" id="ir_cron_scedular_amazon_update_price" model="ir.cron">
+           <field name="name">Update Amazon Price</field>
+           <field name="model_id" ref="model_sale_shop"/>
+           <field name="state">code</field>
+           <field name="code">model.update_price_scheduler()</field>
+           <field eval="False" name="active"/>
+           <field name="interval_number">1</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+           <field eval="False" name="doall"/>
+       </record>
+ 	</data>
+ </odoo>

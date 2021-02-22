@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_update_prod" model="ir.ui.view">
+            <field name="name">Update Price</field>
+            <field name="model">update.prod</field>
+            <field name="arch" type="xml">
+                <form string="Update Price">
+                    <field name="name" />
+                    <field name="end_price" />
+                    <field name="is_ebay" />
+                    <field name="is_amazon" />
+                    <field name="is_buy" />
+                    <field name="is_random" />
+                    <group col="2" colspan="4">
+                        <button special="cancel" string="_Cancel" icon="gtk-cancel"/>
+                        <button name="update_price" string="Update Price"  type="object" icon="gtk-apply" confirm="Are you sure you want to update the price?"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+       
+
+	<record id="action_view_update_price" model="ir.actions.act_window">
+            <field name="name">Updated Price</field>
+<!--            <field name="type">ir.actions.act_window</field>-->
+            <field name="res_model">update.prod</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+    	</record>
+
+    </data>
+</odoo>

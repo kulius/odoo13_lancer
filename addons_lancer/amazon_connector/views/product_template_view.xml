@@ -1,0 +1,267 @@
+<odoo>
+
+	<record id="view_amazon_product_template_form2" model="ir.ui.view">
+		<field name="name">product.amazon.form.inherit2</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view" />
+
+		<field name="arch" type="xml">
+			<header>
+				<button name="ExportUpdateProduct" type="object" string="ExportUpdate"/>
+			</header>
+		<!-- <xpath expr="//field[@name='name']" position="after">
+				<field name="name_cust"/>
+			</xpath> -->
+
+			<xpath expr="//div[@name='options']" position="inside">
+				<div>
+					<field name="amazon_product"/>
+					<label for="amazon_product" />
+					<field name="amazon_export"/>
+					<label for="amazon_export" />
+				</div>
+			</xpath>
+
+			<xpath expr="//field[@name='currency_id']" position="inside">
+				<field name="feature" />
+			</xpath>
+
+			<xpath expr="//field[@name='default_code']" position="before">
+				<field name="parentage"/>
+				<field name="standard_temp_product"/>
+			</xpath>
+	
+			<xpath expr="//page[@name='variants']/field[@name='attribute_line_ids']" position="before">
+				<label for="variationtheme" string='Variation Theme' attrs="{'required':['|',('attribute_line_ids','!=',[]),('amazon_export','=',True),('parentage','=','parent')]}"/>
+				<field name="variationtheme" />
+			</xpath>
+
+
+
+<!--
+			
+			<xpath expr="//field[@name='default_code']" position="after">
+				<field name="amazon_sku"/>
+				<field name="amazon_fba_sku"/>
+				<field name="tmp_asin"  attrs="{'invisible':[('standard_temp_product','!=','ASIN')]}"/>
+				<field name="upc_temp" attrs="{'invisible':[('standard_temp_product','!=','UPC')]}"/>
+				<field name="isbn_temp" attrs="{'invisible':[('standard_temp_product','!=','ISBN')]}"/>
+				<field name="ean_barcode" attrs="{'invisible':[('standard_temp_product','!=','EAN')]}"/>
+			</xpath>
+
+			 <xpath expr="//page" position="after">
+				<page string="Amazon Information" attrs="{'invisible':[('amazon_product','=',False)]}">
+					<notebook>
+						<page string="Amazon Attributes">
+							<form string="Product Attribtes">
+								<group col="4">
+									<field name="amazon_categ_id" domain="[('amazon_category','=',True)]"/>
+									<field name="tem_standard_price"/>
+									<field name="is_prime" />
+									<field name="fulfillment_by" />
+									<field name="amazon_price" />
+									<field name="label" />
+									<field name="product_type_name" />
+									<field name="color" />
+									<field name="binding"/>
+									<field name="brand_name" />
+									<field name="studio" />
+									<field name="amazon_manufacturer" />
+									<field name="manufacturer_part" />
+									<field name="publisher" />
+									<field name="package_quantity" />
+									<separator colspan="4" string="Product Dimension" />
+									<field name="item_dimension_weight" />
+									<field name="package_dimension_length" />
+									<field name="package_dimension_width" />
+									<field name="package_dimension_weight" />
+									<field name="package_dimension_height" />
+									<separator colspan="4" string="Product Image Dimensions" />
+									<field name="small_image_url" />
+									<field name="small_image_height" />
+									<field name="small_image_width" />
+									
+                        			<field name="productData"/>
+									<field name="product_type_ce" attrs="{'invisible':[('product_data','!=','CE')]}"/>
+			                        <field name="product_type_com" attrs="{'invisible':[('product_data','!=','Computers')]}"/>
+			                        <field name="product_type_auto_accessory" attrs="{'invisible':[('product_data','!=','AutoAccessory')]}"/>
+			                        <field name="product_type_toys_baby" attrs="{'invisible':[('product_data','!=','ToysBaby')]}"/>
+			                        <field name="product_type_beauty" attrs="{'invisible':[('product_data','!=','Beauty')]}" on_change="onchange_beauty(product_type_beauty)"/>
+			                        <field name="product_type_cameraphoto" attrs="{'invisible':[('product_data','!=','CameraPhoto')]}"/>
+			                        <field name="product_type_wirelessaccessories" attrs="{'invisible':[('product_data','!=','Wireless')]}" on_change="onchange_wireless(product_type_wirelessaccessories)"/>
+			                        <field name="product_type_giftcard" attrs="{'invisible':[('product_data','!=','GiftCards')]}" on_change="onchange_gift(product_type_giftcard)"/>
+			                        <field name="product_type_foodandbeverages" attrs="{'invisible':[('product_data','!=','FoodAndBeverages')]}"/>
+			                        <field name="product_type_home" attrs="{'invisible':[('product_data','!=','Home')]}" on_change="onchange_home(product_type_home)"/>
+			                        <field name="product_type_health" attrs="{'invisible':[('product_data','!=','Health')]}"/>
+			                        <field name="product_type_jewelry" attrs="{'invisible':[('product_data','!=','Jewelry')]}"/>
+			                        <field name="product_type_miscellaneous" attrs="{'invisible':[('product_data','!=','Miscellaneous')]}"/>
+			                        <field name="product_type_musicalinstruments" attrs="{'invisible':[('product_data','!=','MusicalInstruments')]}"/>
+			                        <field name="product_type_music" attrs="{'invisible':[('product_data','!=','Music')]}"/>
+			                        <field name="product_type_office" attrs="{'invisible':[('product_data','!=','Office')]}"/>
+			                        <field name="product_type_petsupplies" attrs="{'invisible':[('product_data','!=','PetSupplies')]}"/>
+			                        <field name="product_type_shoes" attrs="{'invisible':[('product_data','!=','Shoes')]}"/>
+			                        <field name="product_type_softwarevideoGames" attrs="{'invisible':[('product_data','!=','SWVG')]}"/>
+			                        <field name="product_type_sports" attrs="{'invisible':[('product_data','!=','Sports')]}"/>
+			                        <field name="product_type_sportsmemorabilia" attrs="{'invisible':[('product_data','!=','SportsMemorabilia')]}"/>
+			                        <field name="product_type_tiresandwheels" attrs="{'invisible':[('product_data','!=','TiresAndWheels')]}"/>
+			                        <field name="product_type_tools" attrs="{'invisible':[('product_data','!=','Tools')]}"/>
+			                        <field name="product_type_toys" attrs="{'invisible':[('product_data','!=','Toys')]}"/>
+			                        <field name="product_type_Video" attrs="{'invisible':[('product_data','!=','Video')]}"/>
+			                        <field name="product_type_clothingaccessories" attrs="{'invisible':[('product_data','!=','ClothingAccessories')]}" on_change="onchange_clothing(product_type_clothingaccessories)"/>
+			                        <field name="product_type_light" attrs="{'invisible':[('product_data','!=','Lighting')]}" on_change="onchange_lightning(product_type_light)"/>
+
+								</group>
+								<group>
+									<field name="item_type" attrs="{'required':[('amazon_export','=',True)]}"/>
+									<field name="bullet_point">
+										<tree editable="bottom">
+											<field name="bullet"/>
+										</tree>
+									</field>
+									<field name="search_keywords">
+										<tree editable="bottom">
+											<field name="searchterm"/>
+										</tree>
+									</field>
+								</group>
+							</form>
+						</page>
+						<page string="Clothing  Accessories" attrs="{'invisible':[('product_data','!=','Clothing')]}">
+							<form string="Clothing Attribtes">
+								<group>
+									<group>
+										<field name="parentage_cloth"/>
+										<field name="size_cloth"/>
+										<field name="color_cloth"/>
+										<field name="variationtheme_cloth"/>
+										<field name="department_cloth"/>
+										<field name="material_cloth"/>
+										<field name="furdescription_cloth"/>
+										<field name="materialopacity_cloth"/>
+										<field name="fabricwash_cloth"/>
+										<field name="patternstyle_cloth"/>
+										<field name="apparelclosuretype_cloth"/>
+										<field name="occasionandlifestyle_cloth"/>
+										<field name="stylename_cloth"/>
+										<field name="stylenumber_cloth"/>
+										<field name="collartype_cloth"/>
+										<field name="sleevetype_cloth"/>
+										<field name="cufftype_cloth"/>
+										<field name="pocketdescription_cloth"/>
+										<field name="frontpleattype_cloth"/>
+									</group>
+									<group>
+										<field name="topstyle_cloth"/>
+										<field name="bottomstyle_cloth"/>
+										<field name="waistsize_cloth"/>
+										<field name="inseamlength_cloth"/>
+										<field name="sleevelength_cloth"/>
+										<field name="necksize_cloth"/>
+										<field name="neckstyle_cloth"/>
+										<field name="chestsize_cloth"/>
+										<field name="cupsize_cloth"/>
+										<field name="underwiretype_cloth"/>
+										<field name="shoewidth_cloth"/>
+										<field name="legdiameter_cloth"/>
+										<field name="legstyle_cloth"/>
+										<field name="beltstyle_cloth"/>
+										<field name="straptype_cloth"/>
+										<field name="toestyle_cloth"/>
+										<field name="isstainresistant_cloth"/>
+										<field name="numberofpieces_cloth"/>
+									</group>
+								</group>
+							</form>
+						</page>
+						<page string="Lighting" attrs="{'invisible':[('product_data','!=','Lighting')]}">
+							<form string="Lighting Attribte">
+								<group>
+									<group>
+										<field name="energy_rating_li"/>
+						                <field name="material_li"/>
+						             	<field name="powersource_li"/>
+				                        <field name="specialfeatures_li"/>
+				                        <field name="specificuses_li"/>
+				                        <field name="airflowcapacity_li" />
+				                        <field name="basediameter_li" />
+				                        <field name="battery_li" />
+				                        <field name="bulbdiameter_li" />
+				                        <field name="bulblength_li" />
+				                        <field name="bulblifespan_li"/>
+				                        <field name="bulbpowerfactor_li"/>
+				                        <field name="bulbspecialfeatures_li"/>
+				                        <field name="bulbswitchingcycles_li"/>
+				                        <field name="bulbtype_li"/>
+				                        <field name="bulbwattage_li"/>
+				                        <field name="captype_li"/>
+				                        <field name="certification_li"/>
+									</group>
+									<group>
+										<field name="numberofblades_li" />
+					                    <field name="numberofbulbsockets_li" />
+					                    <field name="plugtype_li" />
+           				                <field name="stylename_li" />
+					                    <field name="switchstyle_li" />
+					                    <field name="voltage_li" />
+					                    <field name="volume_li"/>
+					                    <field name="wattage_li"/>
+					                    <field name="battery_li" />
+					                    <field name="bulbdiameter_li" />
+				                        <field name="bulblength_li" />
+				                        <field name="bulblifespan_li"/>
+				                        <field name="bulbpowerfactor_li"/>
+				                        <field name="bulbspecialfeatures_li"/>
+				                        <field name="bulbswitchingcycles_li"/>
+				                        <field name="bulbtype_li"/>
+				                        <field name="bulbwattage_li"/>
+				                        <field name="captype_li"/>
+				                        <field name="certification_li"/>
+				                       <field name="voltage_li" />
+				                      <field name="volume_li"/>
+									</group>
+								</group>
+							</form>
+						</page>
+						<page string="Beauty" attrs="{'invisible':[('product_data','!=','Beauty')]}">
+							<form string="Beauty Attribtes">
+								<group>
+									<group>
+										<field name="var_theme_beauty"/>
+				             			<field name="size_beauty"/>
+				             			<field name="capacity_beauty"/>
+				             			<field name="color_beauty"/>
+				             			<field name="scent_beauty"/>
+				             			<field name="pattern_name_beauty"/>
+				             			<field name="unit_count_beauty"/>
+				             			<field name="uom_beauty"/>
+				             			<field name="count_beauty"/>
+				             			<field name="no_of_items_beauty"/>
+				             			<field name="battry_average_life_beauty"/>
+				             			<field name="battry_charge_time_beauty"/>
+				             			<field name="battry_descriptn_beauty"/>
+									</group>
+									<group>
+										<field name="battry_power_beauty"/>
+				             			<field name="skin_type_beauty"/>
+				             			<field name="skin_tone_beauty"/>
+				             			<field name="hair_type_beauty"/>
+				             			<field name="ingredients_beauty"/>
+				             			<field name="mrf_warrant_type_beauty"/>
+				             			<field name="material_type_beauty"/>
+				             			<field name="warnings_beauty"/>
+				             			<field name="flavor_beauty"/>
+				             			<field name="is_adult_product_beauty"/>
+				             			<field name="target_gender_beauty"/>
+				             			<field name="seller_description_beauty"/>
+									</group>
+								</group>
+							</form>
+						</page>
+						
+					</notebook>
+				</page>
+			</xpath> -->
+
+		</field>
+	</record>
+</odoo>

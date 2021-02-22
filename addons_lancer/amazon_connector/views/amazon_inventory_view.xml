@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="amazon_inventory_tree_view" model="ir.ui.view">
+			<field name="name">amazon.inventory.tree.view</field>
+			<field name="model">amazon.product.listing</field>
+			<field name="arch" type="xml">
+				<tree editable="bottom" string="Inventory">
+					<field name="product_id" />
+					<field name="quantity" />
+					<field name="price" />
+				</tree>
+			</field>
+		</record>
+		<record id="amazon_inventory_search_view" model="ir.ui.view">
+			<field name="name">amazon.inventory.search.view</field>
+			<field name="model">amazon.product.listing</field>
+			<field name="arch" type="xml">
+				<search string="Aamzon Product">
+					<group expand="0" string="Group By">
+						<filter name="product_id" string="Product" domain="[]"
+							context="{'group_by':'product_id'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+
+		<record model="ir.actions.act_window" id="action_amazon_inventory_view">
+			<field name="name">Amazon Inventory</field>
+			<field name="res_model">amazon.product.listing</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="amazon_action_inventory_tree_view">
+			<field name="sequence" eval="1" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="amazon_connector.amazon_inventory_tree_view" />
+			<field name="act_window_id" ref="amazon_connector.action_amazon_inventory_view" />
+		</record>
+	</data>
+</odoo>
+	

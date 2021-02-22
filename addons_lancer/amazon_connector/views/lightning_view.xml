@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_upload_amazon_products_lightning" model="ir.ui.view">
+			<field name="name">upload amazon products.lightning</field>
+			<field name="model">upload.amazon.products</field>
+			<field name="arch" type="xml">
+				<group string="Lighting">
+					<field name="variation_theme" />
+					<field name="airflowcapacity" />
+					<field name="basediameter" />
+					<field name="battery" />
+					<field name="bulbdiameter" />
+					<field name="bulblength" />
+					<field name="bulblifespan" />
+					<field name="bulbpowerfactor" />
+					<field name="bulbspecialfeatures" />
+					<field name="bulbswitchingcycles" />
+					<field name="bulbtype" />
+					<field name="bulbwattage" />
+					<field name="captype" />
+					<field name="certification" />
+					<field name="collection" />
+					<field name="color" />
+					<field name="energyefficiencyrating" />
+					<field name="internationalprotectionrating" />
+					<field name="itemdiameter" />
+					<field name="lightingmethod" />
+					<field name="lithiumbatteryenergycontent" />
+					<field name="lithiumbatterypackaging" />
+					<field name="lithiumbatteryvoltage" />
+					<field name="lithiumbatteryweight" />
+					<field name="material" />
+					<field name="numberofblades" />
+					<field name="numberofbulbsockets" />
+					<field name="plugtype" />
+					<field name="powersource" />
+					<field name="specialfeatures" />
+					<field name="specificuses" />
+					<field name="stylename" />
+					<field name="switchstyle" />
+					<field name="voltage" />
+					<field name="volume" />
+					<field name="wattage" />
+				</group>
+			</field>
+		</record>
+	</data>
+</odoo>

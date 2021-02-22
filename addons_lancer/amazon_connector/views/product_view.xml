@@ -1,0 +1,3387 @@
+<?xml version="1.0"?>
+<odoo>
+	<!-- Amazon Category views -->
+<!--    ATTRIBUTE_IDS COMMENT-->
+	<record id="amazon_product_category_from_view" model="ir.ui.view">
+		<field name="name">amazon.product.category.from.view</field>
+		<field name="model">product.category</field>
+		<field name="arch" type="xml">
+			<form string="Category">
+				<div class="oe_title">
+					<label for="name" string="Category name" class="oe_edit_only" />
+					<h1>
+						<field name="name" placeholder="eg. Tricycle" />
+					</h1>
+				</div>
+				<group name="first" col="4" string="Category Type">
+					<field name="parent_id" domain="[('amazon_category', '=', True)]" />
+					<!-- <field name="type" /> -->
+				</group>
+				<group name="Amazon Information">
+					<field name="amazon_category" readonly="4"></field>
+					<field name="amazon_cat_id" readonly="4"></field>
+				</group>
+				<group name="shops" string="Shops">
+					<field name="shop_ids" nolabel="1" colspan="4"/>
+				</group>
+			</form>
+		</field>
+	</record>
+	<record id="amazon_product_category_tree_view" model="ir.ui.view">
+		<field name="name">amazon.product.category.tree.view</field>
+		<field name="model">product.category</field>
+		<field name="arch" type="xml">
+			<tree string="Category">
+				<field name="display_name" />
+				<field name="amazon_category" />
+				<field name="amazon_cat_id" />
+			</tree>
+		</field>
+	</record>
+	<record id="amazon_product_category_search_view" model="ir.ui.view">
+		<field name="name">amazon.product.category.search.view</field>
+		<field name="model">product.category</field>
+		<field name="arch" type="xml">
+			<search string="Category">
+				<field name="name" />
+			</search>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="amazon_action_product_category_action">
+		<field name="name">Amazon Category</field>
+		<field name="res_model">product.category</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('amazon_category', '=', True)]</field>
+		<field name="search_view_id"
+		ref="amazon_connector.amazon_product_category_search_view" />
+	</record>
+	<record model="ir.actions.act_window.view" id="amazon_action_product_category_tree_view">
+		<field name="sequence" eval="1" />
+		<field name="view_mode">tree</field>
+		<field name="view_id"
+		ref="amazon_connector.amazon_product_category_tree_view" />
+		<field name="act_window_id"
+		ref="amazon_connector.amazon_action_product_category_action" />
+	</record>
+	<record model="ir.actions.act_window.view" id="amazon_action_product_category_form_view">
+		<field name="sequence" eval="2" />
+		<field name="view_mode">form</field>
+		<field name="view_id"
+		ref="amazon_connector.amazon_product_category_from_view" />
+		<field name="act_window_id"
+		ref="amazon_connector.amazon_action_product_category_action" />
+	</record>
+
+	<record id="view_amazon_product_template_form" model="ir.ui.view">
+		<field name="name">product.amazon.form.inherit</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view" />
+		<field name="arch" type="xml">
+			<header>
+				<button name="ExportUpdateProduct" type="object" string="ExportUpdate"/>
+			</header>
+
+
+			<xpath expr="//div[@name='options']" position="inside">
+				<div>
+					<field name="amazon_product"/>
+					<label for="amazon_product" />
+					<field name="amazon_export"/>
+					<label for="amazon_export" />
+				</div>
+			</xpath>
+			<xpath expr="//field[@name='currency_id']" position="inside">
+				<field name="feature" />
+			</xpath>
+			<xpath expr="//field[@name='default_code']" position="before">
+				<field name="standard_temp_product" />
+				
+			</xpath>
+
+			<xpath expr="//page[@name='variants']/field[@name='attribute_line_ids']" position="before">
+				<label for='variationtheme'/>
+				<field name="variationtheme" string='Variation Theme' attrs="{'required':[('amazon_export','=',True)]}"/>
+				
+			</xpath>
+
+			<xpath expr="//field[@name='default_code']" position="after">
+				<field name="parentage" attrs="{'required':[('amazon_export','=',True)]}"/>
+				<field name="amazon_sku"/>
+				<field name="amazon_fba_sku"/>
+				<field name="tmp_asin"  attrs="{'invisible':[('standard_temp_product','!=','ASIN')]}"/>
+				<field name="upc_temp" attrs="{'invisible':[('standard_temp_product','!=','UPC')]}"/>
+				<field name="isbn_temp" attrs="{'invisible':[('standard_temp_product','!=','ISBN')]}"/>
+				<field name="ean_barcode" attrs="{'invisible':[('standard_temp_product','!=','EAN')]}"/>
+			</xpath>
+
+			<xpath expr="//page" position="after">
+				<page string="Amazon Information" attrs="{'invisible':[('amazon_product','=',False)]}">
+
+					<notebook>
+						<page string="Amazon Attributes">
+							<form string="Product Attribtes">
+								<group col="4">
+								
+									<field name="amazon_categ_id" domain="[('amazon_category','=',True)]"/>
+									<field name="tem_standard_price"/>
+									<field name="is_prime" />
+									<field name="fulfillment_by" />
+									<field name="amazon_price" />
+									<field name="label" />
+									<field name="product_type_name" />
+									<field name="color" />
+									<field name="binding"/>
+									<field name="brand_name" attrs="{'required':[('amazon_product','=',True),('amazon_export','=',True)]}"/>
+									<field name="studio" />
+									<field name="amazon_manufacturer" attrs="{'required':[('amazon_product','=',True),('amazon_export','=',True)]}"/>
+									<field name="manufacturer_part"/>
+
+									<field name="publisher" />
+									<field name="package_quantity" />
+									<separator colspan="4" string="Product Dimension" />
+									<field name="item_dimension_weight" />
+									<field name="package_dimension_length" />
+									<field name="package_dimension_width" />
+									<field name="package_dimension_weight" />
+									<field name="package_dimension_height" />
+									<separator colspan="4" string="Product Image Dimensions" />
+									<field name="small_image_url" />
+									<field name="small_image_height" />
+									<field name="small_image_width" />
+
+									
+								</group>
+									<separator colspan="4" string="Product Data" />
+									<group >
+
+                    			 	<field name="product_data"  attrs="{'required':[('amazon_product','=',True),('amazon_export','=',True)]}"/>
+
+
+                    			 	<field name="product_type_powertransmission" attrs="{'invisible':[('product_data','!=','PowerTransmission')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','PowerTransmission')]}"/>
+
+
+                    			 	<field name="product_type_largeappliances" attrs="{'invisible':[('product_data','!=','LargeAppliances')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','LargeAppliances')]}"/>
+
+                    			 	<field name="product_type_gourmet" attrs="{'invisible':[('product_data','!=','Gourmet')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Gourmet')]}"/>
+
+                    			 	<field name="product_type_labsupplies" attrs="{'invisible':[('product_data','!=','LabSupplies')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','LabSupplies')]}"/> 
+                    			 	
+                    			 	<field name="product_type_cameraphoto" attrs="{'invisible':[('product_data','!=','CameraPhoto')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','CameraPhoto')]}"/>                   			 	
+
+			                        <field name="product_type_auto_accessory" attrs="{'invisible':[('product_data','!=','AutoAccessory')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','AutoAccessory')]}"/>
+
+			                        <field name="product_type_foodandbeverages" attrs="{'invisible':[('product_data','!=','FoodAndBeverages')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','FoodAndBeverages')]}"/>
+
+			                        <field name="product_type_health" attrs="{'invisible':[('product_data','!=','Health')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Health')]}"/>
+
+			                        <field name="product_type_jewelry" attrs="{'invisible':[('product_data','!=','Jewelry')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Jewelry')]}"/>
+
+			                       <!--  <field name="product_type_miscellaneous" attrs="{'invisible':[('product_data','!=','Miscellaneous')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Miscellaneous')]}"/>
+ -->
+			                        <field name="product_type_musicalinstruments" attrs="{'invisible':[('product_data','!=','MusicalInstruments')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','MusicalInstruments')]}"/>
+
+			                       <!--  <field name="product_type_music" attrs="{'invisible':[('product_data','!=','Music')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Music')]}"/> -->
+
+			                       <!--  <field name="product_type_office" attrs="{'invisible':[('product_data','!=','Office')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Office')]}"/> -->
+
+			                        <field name="product_type_petsupplies" attrs="{'invisible':[('product_data','!=','PetSupplies')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','PetSupplies')]}"/>
+
+			                        <!-- <field name="product_type_shoes" attrs="{'invisible':[('product_data','!=','Shoes')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Shoes')]}"/> -->
+
+			                       <!--  <field name="product_type_softwarevideoGames" attrs="{'invisible':[('product_data','!=','SWVG')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','SWVG')]}"/> -->
+
+			                        <field name="product_type_sports" attrs="{'invisible':[('product_data','!=','Sports')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Sports')]}"/>
+
+			                        <field name="product_type_sportsmemorabilia" attrs="{'invisible':[('product_data','!=','SportsMemorabilia')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','SportsMemorabilia')]}"/>
+
+			                        <field name="product_type_tiresandwheels" attrs="{'invisible':[('product_data','!=','TiresAndWheels')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','TiresAndWheels')]}"/>
+
+			                        <field name="product_type_tools" attrs="{'invisible':[('product_data','!=','Tools')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Tools')]}"/>
+
+			                        <field name="product_type_toys" attrs="{'invisible':[('product_data','!=','Toys')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Toys')]}"/>
+
+			                        <!-- <field name="product_type_Video" attrs="{'invisible':[('product_data','!=','Video')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Video')]}"/> -->
+
+			                        <field name="product_type_toys_baby" attrs="{'invisible':[('product_data','!=','Baby')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Baby')]}"/>
+
+			                        <field name="product_type_clothingaccessories" attrs="{'invisible':[('product_data','!=','Clothing')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Clothing')]}"/>
+
+			                        <field name="product_type_wirelessaccessories" attrs="{'invisible':[('product_data','!=','Wireless')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Wireless')]}"/>
+
+			                       <!--  <field name="product_type_giftcard" attrs="{'invisible':[('product_data','!=','GiftCards')] ,'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','GiftCards')]}"/> -->
+
+			                        <field name="product_type_com" attrs="{'invisible':[('product_data','!=','Computers')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Computers')]}"/>
+
+			                       <!--  <field name="product_type_home" attrs="{'invisible':[('product_data','!=','Home')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Home')]}"/> -->
+
+			                        <field name="product_type_ce" attrs="{'invisible':[('product_data','!=','CE')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','CE')]}"/>
+
+			                        <field name="product_type_light" attrs="{'invisible':[('product_data','!=','Lighting')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Lighting')]}"/>
+
+			                        <field name="product_type_beauty" attrs="{'invisible':[('product_data','!=','Beauty')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Beauty')]}"/>
+
+			                        <field name="product_type_homeimprovement" attrs="{'invisible':[('product_data','!=','HomeImprovement')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','HomeImprovement')]}"/>
+
+			                        <field name="product_type_rawmaterials" attrs="{'invisible':[('product_data','!=','RawMaterials')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','RawMaterials')]}"/>
+
+			                        <field name="product_type_foodserviceandjansan" attrs="{'invisible':[('product_data','!=','FoodServiceAndJanSan')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','FoodServiceAndJanSan')]}"/>
+
+			                        </group>
+
+ 
+									<group>
+										<field name="item_type" attrs="{'required':[('amazon_export','=',True),('amazon_product','=',True)]}"/>
+										<field name="bullet_point">
+											<tree editable="bottom">
+												<field name="bullet"/>
+											</tree>
+										</field>
+										<field name="search_keywords">
+											<tree editable="bottom">
+												<field name="searchterm"/>
+											</tree>
+										</field>
+									</group>
+							</form>
+						</page>
+
+
+						<page string="Photo Camera" attrs="{'invisible':[('product_data','!=','CameraPhoto')]}">
+						<form string="Photo Camera Attributes">
+							<group>
+						  		<separator string="Photo Camera Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="country_of_origin_hi"/>
+									<field name="model_name_ps"/>
+									<field name="customer_package_type_hi"/>
+									<field name="can_ship_in_original_container_g"/>
+									<field name="color"/>
+									<field name="color_map_hi"/>
+									<field name="compatible_devices_hi"/>
+									<field name="device_type_hi"/>
+									<field name="display_type_tg"/>
+									<field name="manufacturer_warranty_description_hi"/>
+									<field name="camera_type_cp"/>
+									<field name="has_image_stabilizer_cp"/>
+									<field name="display_technology_cp"/>
+									<field name="manufacturer_cp"/>
+									<field name="model_number_cp"/>
+									<field name="mfr_part_number_cp"/>
+									<field name="auto_focus_technology_cp"/>
+									<field name="film_speed_range_cp"/>
+									<field name="memory_Storage_Capacity_cp"/>
+									<field name="memory_technology_cp"/>
+
+									<field name="film_format_cp"  attrs="{'invisible':[('product_type_cameraphoto','!=','FilmCamera')]}"/>
+									<field name="film_management_features_cp"  attrs="{'invisible':[('product_type_cameraphoto','!=','FilmCamera')]}"/>
+								</group>
+
+								<group>
+									<field name="camera_accessories_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','OtherAccessory')]}"/>
+									<field name="camcorder_accessories_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','OtherAccessory')]}"/>
+
+									<field name="camera_power_supply_type_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','PowerSupply')]}"/>
+
+									<field name="projection_type_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','Projection')]}"/>
+									<field name="projector_lenses_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','Projection')]}"/>
+									<field name="projection_screens_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','Projection')]}"/>
+
+									<field name="storage_and_presentation_materials_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','PhotoStudio')]}"/>
+									<field name="studio_supplies_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','PhotoStudio')]}"/>
+									<field name="photo_backgrounds_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','PhotoStudio')]}"/>
+
+									<field name="meter_type_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','LightMeter')]}"/>
+									<field name="meter_display_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','LightMeter')]}"/>
+
+
+									<field name="night_vision_cp" attrs="{'invisible':[('product_type_cameraphoto','not in',['OtherAccessory','SurveillanceSystem'])]}"/>
+
+									<field name="focus_type_cp" attrs="{'invisible':[('product_type_cameraphoto','not in',['DigitalCamera','FilmCamera','Binocular','Lens'])]}"/>
+
+									<field name="lens_thread_cp" attrs="{'invisible':[('product_type_cameraphoto','not in',['DigitalCamera','FilmCamera'])]}"/>
+
+									<field name="durability_cp" attrs="{'invisible':[('product_type_cameraphoto','not in',['FilmCamera','Camcorder','DigitalCamera','SurveillanceSystem','Filter','OtherAccessory'])]}"/>
+
+									<field name="features_cp" attrs="{'invisible':[('product_type_cameraphoto','not in',['DigitalCamera','FilmCamera','Camcorder','SurveillanceSystem','Binocular','Lens','Microscope','BagCase'])]}"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+						<page string="Food Servies And Jan San" attrs="{'invisible':[('product_data','!=','FoodServiceAndJanSan')]}">
+						<form string="Food Servies And Jan San Attributes">
+							<group>
+						  		<separator string="Food Servies And Jan San Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="item_volume_fs"/>
+									<field name="holding_time_fs"/>
+									<field name="heat_time_fs"/>
+									<field name="graduation_range_fs"/>
+									<field name="graduation_interval_fs"/>
+									<field name="extension_length_fs"/>
+									<field name="current_rating_fs"/>
+									<field name="coolant_consumption_rate_fs"/>
+									<field name="coolant_capacity_fs"/>
+									<field name="cap_size_fs"/>
+								</group>
+								<group>
+									<field name="age_range_description_fs"/>
+									<field name="capacity_hi"/>
+									<field name="captype_li"/>
+									<field name="country_of_origin_hi"/>
+									<field name="fuel_type_tg"/>
+									<field name="horsepower_hi"/>
+									<field name="item_depth_by"/>
+									<field name="itemdiameter_li"/>
+									<field name="item_shape_rm"/>
+									<field name="item_thickness_ps"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+					<page string="Lab Supply" attrs="{'invisible':[('product_data','!=','LabSupplies')]}">
+						<form string="Lab Supplies Attributes">
+							<group>
+						  		<separator string="Lab Supplies Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="age_range_description_fs"/>
+									<field name="airflowcapacity_li"/>
+									<field name="chamber_width_ls"/>
+
+									<field name="heated_element_dimensions"/>
+									<field name="heater_surface_material_type"/>
+									<field name="heating_element_type"/>
+
+									<field name="capacity_hi"/>
+									<field name="display_type_tg"/>
+									<field name="extension_length_fs"/>
+								</group>
+								<group>
+									<field name="fuel_type_tg"/>
+									<field name="heat_time_fs"/>
+
+									<field name="chamber_depth_ls" attrs="{'invisible':[('product_type_labsupplies','!=','LabSupply')]}"/>
+									<field name="chamber_height_ls" attrs="{'invisible':[('product_type_labsupplies','!=','LabSupply')]}"/>
+									<field name="coolant_capacity_fs" attrs="{'invisible':[('product_type_labsupplies','!=','LabSupply')]}"/>
+									<field name="coolant_consumption_rate_fs" attrs="{'invisible':[('product_type_labsupplies','!=','LabSupply')]}"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+
+				    <page string="Large Appliances" attrs="{'invisible':[('product_data','!=','LargeAppliances')]}">
+						<form string="Large Appliances Attributes">
+							<group>
+						  		<separator string="Large Appliances Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="battery_life_la" />
+									<field name="capacity_hi"/>
+									<field name="diameter_home"/>
+									<field name="efficiency_hi"/>
+									<field name="energy_consumption_hi"/>
+
+									<field name="burner_type_la" attrs="{'invisible':[('product_type_largeappliances','!=','CookingOven')]}"/>
+									<field name="drawer_type_la" attrs="{'invisible':[('product_type_largeappliances','!=','CookingOven')]}"/>
+									<field name="fuel_type_tg" attrs="{'invisible':[('product_type_largeappliances','!=','CookingOven')]}"/>
+								</group>
+								<group>
+
+									<field name="installation_type_la"/>
+									<field name="item_thickness_la"/>
+
+									<field name="included_components_ps"/>
+									<field name="lithiumbatterypackaging_wire"/>
+
+									<field name="racks_la" attrs="{'invisible':[('product_type_largeappliances','not in',['CookingOven','MicrowaveOven'])]}"/>
+
+									<field name="freezer_capacity_la" attrs="{'invisible':[('product_type_largeappliances','!=','RefrigerationAppliance')]}"/>
+
+									<field name="ice_capacity_la" attrs="{'invisible':[('product_type_largeappliances','!=','RefrigerationAppliance')]}"/>
+									
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+
+
+					<page string="Gourmet" attrs="{'invisible':[('product_data','!=','Gourmet')]}">
+						<form string="Gourmet Attributes">
+							<group>
+						  		<separator string="Gourmet Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="unit_count_g"/>
+									<field name="item_specialty_g"/>
+									<field name="organic_certification_g"/>
+									<field name="kosher_certification_g"/>
+									<field name="nutritional_facts_g"/>
+									<field name="country_produced_in_g"/>
+									<field name="identity_package_type_g"/>
+									<field name="can_ship_in_original_container_g"/>
+									<field name="customer_package_type_hi"/>
+									<field name="ingredients_beauty"/>
+								</group>
+								<group>
+									<field name="warnings_home"/>
+									<field name="directions_tg"/>
+									<field name="itempackagequantity_wire"/>
+									<field name="number_of_items_hi"/>
+									<field name="display_volume_hi"/>
+									<field name="display_length_hi"/>
+									<field name="display_weight_hi"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+				    <page string="Sports" attrs="{'invisible':[('product_data','!=','Sports')]}">
+						<form string="Sports Atributes">
+							<group>
+						  		<separator string="Sports Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="model_year_s"/>
+									<field name="customizable_template_name_s"/>
+									<field name="is_customizable_s"/>
+									<field name="grip_size_s"/>
+									<field name="design_s"/>
+									<field name="age_gender_category_s"/>
+									<field name="bike_rim_size_s"/>
+									<field name="boot_size_s"/>
+									<field name="calf_size_s"/>
+								</group>
+								<group>
+									<field name="color"/>
+									<field name="size"/>
+									<field name="customer_package_type_hi"/>
+									<field name="department_cloth"/>
+									<field name="item_thickness_ps"/>
+									<field name="material_hi"/>
+									<field name="number_of_items_hi"/>
+									<field name="isadultproduct_toys_tg"/>
+									<field name="can_ship_in_original_container_g"/>
+									<field name="care_instructions_tg"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+				    <page string="Sports Memorabilia" attrs="{'invisible':[('product_data','!=','SportsMemorabilia')]}">
+						<form string="Sports Memorabilia Atributes">
+							<group>
+						  		<separator string="Sports Memorabilia Atributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="material_hi"/>
+									<field name="numberofpieces_home"/>
+									<field name="unit_count_g"/>
+									<field name="packaging_sm"/>
+									<field name="player_name_sm"/>
+									<field name="authenticated_by_sm"/>
+									<field name="signed_by_sm"/>
+									<field name="autographed_sm"/>
+									<field name="jersey_type_sm"/>
+									<field name="league_name_sm"/>
+								</group>
+								<group>
+									<field name="season_sm"/>
+									<field name="sport_sm"/>
+									<field name="team_name_sm"/>
+									<field name="uniform_number_sm"/>
+									<field name="year_sm"/>
+									<field name="whats_in_the_box_sm"/>
+									<field name="is_very_high_value_sm"/>
+									<field name="game_used_sm"/>
+									<field name="authenticity_certificate_number_sm"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+				    <page string="Tools" attrs="{'invisible':[('product_data','!=','Tools')]}">
+						<form string="Tools Atributes">
+							<group>
+						  		<separator string="Tools Atributes" />
+						  	</group>
+							<group>
+								<group>
+									<field name="wattage_hi"/>
+									<field name="voltage_hi"/>
+									<field name="battery_type_lithium_ion_hi"/>
+									<field name="battery_type_lithium_metal_hi"/>
+									<field name="lithium_content_li"/>
+									<field name="lithiumbatterypackaging_wire"/>
+									<field name="lithium_voltage_li"/>
+									<field name="lithium_weight_li"/>
+								</group>
+								<group>
+									<field name="number_of_lithium_ion_cells_hi"/>
+									<field name="number_of_lithium_metal_cells_hi"/>
+									<field name="customer_restriction_type_hi"/>
+									<field name="power_plug_type_hi"/>
+									<field name="power_source_t"/>
+									<field name="number_of_items_inpackage_t"/>
+									<field name="material_hi"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+					<page string="Power Transmission" attrs="{'invisible':[('product_data','!=','PowerTransmission')]}">
+						<form string="Power Transmission Attributes">
+							<group>
+						  		<separator string="Power Transmission Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="wire_diameter_pt"/>
+									<field name="trade_size_name_pt"/>
+									<field name="strand_type_pt"/>
+									<field name="spring_wind_direction_pt"/>
+									<field name="spring_rate_pt"/>
+									<field name="slide_travel_distance_pt"/>
+									<field name="set_screw_thread_type_pt"/>
+									<field name="outer_ring_width_pt"/>
+									<field name="number_of_teeth_pt"/>
+									<field name="active_coils_pt"/>
+									<field name="axial_misalignment_pt"/>
+									<field name="belt_cross_section_pt"/>
+									<field name="belt_width_pt"/>
+									<field name="body_outside_diameter_pt"/>
+									<field name="compressed_length_pt"/>
+									<field name="deflection_angle_pt"/>
+									<field name="face_width_pt"/>
+									<field name="flange_outside_diameter_pt"/>
+									<field name="flange_thickness_pt"/>
+								</group>
+								<group>
+									<field name="guide_support_type_pt"/>
+									<field name="item_pitch_pt"/>
+									<field name="key_way_depth_pt"/>
+									<field name="key_way_sidth_pt"/>
+									<field name="leg_length_pt"/>
+									<field name="load_capacity_pt"/>
+									<field name="maximum_angular_misalignment_pt"/>
+									<field name="maximum_parallel_misalignment_pt"/>
+									<field name="maximum_rotational_speed_pt"/>
+									<field name="maximum_spring_compression_load_pt"/>
+									<field name="maximum_tension_load_pt"/>
+									<field name="maximum_torque_pt"/>
+									<field name="minimum_spring_Compression_load_pt"/>
+									<field name="number_of_bands_pt"/>
+									<field name="number_of_grooves_pt"/>
+									<field name="itempackagequantity_wire"/>
+									<field name="material_type_tg"/>
+									<field name="number_of_items_hi"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+					<page string="RawMaterials" attrs="{'invisible':[('product_data','!=','RawMaterials')]}">
+						<form string="Raw Materials Attributes">
+							<group>
+						  		<separator string="Raw Materials Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="country_of_origin_hi"/>
+									<field name="gauge_string_hi"/>
+									<field name="itemdiameter_li"/>
+									<field name="item_thickness_ps"/>
+									<field name="measurement_system_hi"/>
+									<field name="specification_met_tg"/>
+									<field name="wire_diameter_string_rm"/>
+									<field name="void_volume_percentage_rm"/>
+									<field name="upper_temperature_rating_rm"/>
+									<field name="upper_bubbling_pressure_rm"/>
+									<field name="tubing_wall_type_rm"/>
+									<field name="tolerance_held_rm"/>
+									<field name="thread_diameter_string_rm"/>
+									<field name="tensile_strength_rm"/>
+									<field name="standard_construction_rm"/>
+									<field name="slot_width_rm"/>
+									<field name="slot_depth_rm"/>
+									<field name="shim_type_rm"/>
+									<field name="notch_width_rm"/>
+									<field name="notch_depth_rm"/>
+									<field name="metal_construction_type_rm"/>
+									<field name="mesh_opening_size_rm"/>
+									<field name="mesh_openin_shape_rm"/>
+									<field name="mesh_number_rm"/>
+									<field name="mesh_form_rm"/>
+								</group>
+								<group>
+									<field name="mesh_count_rm"/>
+									<field name="maximum_pressure_rm"/>
+									<field name="air_entry_pressure_rm"/>
+									<field name="backing_type_rm"/>
+									<field name="ball_type_rm"/>
+									<field name="compatible_with_tube_gauge_rm"/>
+									<field name="corner_style_rm"/>
+									<field name="disc_diameter_string_rm"/>
+									<field name="durometer_hardness_rm"/>
+									<field name="exterior_finish_rm"/>
+									<field name="foam_structure_rm"/>
+									<field name="grade_rating_rm"/>
+									<field name="hole_count_rm"/>
+									<field name="inside_diameter_string_rm"/>
+									<field name="inside_diameter_tolerance_string_rm"/>
+									<field name="item_diameter_tolerance_string_rm"/>
+									<field name="item_hardness_rm"/>
+									<field name="item_length_tolerance_string_rm"/>
+									<field name="item_shape_rm"/>
+									<field name="item_temper_rm"/>
+									<field name="item_thickness_tolerance_string_rm"/>
+									<field name="item_width_tolerance_string_rm"/>
+									<field name="lower_bubbling_pressure_rm"/>
+
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+
+					<page string="Baby Attributes" attrs="{'invisible':[('product_data','!=','Baby')]}">
+						<form string="Baby Attributes">
+							<group>
+						  		<separator string="Baby Product Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="battery_li"/>
+									<field name="battery_average_life_hi"/>
+									<field name="battery_average_life_standby_hi"/>
+									<field name="battery_capacity_hi"/>
+									<field name="battery_cell_composition"/>
+									<field name="battery_charge_time_hi"/>
+									<field name="care_instructions_tg"/>
+									<field name="chestsize_cloth"/>
+									<field name="color_map_hi"/>
+									<field name="compatible_devices_hi"/>
+									<field name="control_type_hi"/>
+									<field name="fill_material_type_ps"/>
+									<field name="handle_height_tg"/>
+									<field name="includes_ac_adapter_ps"/>
+									<field name="includes_remote_tg"/>
+									<field name="ingredients_beauty"/>
+									<field name="is_assembly_required_tg"/>
+									<field name="is_portable_ps"/>
+									<field name="itemdiameter_li"/>
+									<field name="material_composition_tg"/>
+									<field name="material_type_tg"/>
+									<field name="mfg_warranty_description_parts_ps"/>
+									<field name="mfg_warranty_description_type_ps"/>
+									<field name="power_source_type_tg"/>
+									<field name="remote_control_technology_tg"/>
+									<field name="seat_length_tg"/>
+									<field name="seat_width_tg"/>
+									<field name="seller_warranty_description_hi"/>
+									<field name="specialfeatures_li"/>
+									<field name="suspension_type_tg"/>
+									<field name="targetgender_gift"/>
+									<field name="tire_diameter_tg"/>
+									<field name="tire_material_tg"/>
+									<field name="warranty_description_tg"/>
+									<field name="wheel_type_tg"/>
+									<field name="shade_material_type_hi"/>
+									
+
+								</group>
+								<group>
+									<field name="seating_capacity_by"/>
+									<field name="seat_interior_width_by"/>
+									<field name="seat_height_by"/>
+									<field name="seat_back_interior_height_by"/>
+									<field name="safety_warning_by"/>
+									<field name="battery_description_by"/>
+									<field name="battery_power_by"/>
+									<field name="bottle_nipple_type_by"/>
+									<field name="bottle_type_by"/>
+									<field name="carrier_weight_by"/>
+									<field name="car_seat_weight_group_eu_by"/>
+									<field name="color_name_by"/>
+									<field name="folded_size_by"/>
+									<field name="is_dishwasher_safe_by"/>
+									<field name="item_depth_by"/>
+									<field name="manufacturer_warranty_description_hi"/>
+									<field name="material_type_free_by"/>
+									<field name="maximum_anchoring_weight_capacity_by"/>
+									<field name="maximum_height_recommendation_by"/>
+									<field name="minimum_height_recommendation_by"/>
+									<field name="maximum_manufacturer_age_recommended_by"/>
+									<field name="minimum_manufacturer_age_recommended_by"/>
+									<field name="maximum_item_width_by"/>
+									<field name="maximum_range_indoors_by"/>
+									<field name="maximum_range_open_space_by"/>
+									<field name="maximum_weight_recommendation_by"/>
+									<field name="minimum_weight_recommendation_by"/>
+									<field name="operation_mode_by"/>
+									<field name="orientation_by"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+
+
+					<page string="Pet Supplies" attrs="{'invisible':[('product_data','!=','PetSupplies')]}">
+						<form string="Pet Supplies Attribtes">
+							<group>
+						  		<separator string="Pet Supplies Attribtes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="Flavor"/>
+									<field name="size"/>
+									<field name="size_map_tg"/>
+									<field name="battery_average_life_hi"/>
+									<field name="battery_average_life_standby_hi"/>
+									<field name="battery_capacity_hi"/>
+									<field name="battery_cell_composition"/>
+									<field name="battery_charge_time_hi"/>
+									<field name="compatible_devices_hi"/>
+									<field name="batterypower_headphone"/>
+									<field name="breed_recommendation"/>
+									<field name="bulblifespan_li"/>
+									<field name="care_instructions_tg"/>
+									<field name="country_of_origin_hi"/>
+									<field name="directions_tg"/>
+									<field name="display_length_hi"/>
+									<field name="display_volume_hi"/>
+									<field name="display_weight_hi"/>
+									<field name="energy_rating_li"/>
+									<field name="eu_energy_label_efficiency_class_hi"/>
+									<field name="includes_remote_tg"/>
+									<field name="ingredients_beauty"/>
+									<field name="is_assembly_required_tg"/>
+									<field name="itemdiameter_li"/>
+									<field name="itemdisplayheight_gift"/>
+									<field name="itemdisplaywidth_gift"/>
+									<field name="itempackagequantity_wire"/>
+									<field name="lithium_content_li"/>
+									<field name="lithiumbatterypackaging_wire"/>
+									<field name="lithium_voltage_li"/>
+									<field name="lithium_weight_li"/>
+									<field name="material_hi"/>
+									<field name="material_composition_tg"/>
+									<field name="number_of_items_hi"/>
+									<field name="number_of_lithium_ion_cells_hi"/>
+									<field name="number_of_lithium_metal_cells_hi"/>
+									<field name="recycled_content_percentage_hi"/>
+									<field name="seller_warranty_description_hi"/>
+									<field name="necksize_cloth"/>
+									<field name="maximum_power_hi"/>
+									<field name="power_source_type_tg"/>
+									<field name="specialfeatures_li"/>
+									<field name="specification_met_tg"/>
+									<field name="targetgender_gift"/>
+									<field name="voltage_hi"/>
+									<field name="wattage_hi"/>
+									<field name="volume_li"/>
+									<field name="warnings_home"/>
+									<field name="weight_recommendation_tg"/>
+									<field name="language_tg"/>
+									<field name="legal_compliance_certification_metadata_hi"/>
+									<field name="legal_compliance_certification_date_of_issue_hi"/>
+									<field name="legal_compliance_certification_expiration_date_hi"/>
+								</group>
+								<group>
+									<field name="breed_recommendation"/>
+									<field name="battery_cell_composition"/>
+									<field name="battery_form_factor_ps"/>
+									<field name="closure_type_ps"/>
+									<field name="contains_food_or_beverage_ps"/>
+									<field name="color_specification_ps"/>
+									<field name="dog_size_ps"/>
+									<field name="external_certification_ps"/>
+									<field name="fill_material_type_ps"/>
+									<field name="girth_size_ps"/>
+									<field name="height_recommendation_ps"/>
+									<field name="health_benefits_ps"/>
+									<field name="included_components_ps"/>
+									<field name="includes_ac_adapter_ps"/>
+									<field name="inner_material_type_ps"/>
+									<field name="is_expiration_dated_product_ps"/>
+									<field name="is_portable_ps"/>
+									<field name="item_display_diameter_ps"/>
+									<field name="item_form_ps"/>
+									<field name="item_thickness_ps"/>
+									<field name="light_output_luminance_ps"/>
+									<field name="max_ordering_quantity_ps"/>
+									<field name="maximum_age_recommendation_ps"/>
+									<field name="mfg_warranty_description_labor_ps"/>
+									<field name="mfg_warranty_description_parts_ps"/>
+									<field name="mfg_warranty_description_type_ps"/>
+									<field name="minimum_age_recommendation_ps"/>
+									<field name="nutrition_facts_ps"/>
+									<field name="outer_material_type_ps"/>
+									<field name="pattern_name_ps"/>
+									<field name="pet_life_stage_ps"/>
+									<field name="pet_type_ps"/>
+									<field name="product_feature_ps"/>
+									<field name="product_sample_received_date_ps"/>
+									<field name="recommended_uses_for_product_ps"/>
+									<field name="scent_name_ps"/>
+									<field name="storage_instructions_ps"/>
+									<field name="tank_size_ps"/>
+									<field name="width_size_ps"/>
+									<field name="model_name_ps"/>
+									<field name="material_features_ps"/>
+									<field name="legal_compliance_certification_regulatory_organization_name"/>
+									<field name="legal_compliance_certification_geographic_jurisdiction_ps"/>
+									<field name="legal_compliance_certification_status_ps"/>
+									<field name="legal_compliance_certification_Value_ps"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+
+						<page string="Home Improvements" attrs="{'invisible':[('product_data','!=','HomeImprovement')]}">
+						<form string="Home Improvements Attribtes">
+							
+							<group>
+						  		<separator string="Home Attributes" />
+						  	</group>		 
+
+							<group>
+							  	<group>							  	
+								  	<field name="battery_average_life_hi" />
+								  	<field name="battery_average_life_standby_hi" />
+								  	<field name="battery_charge_time_hi" />
+								  	<field name="battery_type_lithium_ion_hi" />
+								  	<field name="battery_type_lithium_metal_hi" />
+								  	<field name="country_of_origin_hi" />
+								  	<field name="item_display_area_hi" />
+								  	<field name="lithium_content_li" />
+								  	<field name="lithiumbatterypackaging_wire" />
+								  	<field name="lithium_voltage_li" />
+							  	 </group>
+
+							  	<group>
+							  		<field name="lithium_weight_li" />
+							  		<field name="mfr_warranty_description_labor_hi" />
+							  		<field name="mfr_warranty_description_parts_hi" />
+							  		<field name="mfr_warranty_description_type_hi" />
+							  		<field name="number_of_lithium_ion_cells_hi" />
+							  		<field name="number_of_lithium_metal_cells_hi" />
+							  		<field name="warnings_home"/>
+							  		<field name="fabrictype_home" />
+							  		<field name="import_designation_hi" />
+							  	</group>
+							</group>
+
+							<group>
+								<group>
+									  	<field name="accessory_connection_type_hi" />
+									  	<field name="battery_capacity_hi" />
+									  	<field name="blade_edge_hi" />
+									  	<field name="blade_length_hi" />
+									  	<field name="brightness_hi" />
+									  	<field name="bulb_type_hi"/>
+									  	<field name="center_length_hi" />
+									  	<field name="color" />
+									  	<field name="color_map_hi" />
+									  	<field name="compatible_devices_hi" />
+									  	<field name="compatible_fastener_range_hi" />
+									  	<field name="cooling_method_hi" />
+									  	<field name="cooling_wattage_hi" />
+									  	<field name="corner_radius_hi" />
+									  	<field name="coverage_hi" />
+									  	<field name="cut_type_hi" />
+									  	<field name="cutting_width_hi"/>
+									  	<field name="cutting_diameter_hi" />
+									  	<field name="customer_package_type_hi" />
+									  	<field name="display_diameter_hi"  attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures')]}"/>
+									  	<field name="device_type_hi" />
+									  	<field name="display_style_hi" />
+									  	<field name="energy_consumption_hi" />
+									  	<field name="energy_efficiency_ratio_cooling_hi" />
+									  	<field name="environmental_description_hi" />
+									  	<field name="eu_energy_efficiency_class_heating_hi" />
+									  	<field name="eu_energy_label_efficiency_class_hi" />
+									  	<field name="external_testing_certification_hi" />
+									  	<field name="horsepower_hi" attrs="{'invisible':[('product_type_homeimprovement','in',['PlumbingFixtures','BuildingMaterials'])]}"/>
+									  	<field name="flush_type_hi" />
+									  	<field name="folded_knife_size_hi" />
+									  	<field name="grit_rating_hi" />
+									  	<field name="handle_material_hi" />
+									  	<field name="inside_diameter_hi" />
+									  	<field name="heater_wattage_hi" />
+									  	<field name="laser_beam_color_hi" />
+									  	<field name="maximum_power_hi" />
+									  	<field name="measurement_accuracy_hi" />
+									  	<field name="measurement_system_hi" />
+									  	<field name="minimum_efficiency_reporting_value_hi" />
+									  	<field name="minimum_age_hi" />
+									  	<field name="number_of_basins_hi" attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures')]}"/>
+									  	<field name="number_of_holes_hi" attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures')]}"/>
+									  	<field name="number_of_items_hi" />
+									  	<field name="outside_diameter_hi"/>
+									  	<field name="performance_description_hi" />
+									  	<field name="recycled_content_percentage_hi" />
+									  	<field name="speed_hi"/>
+									  	<field name="rough_in_hi"/>
+									  	<field name="size" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+									  	<field name="spout_height_hi" />
+									  	<field name="spout_reach_hi" />
+									  	
+									  	<field name="customer_restriction_type_hi" attrs="{'invisible':[('product_type_homeimprovement','=','Electrical')]}"/>
+
+									  	<field name="thread_size_hi" />
+									  	<field name="tool_tip_description_hi" />
+									  	<field name="torque_hi" />
+									  	<field name="r_value_hi" attrs="{'invisible':[('product_type_homeimprovement','=','BuildingMaterials')]}"/>
+									</group>
+									<group>
+									  	<field name="uv_protection_hi" />
+									  	<field name="viewing_area_hi" />
+									  	
+									  	<field name="head_style_hi"/>
+									  	<field name="material_hi" />
+									  	<field name="display_volume_hi" />
+									  	<field name="display_length_hi" />
+									  	<field name="display_weight_hi" />
+									  	<field name="display_width_hi" attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures')]}"/>
+									  	<field name="display_height_hi" />
+									  	<field name="manufacturer_warranty_description_hi" />
+									  	<field name="plug_format_hi" />
+									  	<field name="plug_profile_hi"/>
+									  	<field name="power_source_hi" />
+									  	<field name="seller_warranty_description_hi" attrs="{'invisible':[('product_type_homeimprovement','=','Hardware')]}"/>
+									  	<field name="switch_style_hi" />
+									  	<field name="switch_type_hi" />
+									  	<field name="voltage_hi" />
+									  	<field name="wattage_hi" />
+									  	<field name="base_diameter_hi" />
+									  	<field name="beam_angle_hi" />
+									  	<field name="blade_color_hi" />
+									  	<field name="circuit_breaker_type_hi" />
+									  	<field name="efficiency_hi" />
+									  	<field name="international_protection_rating_hi" />
+									  	<field name="light_source_operating_life_hi" />
+									  	<field name="lighting_method_hi" />
+									  	<field name="maximum_compatible_light_source_wattage_hi" />
+									  	<field name="number_of_blades_hi" />
+									  	<field name="number_of_light_sources_hi" />
+									  	<field name="shade_diameter_hi" />
+									  	<field name="shade_material_type_hi" />
+									  	<field name="short_product_description_hi" />
+									  	<field name="start_up_time_description_hi" />
+									  	<field name="strands_hi" />
+									  	<field name="tubing_outside_Diameter_hi" />
+									  	<field name="legal_compliance_certification_metadata_hi" />
+									  	<field name="legal_compliance_certification_date_of_issue_hi" />
+									  	<field name="legal_compliance_certification_expiration_date_hi" />
+									  	<field name="power_plug_type_hi"  attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures'),('product_type_homeimprovement','=','BuildingMaterials')]}"/>
+
+									  	<field name="base_width_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="capacity_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="control_type_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="drain_type_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="form_factor_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="gauge_string_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="handle_type_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="input_power_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="mounting_type_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="number_of_settings_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="roll_quantity_hi" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+		             		  		</group>
+		             		</group>	
+		             		</form>						 
+		                </page>
+
+						<page string="Toys And games" attrs="{'invisible':[('product_data','!=','Toys')]}">
+						<form string="Toys Attribtes">
+						<group>
+					  		<separator string="Toys Attributes" />
+					  	</group>
+					 
+						<group>
+						  	<group>	
+						  		<field name="assembly_time_tg"/>
+						  		<field name="edition_tg"/>
+						  		<field name="is_assembly_required_tg"/>
+						  		<field name="manufacturer_safety_warning_tg"/>
+						  		<field name="weight_recommendation_tg"/>
+						  		<field name="manufacturer_warranty_description_hi"/>
+						  		<field name="numberofpieces_home"/>
+						  		<field name="assembly_instructions_tg"/>
+						  	</group>
+
+						  	<group>
+						  		<field name="number_of_players_tg"/>
+						  		<field name="part_number_tg"/>
+						  		<field name="size_map_tg"/>
+						  		<field name="subject_character_tg"/>
+						  		<field name="isadultproduct_toys_tg"/>
+						  		<field name="size" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+								<field name="stylename_li"/>
+						  	</group>
+						</group>
+
+						<group>
+							<group>
+
+								<field name="color" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+							    <field name="Flavor" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+
+								<field name="battery_average_life_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="battery_average_life_standby_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}" />
+								<field name="battery_charge_time_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="mfr_warranty_description_labor_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="mfr_warranty_description_parts_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="mfr_warranty_description_type_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="number_of_lithium_ion_cells_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="number_of_lithium_metal_cells_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="seller_warranty_description_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="battery_type_lithium_ion_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="battery_type_lithium_metal_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="display_length_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="display_volume_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="display_weight_hi" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="specialfeatures_li" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="targetgender_gift" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="ingredients_beauty" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+
+								<field name="awards_won_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="color_map_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="directions_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="number_of_control_channels_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="frequency_bands_supported_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="language_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="includes_remote_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="power_source_type_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="recommended_use_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="remote_control_technology_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="rail_gauge_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="region_of_origin_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="drive_system_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>								
+								<field name="fuel_capacity_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="fuel_type_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="material_composition_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="care_instructions_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="handle_height_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="seat_length_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="seat_width_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="tire_material_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="tire_diameter_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="style_keywords_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="warranty_description_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="scale_name_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="specification_met_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="engine_type_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+							</group>
+							<group>
+
+								<field name="material_type_tg" attrs="{'invisible':[('product_type_toys','=','CollectibleCard')]}"/> 
+								<field name="country_of_origin_hi" attrs="{'invisible':[('product_type_toys','=','CollectibleCard')]}"/> 
+
+							    <field name="control_type_hi" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="specific_uses_for_product_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+
+							    <field name="active_surface_area_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="wing_area_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="collection_name_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="initial_print_run_rarity_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="brake_style_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="drive_system_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    
+							    <field name="frame_material_type_tg" attrs="{'invisible':[('product_type_toys','not in',['ToysAndGames','Hobbies'])]}"/> 
+							    <field name="fuel_capacity_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="fuel_type_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="maximum_range_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="maximum_speed_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="motor_type_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="display_size_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="display_type_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="engine_displacement_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="liquid_volume_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="movement_type_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="surface_recommendation_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="radio_bands_supported_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="rail_type_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="scale_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="suspension_type_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="tire_type_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="wheel_diameter_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="wheel_type_tg" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+
+
+							    <field name="lithium_content_li" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="lithiumbatterypackaging_wire" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="lithium_voltage_li" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="lithium_weight_li" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="publisher" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="number_of_frequency_channels_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="is_electric_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="animal_type_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="skill_level_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="toy_award_name_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="publisher_contributor_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="distribution_designation_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="country_string_tg" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+
+							    <field name="collection_tg" attrs="{'invisible':[('product_type_toys','!=','CollectibleCard')]}"/> 
+							    <field name="rarity_tg" attrs="{'invisible':[('product_type_toys','!=','CollectibleCard')]}"/> 
+							    <field name="card_number_tg" attrs="{'invisible':[('product_type_toys','!=','CollectibleCard')]}"/> 
+							    <field name="card_type_tg" attrs="{'invisible':[('product_type_toys','!=','CollectibleCard')]}"/> 
+
+							    <field name="educational_objective_tg" attrs="{'invisible':[('product_type_toys','=','Costume')]}"/>
+							    
+							    <field name="genre_gift" attrs="{'invisible':[('product_type_toys','not in',['Hobbies','CollectibleCard'])]}"/> 
+							    
+					  		</group>
+				 		</group>
+				 	</form>
+				    </page>
+
+
+
+
+		    		<page string="Wireless" attrs="{'invisible':[('product_data','!=','Wireless')]}">
+					<form string="Wireless Attribtes">
+						<group>
+					  		<separator string="Wireless Attributes" />
+					  	</group>
+					 
+						<group>
+						  	<group>		
+						  		<field name="battery_type_lithium_ion_hi"/>		
+						  		<field name="battery_type_lithium_metal_hi"/>	
+						  		<field name="lithium_voltage_li"/>	
+						  		<field name="number_of_lithium_ion_cells_hi"/>	
+						  	 </group>
+
+						  	<group>
+						  		<field name="lithium_content_li"/>	
+						  		<field name="lithiumbatterypackaging_wire"/>	
+						  		<field name="lithium_weight_li"/>	
+						  		<field name="number_of_lithium_metal_cells_hi"/>	
+						  	</group>
+						</group>
+
+						<group>
+							<group>
+								<field name="lithiumbatterypackaging_wire"/>
+		             			<field name="additionalfeatures_wire"/>
+		             			<field name="solar_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="refillable_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="extended_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="slim_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<!-- <field name="color" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/> -->
+		             			
+		             			<field name="color_map_hi" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+							</group>
+							<group>
+								<field name="auxiliary_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="batterytype_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="antennatype_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="manufacturername_wire"/>
+		             			<field name="keywords_wire"/>
+		             			<field name="itempackagequantity_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="headsettype_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="headsetstyle_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+
+		             			<field name="manufacturername_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessDownloads')]}"/>
+		             			<field name="additionalfeatures_wire"/>
+		             			<field name="keywords_wire" />
+		             			<field name="applicationversion_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessDownloads')]}"/>
+		             			<field name="power_plug_type_hi"/>
+
+		             			<field name="talk_time_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="standby_time_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="charging_time_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="batterypower_headphone" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="compatible_phone_models_wire"/>
+		             			<field name="prepaid_features_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="phone_type_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="phone_style_wire" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="operatingsystem_gp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="power_plug_type_hi"/>		             			
+					  		</group>
+				 		</group>
+				 	</form>
+				    </page>
+
+						<!-- <page string="Gift Cards" attrs="{'invisible':[('product_data','!=','GiftCards')]}">
+							<group attrs="{'invisible':[('product_type_giftcard','!=','PhysicalGiftCard')]}" string="Physical Gift Cards" colspan="4">
+							  <group>
+								<field name="itemdisplayheight_gift"/>
+		             			<field name="itemdisplaylength_gift"/>
+		             			<field name="itemdisplayweight_gift"/>
+		             			<field name="itemdisplaywidth_gift"/>
+		             			<field name="color" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+		             			<field name="designname_gift"/>
+		             		  </group>
+		             		  <group>
+		             			<field name="format_gift"/>
+		             			<field name="genre_gift"/>
+		             			<field name="isadultproduct_toys_tg"/>
+		             			<field name="occasiontype_gift"/>
+		             			<field name="state_gift"/>
+		                      </group>
+		                     </group>
+
+		                    <group col="4" attrs="{'invisible':[('product_type_giftcard','!=','ElectronicGiftCard')]}" string="Electronic Gift Cards" colspan="4">
+		             			<field name="color" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+		             			<field name="designname_gift"/>		             		  
+		             		  	<field name="genre_gift"/>
+		             			<field name="isadultproduct_toys_tg"/>
+		             			<field name="occasiontype_gift"/>
+		             			<field name="state_gift"/>
+		             		
+             				</group>
+						</page>
+ -->
+ 					<page string="Computers" attrs="{'invisible':[('product_data','!=','Computers')]}">
+						<form string="Computer Attribtes">
+							<group>
+						  		<separator string="Computer Attribtes"/>
+						  	</group>
+
+							<group>
+								<group>
+									<field name="assembly_required"/> 
+									<field name="manufacturer_warranty_type"/> 
+									<field name="color"/> 
+									<field name="size"/> 
+									<field name="display_length_hi"/> 
+
+									<field name="hand_orientation" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>                
+									<field name="input_device_design_style" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>
+									<field name="keyboard_description" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>
+									<field name="model_number" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>            
+									<field name="voltage_hi" attrs="{'invisible':[('product_type_com','not in',['Keyboards','NetworkingDevice'])]}"/>
+									<field name="wattage_hi" attrs="{'invisible':[('product_type_com','not in',['Keyboards','NetworkingDevice'])]}"/>
+									<field name="wireless_input_device_protocol" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>
+									<field name="wireless_input_device_technology" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>
+
+									<field name="additional_features_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="additional_functionality_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="ipprotocol_standards_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="lanportbandwidth_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="lan_port_number_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="maxdownstreamtransmissionrate_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="maxupstreamtransmissionRate_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="model_number_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="modem_type_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>         
+									<field name="network_adapter_type_type_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="operating_system_compatability_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+								</group>
+
+								<group>     
+									<field name="included_components_ps"/> 
+									<field name="is_portable_ps"/> 
+									<field name="lithiumbatterypackaging_wire"/> 
+									<field name="mfr_warranty_description_parts_hi"/> 
+									<field name="seller_warranty_description_hi"/> 
+
+								 	<field name="securityprotocol_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					              	<field name="simultaneous_sessions_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					              
+					              	<field name="wirelessdatatransferrate_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					                <field name="wirelessroutertransmissionband_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					             	<field name="wirelesstechnology_net" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					          
+									<field name="hasgreyscale_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="lightsourcetype_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxinputsheetcapacity_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxprintresolutionblackwhite_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxprintresolutioncolor_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxprintspeedblackwhite_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxprintspeedcolor_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxscanningsize_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>            
+									<field name="minscanningsize_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printermediasizemaximum_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printeroutputtype_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printerwirelesstype_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printing_media_type_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printingtechnology_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="scanrate_scanner_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="scannerresolution_scanner" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+						  		</group>
+					 		</group>
+					 	</form>
+					</page>
+
+
+
+
+
+
+						<!-- <page string="Computers" attrs="{'invisible':[('product_data','!=','Computers')]}">
+							<group attrs="{'invisible':[('product_type_com','!=','Keyboards')]}" string="KeyBoard Attributes" colspan="4">
+								<group>
+			                        <field name="hand_orientation" />
+			                        <field name="input_device_design_style" />
+			                        <field name="keyboard_description" />
+			                        <field name="model_number" />
+			                    </group>
+			                   	<group>
+			                        <field name="voltage_hi" />
+			                        <field name="wattage_hi" />
+			                        <field name="wireless_input_device_protocol" />
+			                        <field name="wireless_input_device_technology" />
+			                    </group>
+		                    </group>
+
+		                    <group attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}" string="Networking Device" colspan="4">
+		                    	<group>
+			                      <field name="additional_features_net" />
+			                      <field name="additional_functionality_net" />
+			                      <field name="ipprotocol_standards_net" />
+			                      <field name="lanportbandwidth_net" />
+			                      <field name="lan_port_number_net" />
+			                      <field name="maxdownstreamtransmissionrate_net" />
+			                      <field name="maxupstreamtransmissionRate_net" />
+			                      <field name="model_number_net" />
+			                      <field name="modem_type_net" />
+		                      </group>
+		                      <group>
+			                      <field name="network_adapter_type_type_net" />
+			                      <field name="operating_system_compatability_net" />
+			                       <field name="securityprotocol_net" />
+			                      <field name="simultaneous_sessions_net" />
+			                       <field name="voltage_hi" />
+			                      <field name="wattage_hi" />
+			                      <field name="wirelessdatatransferrate_net" />
+			                       <field name="wirelessroutertransmissionband_net" />
+			                      <field name="wirelesstechnology_net" />
+		                      </group>
+		                    </group>
+
+		                    <group attrs="{'invisible':[('product_type_com','!=','Scanner')]}" string="Scanner" colspan="4">
+		                    	<group>
+			                      <field name="hasgreyscale_scanner" />
+			                      <field name="lightsourcetype_scanner" />
+			                      <field name="maxinputsheetcapacity_scanner" />
+			                      <field name="maxprintresolutionblackwhite_scanner" />
+			                      <field name="maxprintresolutioncolor_scanner" />
+			                      <field name="maxprintspeedblackwhite_scanner" />
+			                      <field name="maxprintspeedcolor_scanner" />
+			                      <field name="maxscanningsize_scanner" />
+			                    </group>
+			                    <group>
+			                      <field name="minscanningsize_scanner" />
+			                      <field name="printermediasizemaximum_scanner" />
+			                      <field name="printeroutputtype_scanner" />
+			                      <field name="printerwirelesstype_scanner" />
+			                      <field name="printing_media_type_scanner" />
+			                      <field name="printingtechnology_scanner" />
+			                      <field name="scanrate_scanner_scanner" />
+			                      <field name="scannerresolution_scanner" />
+			                    </group>
+		                    </group>
+
+		                    <group attrs="{'invisible':[('product_type_com','!=','Printer')]}" string="Printer" colspan="4">
+		                      <group>
+			                      <field name="hasgreyscale_printer" />
+			                      <field name="lightsourcetype_printer" />
+			                      <field name="maxinputsheetcapacity_printer" />
+			                      <field name="maxprintresolutionblackwhite_printer" />
+			                      <field name="maxprintresolutioncolor_printer" />
+			                      <field name="maxprintspeedblackwhite_printer" />
+			                      <field name="maxprintspeedcolor_printer" />
+			                      <field name="maxscanningsize_printer" />
+		                      </group>
+		                      <group>
+			                      <field name="minscanningsize_printer" />
+			                      <field name="printermediasizemaximum_printer" />
+			                      <field name="printeroutputtype_printer" />
+			                      <field name="printerwirelesstype_printer" />
+			                      <field name="printing_media_type_printer" />
+			                      <field name="printingtechnology_printer" />
+			                      <field name="scanrate_scanner_printer" />
+			                      <field name="scannerresolution_printer" />
+			                  </group>
+		                    </group>
+
+						</page>
+ -->
+
+
+
+
+<!-- 
+						<page string="Home" attrs="{'invisible':[('product_data','!=','Home')]}">
+							<group col="4" attrs="{'invisible':[('product_type_home','!=','BedAndBath')]}" string="Bed And Bath" colspan="4">
+		             			<field name="identitypackagetype_home"/>
+		             			<field name="isstainresistant_home"/>
+		             			<field name="material_hi"/>
+		             			<field name="shape_home"/>
+		             			
+		             			<field name="stylename_li"/>
+             				</group>
+
+             				<group col="4" attrs="{'invisible':[('product_type_home','!=','FurnitureAndDecor')]}" string="Furniture And Decor" colspan="4">
+		             			<field name="identitypackagetype_home"/>
+		             			<field name="isstainresistant_home"/>
+		             			<field name="material_hi"/>
+		             			<field name="shape_home"/>
+		             		
+		             			<field name="stylename_li"/>
+	             			</group>
+
+	             			<group col="4" attrs="{'invisible':[('product_type_home','!=','Kitchen')]}" string="Kitchen" colspan="4">
+	             				<field name="identitypackagetype_home"/>
+	             				<field name="isstainresistant_home"/>
+	             				<field name="material_hi"/>
+	             				<field name="numberofsets_home"/>
+	             				<field name="shape_home"/>
+	             			
+             				</group>
+
+             				<group col="4" attrs="{'invisible':[('product_type_home','!=','OutdoorLiving')]}" string="Outdoor Living" colspan="4">
+		             			<field name="identitypackagetype_home"/>
+		             			<field name="isstainresistant_home"/>
+		             			<field name="material_hi"/>
+		             			<field name="numberofsets_home"/>
+		             			
+		             			<field name="stylename_li"/>
+         					</group>
+
+         					<group col="4" attrs="{'invisible':[('product_type_home','!=','SeedsAndPlants')]}" string="Seeds And Plant" colspan="4">
+		             			<field name="identitypackagetype_home"/>
+		             			<field name="material_hi"/>
+		             			<field name="moistureneeds_home"/>
+		             			<field name="sunlightexposure_seed"/>
+		             			<field name="sunsetclimatezone_seed"/>
+		             			<field name="hardinesszone_seed"/>
+		             			<field name="size" attrs="{'invisible':[('variation_data','!=','parent')]}"/>
+		             			<field name="color" attrs="{'invisible':[('variation_data','!=','parent')]}"/>
+		             			<field name="stylename_li"/>
+		             			<field name="customer_package_type_hi"/>
+	             			</group>
+
+	             			<group col="4" attrs="{'invisible':[('product_type_home','!=','Art')]}" string="Home Art" colspan="4">
+		             			<field name="identitypackagetype_home"/>
+		             			<field name="isstainresistant_home"/>
+		             			<field name="material_hi"/>
+		             			<field name="paint_type_art"/>
+		             		</group>
+
+		             		<group col="4" attrs="{'invisible':[('product_type_home','!=','Home')]}" string="Home" colspan="4">
+		             			<field name="isstainresistant_home"/>
+		             			<field name="lightsourcetype_home"/>
+		             			<field name="material_hi"/>
+		             			<field name="numberofsets_home"/>	
+		             			<field name="shape_home"/>
+		             			<field name="threadcount_home"/>
+		             			<field name="fabrictype_home"/>
+		             			<field name="specialfeatures_li"/>
+		             			<field name="mattestyle_home"/>
+		             			<field name="itempackagequantity_wire"/>
+		             			<field name="manufacturer_warranty_description_hi"/>
+								<field name="material_hi"/>
+								<field name="numberofpieces_home"/>
+								<field name="warnings_home"/>
+								<field name="length_home"/>
+								<field name="width_home"/>
+								<field name="height_home"/>
+								<field name="depth_home"/>
+								<field name="diameter_home"/>
+								<field name="weight_home"/>
+								<field name="moistureneeds_home"/>
+								<field name="numberofsets_home"/>
+         					</group>
+						</page>
+ -->
+						<page string="Clothing And Accessories" attrs="{'invisible':[('product_data','!=','Clothing')]}">
+							<form string="Clothing Attribtes" >
+								<group attrs="{'invisible':[('product_type_clothingaccessories','!=','ClothingAccessories')]}">
+									<group>
+										<field name="size_tem_map" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="size" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="color"/>
+
+										<field name="department_cloth"/>
+
+										<field name="material_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="furdescription_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="materialopacity_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="fabricwash_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="patternstyle_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="apparelclosuretype_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="occasionandlifestyle_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="stylename_li" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="stylenumber_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										 <field name="department_temp_name" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="collartype_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="sleevetype_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="cufftype_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="pocketdescription_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+										<field name="material_temp_type" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+									</group>
+									<group>
+										<field name="frontpleattype_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="color_temp_map"/>
+
+
+										<field name="cloth_type"  attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+
+
+										<field name="topstyle_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="bottomstyle_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="waistsize_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="inseamlength_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="sleevelength_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="necksize_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="neckstyle_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="chestsize_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="cupsize_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="size" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="underwiretype_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="shoewidth_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="legdiameter_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="legstyle_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="beltstyle_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="straptype_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="toestyle_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="isstainresistant_cloth" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+										<field name="numberofpieces_home" attrs="{'invisible':[('parentage','=','parent'),('variationtheme','!=',''),('attribute_line_ids','!=','[]')]}"/>
+									</group>
+								</group>
+							</form>
+						</page>
+
+						<!-- <page string="CE" attrs="{'invisible':[('product_data','!=','CE')]}">
+
+						    <group attrs="{'invisible':[('product_type_ce','!=','CEBattery')]}" string="CEBattery Attributes" colspan="4">
+			                      <field name="battery_chargecycles" />
+			                      <field name="battery_celltype" />
+			                      <field name="power_plugtype" />
+			                      <field name="power_source" />
+			                      <field name="wattage_hi" />
+			                      <field name="product_sub_type_ce"/>
+		                    </group>
+
+		                    <group attrs="{'invisible':[('product_type_ce','!=','GPSOrNavigationAccessory')]}" string="GPSOrNavigation Accessory" colspan="4">
+		                      <field name="cablelength" />
+		                      <field name="operating_system"/>
+		                      <field name="power_source_gp"/>
+		                      <field name="screen_size"/>
+		                      <field name="total_ethernet_ports" />
+		                      <field name="wireless_type" />
+		                    </group>
+
+		                    <group attrs="{'invisible':[('product_type_ce','!=','HandheldOrPDA')]}" string="Handheld OrPDA" colspan="4">
+		                      <field name="colorscreen_hpda" />
+		                      <field name="hardrivesize_hpda" />
+		                      <field name="memory_slots_available_hpda" />
+		                      <field name="operating_system_hpda" />
+		                      <field name="power_source_hpda" />
+		                      <field name="processor_type_hpda" />
+		                      <field name="processor_speed_hpda" />
+		                      <field name="RAMsize_hpda" />
+		                      <field name="screen_size_hpda" />
+		                      <field name="screen_resolution_hpda" />
+		                      <field name="softwareincluded_hpda" />
+		                      <field name="wirelesstechnology_hpda" />
+		                    </group>
+
+		                    <group attrs="{'invisible':[('product_type_ce','!=','GPSOrNavigationSystem')]}" string="GPSOrNavigation System" colspan="4">
+		                      <field name="battery_cell_type_gp" />
+		                      <field name="battery_charge_cycles_gp" />
+		                      <field name="battery_power_gpnav" />
+		                      <field name="box_contents_gp" />
+		                      <field name="cable_length_gp" />
+		                      <field name="color_screen_gp" />
+		                      <field name="duration_ofmap_service_gp" />
+		                      <field name="operatingsystem_gp" />
+		                      <field name="video_processor_gp" />
+		                      <field name="efficiencys_gp" />
+		                      <field name="finish_typeh_gp" />
+		                      <field name="internet_applications_gp" />
+		                      <field name="memory_slots_available_gp" />
+		                      <field name="power_plug_type_gp" />
+		                      <field name="powersource_gpnav" />
+		                      <field name="processorbrand_gp" />
+		                      <field name="screensize_gp" />
+		                      <field name="remotecontroldescription_gp" />
+		                      <field name="removablememory_gp" />
+		                      <field name="screenresolution_gp" />
+		                      <field name="subscriptiontermnamer_gp" />
+		                      <field name="trafficfeatures_gp" />
+		                      <field name="softwareincluded_gp" />
+		                      <field name="totalethernetports_gp" />
+		                      <field name="totalfirewireports_gp" />
+		                      <field name="totalhdmiports_gp" />
+		                      <field name="totalsvideooutports_gp" />
+		                      <field name="wirelesstechnology_gp" />
+		                      <field name="total_usb_ports_gp" />
+		                      <field name="waypointstype_gp" />
+		                    </group>
+
+		                    <group attrs="{'invisible':[('product_type_ce','!=','Headphones')]}" string="Headphones" colspan="4">
+		                      <field name="amplifiertype_headphone" />
+		                      <field name="battery_celltype_headphone" />
+		                      <field name="batterychargecycles_headphone" />
+		                      <field name="batterypower_headphone" />
+		                      <field name="cable_length_headphone" />
+		                      <field name="control_type_hi" />
+		                      <field name="fittype_headphone" />
+		                      <field name="headphoneearcupmotion_headphone" />
+		                      <field name="noisereductionlevel_headphone" />
+		                      <field name="power_plug_type_headphone" />
+		                      <field name="shape_headphone" />
+		                      <field name="powersource_headphone" />
+		                       <field name="totalcomponentinports_headphone" />
+		                      <field name="wirelesstechnology_headphone" />
+		                    </group>
+						</page> 
+ -->
+
+						<page string="Lighting" attrs="{'invisible':[('product_data','!=','Lighting')]}">
+							<form string="Lighting Attribte">	
+								<group>
+							  		<separator string="Lighting Attributes" />
+							  	</group>
+
+								<group colspan="4">				   
+									<group>
+				                        <field name="color" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+				                        <field name="energy_rating_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+						                <field name="material_hi" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+						             	<field name="powersource_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="specialfeatures_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="specificuses_li" />
+                                        <field name="airflowcapacity_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="basediameter_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                     	<field name="battery_li" attrs="{'invisible':[('product_type_light','=','LightBulbs')]}"/>
+				                      	<field name="bulbdiameter_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                      	<field name="bulblength_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                      	<field name="bulblifespan_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                      	<field name="bulbpowerfactor_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                      	<field name="bulbspecialfeatures_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="bulbswitchingcycles_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="mercury_bulb" attrs="{'invisible':[('product_type_light','!=','LightBulbs')]}"/>
+				                        <field name="bulbwattage_li" attrs="{'invisible':[('product_type_light','!=','LightBulbs')]}"/>
+				                     </group>
+				                     <group>	
+				                        <field name="bulbtype_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="bulbwattage_li"/>
+				                        <field name="captype_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="certification_li" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="inte_rating_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="itemdiameter_li" attrs="{'invisible':[('product_type_light','=','LightBulbs')]}"/>
+				                        <field name="lightingmethod_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="lithium_content_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+
+				                        <field name="lithium_voltage_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+
+				                        <field name="lithium_weight_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="numberofbulbsockets_li" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+
+				                        <field name="plugtype_li" attrs="{'invisible':[('product_type_light','=','LightBulbs')]}"/>
+				                        <field name="voltage_hi" />
+				                        <field name="volume_li"/>
+				                        <field name="wattage_hi"/>
+				                        <field name="switchstyle_li" attrs="{'invisible':[('product_type_light','!=','LightingAccessories')]}"/>
+									</group>	
+								</group>								
+							</form>
+						</page>
+
+
+						
+						<page string="Beauty" attrs="{'invisible':[('product_data','!=','Beauty')]}">
+							<form string="Beauty Attribtes">
+								<group attrs="{'invisible':[('product_type_beauty','!=','BeautyMisc')]}" string="Beauty Attribtes" colspan="4">
+									<group>
+				             			<field name="size" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+				             			<field name="capacity_hi"/>
+				             			<field name="color" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+				             			<field name="scent_beauty"/>
+				             			<field name="pattern_name_beauty"/>
+				             			<field name="unit_count_beauty"/>
+				             			<field name="uom_beauty"/>
+				             			<field name="count_beauty"/>
+				             			<field name="no_of_items_beauty"/>
+				             			<field name="battry_average_life_beauty"/>
+				             			<field name="battry_charge_time_beauty"/>
+				             			<field name="battry_descriptn_beauty"/>
+									</group>
+									<group>
+										<field name="battry_power_beauty"/>
+				             			<field name="skin_type_beauty"/>
+				             			<field name="skin_tone_beauty"/>
+				             			<field name="hair_type_beauty"/>
+				             			<field name="ingredients_beauty"/>
+				             			<field name="mrf_warrant_type_beauty"/>
+				             			<field name="material_type_beauty"/>
+				             			<field name="warnings_home"/>
+				             			<field name="Flavor" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+				             			<field name="is_adult_product_beauty"/>
+				             			<field name="target_gender_beauty"/>
+				             			<field name="seller_warranty_description_hi"/>
+									</group>
+								</group>
+							</form>
+						</page> 
+
+						
+
+					</notebook>
+				</page>
+			</xpath>
+		</field>
+	</record>
+
+	
+	<record id="view_amazon_product_template_filter" model="ir.ui.view">
+		<field name="name">product.template.list</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_search_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='name']" position="after">
+				<filter name="prime_group" string="Prime Product" domain="[('is_prime','=',True)]"/>
+			</xpath>
+		</field>
+	</record>
+
+	<!-- Product Form View -->
+	<record id="view_amazon_product_product_form" model="ir.ui.view">
+		<field name="name">product.amazon.form.inherit</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view" />
+		<field name="arch" type="xml">
+			<!-- <div name="button_box" position="inside">
+				<button class="oe_stat_button" name="action_view_amazon_log"
+				attrs="{'invisible': [('amazon_product_model_count', '=', 0)]}"
+				type="object" icon="fa-usd">
+					<field string="Logs" name="amazon_product_model_count"
+					widget="statinfo" />
+				</button>
+			</div> -->
+
+			<xpath expr="//field[@name='default_code']" position="after">
+				<field name="standard_temp_product" />
+				<field name="parentage" attrs="{'required':[('amazon_export','=',True)]}"/>
+				<field name="amazon_sku"/>
+				<field name="amazon_fba_sku"/>
+				<field name="tmp_asin"  attrs="{'invisible':[('standard_temp_product','!=','ASIN')]}"/>
+				<field name="upc_temp" attrs="{'invisible':[('standard_temp_product','!=','UPC')]}"/>
+				<field name="isbn_temp" attrs="{'invisible':[('standard_temp_product','!=','ISBN')]}"/>
+				<field name="ean_barcode" attrs="{'invisible':[('standard_temp_product','!=','EAN')]}"/>
+				<field name="amazon_afn_sku"/>
+			</xpath>
+
+
+
+
+
+			<!-- <xpath expr="//field[@name='default_code']" position="before">
+			<field name="standard_temp_product" />
+			</xpath> -->
+			<!-- <xpath expr="//field[@name='lst_price']" position="before"> -->
+				<!-- <field name="asin" /> -->
+				<!-- <field name="amazon_sku" invisible="1"/> -->
+				<!-- <field name="amazon_afn_sku"/> -->
+				<!-- <field name="ean_barcode" attrs="{'invisible':[('standard_temp_product','!=','EAN')]}"/> -->
+				<!-- <field name="upc"/> -->
+				<!-- <field name="isbn" attrs="{'invisible':[('standard_temp_product','!=','ISBN')]}"/> -->
+			<!-- </xpath> -->
+
+			<xpath expr="//page[1]" position="after">
+				<!-- <page string="Amazon Information" attrs="{'invisible':[('amazon_product','=',False),('variation_data','=','child')]}"> -->
+				<page string="Amazon Information" attrs="{'invisible':[('amazon_product','=',False),('parentage','=','child')]}">
+					<notebook>
+						<page string="Amazon Attributes">
+							<form string="Product Attribtes">
+								<group col="4">
+									<field name="amazon_categ_id" domain="[('amazon_category','=',True)]"/>
+									<field name="amazon_standard_price" />
+									<field name="amazon_fba_price" />
+									<field name="label" />
+									<field name="is_prime" />
+									<field name="fulfillment_channel" />
+									<field name="product_type_name" />
+									<field name="color" />
+									<!-- <field name="style_name"/> -->
+									<field name="brand_name"/>
+									<field name="studio" />
+									<!-- <field name="variationtheme" string="select VariationTheme"/> -->
+									<field name="amazon_manufacturer" />
+									<!-- <field name="manufacturer_part" /> -->
+									<field name="publisher" />
+									<field name="package_quantity" />
+									<separator colspan="4" string="Product Dimension" />
+									<field name="item_dimension_weight"/>
+									<field name="package_dimension_length"/>
+									<field name="package_dimension_width" />
+									<field name="package_dimension_weight" />
+									<field name="package_dimension_height" />
+									<field name="shipping_weight" />
+									<field name="shipping_weight_uom" />
+									<!-- <separator colspan="4" string="Product Image Dimensions" />
+									<field name="small_image_url" />
+									<field name="small_image_height" />
+									<field name="small_image_width" /> -->
+									<!-- <field name="item_type" attrs="{'required':[('amazon_export','=',True)]}"/> -->
+									<!-- <separator colspan="4" string="Material Type" /> -->
+									<!-- <field name="material_type"/> -->
+								</group>
+
+
+								<!-- <separator colspan="4" string="Product Data" /> -->
+								<group >
+                    			 	<field name="product_data" invisible="1" />
+
+			                        <field name="product_type_auto_accessory" invisible="1" />
+
+			                        <field name="product_type_foodandbeverages" invisible="1"/>
+
+			                        <field name="product_type_health" invisible="1"/>
+
+			                        <field name="product_type_jewelry" invisible="1"/>
+
+			                        <!-- <field name="product_type_miscellaneous" attrs="{'invisible':[('product_data','!=','Miscellaneous')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Miscellaneous')]}"/> -->
+
+			                        <field name="product_type_musicalinstruments" invisible="1"/>
+
+			                        <!-- <field name="product_type_music" attrs="{'invisible':[('product_data','!=','Music')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Music')]}"/> -->
+
+			                        <!-- <field name="product_type_office" attrs="{'invisible':[('product_data','!=','Office')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Office')]}"/> -->
+
+			                        <field name="product_type_petsupplies" invisible="1"/>
+
+			                        <field name="product_type_cameraphoto" invisible="1"/>
+
+			                        
+
+			                        <!-- <field name="product_type_shoes" attrs="{'invisible':[('product_data','!=','Shoes')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Shoes')]}"/> -->
+
+			                        <!-- <field name="product_type_softwarevideoGames" attrs="{'invisible':[('product_data','!=','SWVG')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','SWVG')]}"/> -->
+
+			                        <field name="product_type_sports" invisible="1"/>
+
+			                        <field name="product_type_sportsmemorabilia" invisible="1"/>
+
+			                        <field name="product_type_tiresandwheels" invisible="1"/>
+
+			                        <field name="product_type_tools" invisible="1"/>
+
+			                        <field name="product_type_toys" invisible="1"/>
+
+			                        <!-- <field name="product_type_Video" attrs="{'invisible':[('product_data','!=','Video')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Video')]}"/> -->
+
+			                        <field name="product_type_toys_baby" invisible="1"/>
+
+			                        <field name="product_type_clothingaccessories" invisible="1"/>
+
+			                        <field name="product_type_wirelessaccessories" invisible="1"/>
+
+			                        <!-- <field name="product_type_giftcard" attrs="{'invisible':[('product_data','!=','GiftCards')] ,'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','GiftCards')]}"/> -->
+
+			                        <field name="product_type_com" invisible="1"/>
+
+			                        <!-- <field name="product_type_home" attrs="{'invisible':[('product_data','!=','Home')],'required':[('amazon_product','=',True),('amazon_export','=',True),('product_data','=','Home')]}"/> -->
+
+			                        <field name="product_type_ce" invisible="1"/>
+
+			                        <field name="product_type_light" invisible="1"/>
+
+			                        <field name="product_type_beauty" invisible="1"/>
+
+			                        <field name="product_type_homeimprovement" invisible="1"/>
+
+			                        <field name="product_type_powertransmission" invisible="1"/>
+
+			                        <field name="product_type_rawmaterials" invisible="1"/>
+			                        
+			                        <field name="product_type_gourmet" invisible="1"/>
+
+			                        <field name="product_type_foodserviceandjansan" invisible="1"/>
+
+			                        <field name="product_type_largeappliances" invisible="1"/>
+
+			                        <field name="product_type_labsupplies" invisible="1"/> 
+
+			                    </group>
+							</form>
+						</page>
+
+						<page string="Lab Supply" attrs="{'invisible':[('product_data','!=','LabSupplies')]}">
+						<form string="Lab Supplies Attributes">
+							<group>
+						  		<separator string="Lab Supplies Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="age_range_description_fs_pp"/>
+									<field name="airflowcapacity_li_pp"/>
+									<field name="chamber_width_ls_pp"/>
+									<field name="heated_element_dimensions_pp"/>
+									<field name="heater_surface_material_type_pp"/>
+									<field name="heating_element_type_pp"/>
+
+									<field name="capacity_hi_pp"/>
+									<field name="display_type_tg_pp"/>
+									<field name="extension_length_fs_pp"/>
+								</group>
+								<group>
+									<field name="fuel_type_tg_pp"/>
+									<field name="heat_time_fs_pp"/>
+
+									<field name="chamber_depth_ls_pp" attrs="{'invisible':[('product_type_labsupplies','!=','LabSupply')]}"/>
+									<field name="chamber_height_ls_pp" attrs="{'invisible':[('product_type_labsupplies','!=','LabSupply')]}"/>
+									<field name="coolant_capacity_fs_pp" attrs="{'invisible':[('product_type_labsupplies','!=','LabSupply')]}"/>
+									<field name="coolant_consumption_rate_fs_pp" attrs="{'invisible':[('product_type_labsupplies','!=','LabSupply')]}"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+					<page string="Photo Camera" attrs="{'invisible':[('product_data','!=','CameraPhoto')]}">
+						<form string="Photo Camera Attributes">
+							<group>
+						  		<separator string="Photo Camera Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="country_of_origin_hi_pp"/>
+									<field name="model_name_ps_pp"/>
+									<field name="customer_package_type_hi_pp"/>
+									<field name="can_ship_in_original_container_g_pp"/>
+									<field name="color_pp"/>
+									<field name="color_map_hi_pp"/>
+									<field name="compatible_devices_hi_pp"/>
+									<field name="device_type_hi_pp"/>
+									<field name="display_type_tg_pp"/>
+									<field name="manufacturer_warranty_description_hi_pp"/>
+									<field name="camera_type_cp_pp"/>
+									<field name="has_image_stabilizer_cp_pp"/>
+									<field name="display_technology_cp_pp"/>
+									<field name="manufacturer_cp_pp"/>
+									<field name="model_number_cp_pp"/>
+									<field name="mfr_part_number_cp_pp"/>
+									<field name="auto_focus_technology_cp_pp"/>
+									<field name="film_speed_range_cp_pp"/>
+									<field name="memory_Storage_Capacity_cp_pp"/>
+									<field name="memory_technology_cp_pp"/>
+
+									<field name="film_format_cp_pp"  attrs="{'invisible':[('product_type_cameraphoto','!=','FilmCamera')]}"/>
+									<field name="film_management_features_cp_pp"  attrs="{'invisible':[('product_type_cameraphoto','!=','FilmCamera')]}"/>
+								</group>
+
+								<group>
+									<field name="camera_accessories_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','OtherAccessory')]}"/>
+									<field name="camcorder_accessories_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','OtherAccessory')]}"/>
+
+									<field name="camera_power_supply_type_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','PowerSupply')]}"/>
+
+									<field name="projection_type_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','Projection')]}"/>
+									<field name="projector_lenses_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','Projection')]}"/>
+									<field name="projection_screens_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','Projection')]}"/>
+
+									<field name="storage_and_presentation_materials_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','PhotoStudio')]}"/>
+									<field name="studio_supplies_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','PhotoStudio')]}"/>
+									<field name="photo_backgrounds_cp" attrs="{'invisible':[('product_type_cameraphoto','!=','PhotoStudio')]}"/>
+
+									<field name="meter_type_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','LightMeter')]}"/>
+									<field name="meter_display_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','!=','LightMeter')]}"/>
+
+
+									<field name="night_vision_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','not in',['OtherAccessory','SurveillanceSystem'])]}"/>
+
+									<field name="focus_type_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','not in',['DigitalCamera','FilmCamera','Binocular','Lens'])]}"/>
+
+									<field name="lens_thread_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','not in',['DigitalCamera','FilmCamera'])]}"/>
+
+									<field name="durability_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','not in',['FilmCamera','Camcorder','DigitalCamera','SurveillanceSystem','Filter','OtherAccessory'])]}"/>
+
+									<field name="features_cp_pp" attrs="{'invisible':[('product_type_cameraphoto','not in',['DigitalCamera','FilmCamera','Camcorder','SurveillanceSystem','Binocular','Lens','Microscope','BagCase'])]}"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+					<page string="Gourmet" attrs="{'invisible':[('product_data','!=','Gourmet')]}">
+						<form string="Gourmet Attributes">
+							<group>
+						  		<separator string="Gourmet Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="unit_count_g_pp"/>
+									<field name="item_specialty_g_pp"/>
+									<field name="organic_certification_g_pp"/>
+									<field name="kosher_certification_g_pp"/>
+									<field name="nutritional_facts_g_pp"/>
+									<field name="country_produced_in_g_pp"/>
+									<field name="identity_package_type_g_pp"/>
+									<field name="can_ship_in_original_container_g_pp"/>
+									<field name="customer_package_type_hi_pp"/>
+									<field name="ingredients_beauty_pp"/>
+								</group>
+								<group>
+									<field name="warnings_home_pp"/>
+									<field name="directions_tg_pp"/>
+									<field name="itempackagequantity_wire_pp"/>
+									<field name="number_of_items_hi_pp"/>
+									<field name="display_volume_hi_pp"/>
+									<field name="display_length_hi_pp"/>
+									<field name="display_weight_hi_pp"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+						<page string="Lighting" attrs="{'invisible':[('product_data','!=','Lighting')]}">
+							<form string="Lighting Attribte">	
+								<group>
+							  		<separator string="Lighting Attributes" />
+							  	</group>
+
+								<group colspan="4">				   
+									<group>
+				                        <field name="color_pp" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+				                        <field name="energy_rating_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+						                <field name="material_hi_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+						             	<field name="powersource_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="specialfeatures_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="specificuses_li_pp" />
+                                        <field name="airflowcapacity_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="basediameter_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                     	<field name="battery_li_pp" attrs="{'invisible':[('product_type_light','=','LightBulbs')]}"/>
+				                      	<field name="bulbdiameter_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                      	<field name="bulblength_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                      	<field name="bulblifespan_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                      	<field name="bulbpowerfactor_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                      	<field name="bulbspecialfeatures_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="bulbswitchingcycles_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="mercury_bulb_pp" attrs="{'invisible':[('product_type_light','!=','LightBulbs')]}"/>
+				                        <field name="bulbwattage_li_pp" attrs="{'invisible':[('product_type_light','!=','LightBulbs')]}"/>
+				                     </group>
+				                     <group>	
+				                        <field name="bulbtype_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="bulbwattage_li_pp"/>
+				                        <field name="captype_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="certification_li_pp" attrs="{'invisible':[('product_type_light','=','LightingAccessories')]}"/>
+				                        <field name="inte_rating_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="itemdiameter_li_pp" attrs="{'invisible':[('product_type_light','=','LightBulbs')]}"/>
+				                        <field name="lightingmethod_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="lithium_content_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+
+				                        <field name="lithium_voltage_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+
+				                        <field name="lithium_weight_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+				                        <field name="numberofbulbsockets_li_pp" attrs="{'invisible':[('product_type_light','!=','LightsAndFixtures')]}"/>
+
+				                        <field name="plugtype_li_pp" attrs="{'invisible':[('product_type_light','=','LightBulbs')]}"/>
+				                        <field name="voltage_hi_pp" />
+				                        <field name="volume_li_pp"/>
+				                        <field name="wattage_hi_pp"/>
+				                        <field name="switchstyle_li_pp" attrs="{'invisible':[('product_type_light','!=','LightingAccessories')]}"/>
+									</group>	
+								</group>								
+							</form>
+						</page>
+
+
+					<page string="Power Transmission" attrs="{'invisible':[('product_data','!=','PowerTransmission')]}">
+						<form string="Power Transmission Attributes">
+							<group>
+						  		<separator string="Power Transmission Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="wire_diameter_pt_pp"/>
+									<field name="trade_size_name_pt_pp"/>
+									<field name="strand_type_pt_pp"/>
+									<field name="spring_wind_direction_pt_pp"/>
+									<field name="spring_rate_pt_pp"/>
+									<field name="slide_travel_distance_pt_pp"/>
+									<field name="set_screw_thread_type_pt_pp"/>
+									<field name="outer_ring_width_pt_pp"/>
+									<field name="number_of_teeth_pt_pp"/>
+									<field name="active_coils_pt_pp"/>
+									<field name="axial_misalignment_pt_pp"/>
+									<field name="belt_cross_section_pt_pp"/>
+									<field name="belt_width_pt_pp"/>
+									<field name="body_outside_diameter_pt_pp"/>
+									<field name="compressed_length_pt_pp"/>
+									<field name="deflection_angle_pt_pp"/>
+									<field name="face_width_pt_pp"/>
+									<field name="flange_outside_diameter_pt_pp"/>
+									<field name="flange_thickness_pt_pp"/>
+								</group>
+								<group>
+									<field name="guide_support_type_pt_pp"/>
+									<field name="item_pitch_pt_pp"/>
+									<field name="key_way_depth_pt_pp"/>
+									<field name="key_way_sidth_pt_pp"/>
+									<field name="leg_length_pt_pp"/>
+									<field name="load_capacity_pt_pp"/>
+									<field name="maximum_angular_misalignment_pt_pp"/>
+									<field name="maximum_parallel_misalignment_pt_pp"/>
+									<field name="maximum_rotational_speed_pt_pp"/>
+									<field name="maximum_spring_compression_load_pt_pp"/>
+									<field name="maximum_tension_load_pt_pp"/>
+									<field name="maximum_torque_pt_pp"/>
+									<field name="minimum_spring_Compression_load_pt_pp"/>
+									<field name="number_of_bands_pt_pp"/>
+									<field name="number_of_grooves_pt_pp"/>
+									<field name="itempackagequantity_wire_pp"/>
+									<field name="material_type_tg_pp"/>
+									<field name="number_of_items_hi_pp"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+					<page string="Baby Attributes" attrs="{'invisible':[('product_data','!=','Baby')]}">
+						<form string="Baby Product Attributes">
+							<group>
+						  		<separator string="Baby Product Attribtes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="battery_li_pp"/>
+									<field name="battery_average_life_hi_pp"/>
+									<field name="battery_average_life_standby_hi_pp"/>
+									<field name="battery_capacity_hi_pp"/>
+									<field name="battery_cell_composition_pp"/>
+									<field name="battery_charge_time_hi_pp"/>
+									<field name="care_instructions_tg_pp"/>
+									<field name="chestsize_cloth_pp"/>
+									<field name="color_map_hi_pp"/>
+									<field name="compatible_devices_hi_pp"/>
+									<field name="control_type_hi_pp"/>
+									<field name="fill_material_type_ps_pp"/>
+									<field name="handle_height_tg_pp"/>
+									<field name="includes_ac_adapter_ps_pp"/>
+									<field name="includes_remote_tg_pp"/>
+									<field name="ingredients_beauty_pp"/>
+									<field name="is_assembly_required_tg_pp"/>
+									<field name="is_portable_ps_pp"/>
+									<field name="itemdiameter_li_pp"/>
+									<field name="material_composition_tg_pp"/>
+									<field name="material_type_tg_pp"/>
+									<field name="mfg_warranty_description_parts_ps_pp"/>
+									<field name="mfg_warranty_description_type_ps_pp"/>
+									<field name="power_source_type_tg_pp"/>
+									<field name="remote_control_technology_tg_pp"/>
+									<field name="seat_length_tg_pp"/>
+									<field name="seat_width_tg_pp"/>
+									<field name="seller_warranty_description_hi_pp"/>
+									<field name="specialfeatures_li_pp"/>
+									<field name="suspension_type_tg_pp"/>
+									<field name="targetgender_gift_pp"/>
+									<field name="tire_diameter_tg_pp"/>
+									<field name="tire_material_tg_pp"/>
+									<field name="warranty_description_tg_pp"/>
+									<field name="wheel_type_tg_pp"/>
+									<field name="shade_material_type_hi_pp"/>	
+								</group>
+								<group>
+									<field name="seating_capacity_by_pp"/>
+									<field name="seat_interior_width_by_pp"/>
+									<field name="seat_height_by_pp"/>
+									<field name="seat_back_interior_height_by_pp"/>
+									<field name="safety_warning_by_pp"/>
+									<field name="battery_description_by_pp"/>
+									<field name="battery_power_by_pp"/>
+									<field name="bottle_nipple_type_by_pp"/>
+									<field name="bottle_type_by_pp"/>
+									<field name="carrier_weight_by_pp"/>
+									<field name="car_seat_weight_group_eu_by_pp"/>
+									<field name="color_name_by_pp"/>
+									<field name="folded_size_by_pp"/>
+									<field name="is_dishwasher_safe_by_pp"/>
+									<field name="item_depth_by_pp"/>
+									<field name="manufacturer_warranty_description_hi_pp"/>
+									<field name="material_type_free_by_pp"/>
+									<field name="maximum_anchoring_weight_capacity_by_pp"/>
+									<field name="maximum_height_recommendation_by_pp"/>
+									<field name="minimum_height_recommendation_by_pp"/>
+									<field name="maximum_manufacturer_age_recommended_by_pp"/>
+									<field name="minimum_manufacturer_age_recommended_by_pp"/>
+									<field name="maximum_item_width_by_pp"/>
+									<field name="maximum_range_indoors_by_pp"/>
+									<field name="maximum_range_open_space_by_pp"/>
+									<field name="maximum_weight_recommendation_by_pp"/>
+									<field name="minimum_weight_recommendation_by_pp"/>
+									<field name="operation_mode_by_pp"/>
+									<field name="orientation_by_pp"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+					<page string="Pet Supplies" attrs="{'invisible':[('product_data','!=','PetSupplies')]}">
+						<form string="Pet Supplies Attribtes">
+							<group>
+						  		<separator string="Pet Supplies Attribtes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="Flavor_pp"/>
+									<field name="size_pp"/>
+									<field name="size_map_tg_pp"/>
+									<field name="battery_average_life_hi_pp"/>
+									<field name="battery_average_life_standby_hi_pp"/>
+									<field name="battery_capacity_hi_pp"/>
+									<field name="battery_cell_composition_pp"/>
+									<field name="battery_charge_time_hi_pp"/>
+									<field name="compatible_devices_hi_pp"/>
+									<field name="batterypower_headphone_pp"/>
+									<field name="breed_recommendation_pp"/>
+									<field name="bulblifespan_li_pp"/>
+									<field name="care_instructions_tg_pp"/>
+									<field name="country_of_origin_hi_pp"/>
+									<field name="directions_tg_pp"/>
+									<field name="display_length_hi_pp"/>
+									<field name="display_volume_hi_pp"/>
+									<field name="display_weight_hi_pp"/>
+									<field name="energy_rating_li_pp"/>
+									<field name="eu_energy_label_efficiency_class_hi_pp"/>
+									<field name="includes_remote_tg_pp"/>
+									<field name="ingredients_beauty_pp"/>
+									<field name="is_assembly_required_tg_pp"/>
+									<field name="itemdiameter_li_pp"/>
+									<field name="itemdisplayheight_gift_pp"/>
+									<field name="itemdisplaywidth_gift_pp"/>
+									<field name="itempackagequantity_wire_pp"/>
+									<field name="lithium_content_li_pp"/>
+									<field name="lithiumbatterypackaging_wire_pp"/>
+									<field name="lithium_voltage_li_pp"/>
+									<field name="lithium_weight_li_pp"/>
+									<field name="material_hi_pp"/>
+									<field name="material_composition_tg_pp"/>
+									<field name="number_of_items_hi_pp"/>
+									<field name="number_of_lithium_ion_cells_hi_pp"/>
+									<field name="number_of_lithium_metal_cells_hi_pp"/>
+									<field name="recycled_content_percentage_hi_pp"/>
+									<field name="seller_warranty_description_hi_pp"/>
+									<field name="necksize_cloth_pp"/>
+									<field name="maximum_power_hi_pp"/>
+									<field name="power_source_type_tg_pp"/>
+									<field name="specialfeatures_li_pp"/>
+									<field name="specification_met_tg_pp"/>
+									<field name="targetgender_gift_pp"/>
+									<field name="voltage_hi_pp"/>
+									<field name="wattage_hi_pp"/>
+									<field name="volume_li_pp"/>
+									<field name="warnings_home_pp"/>
+									<field name="weight_recommendation_tg_pp"/>
+									<field name="language_tg_pp"/>
+									<field name="legal_compliance_certification_metadata_hi_pp"/>
+									<field name="legal_compliance_certification_date_of_issue_hi_pp"/>
+									<field name="legal_compliance_certification_expiration_date_hi_pp"/>
+								</group>
+								<group>
+									<field name="breed_recommendation_pp"/>
+									<field name="battery_cell_composition_pp"/>
+									<field name="battery_form_factor_ps_pp"/>
+									<field name="closure_type_ps_pp"/>
+									<field name="contains_food_or_beverage_ps_pp"/>
+									<field name="color_specification_ps_pp"/>
+									<field name="dog_size_ps_pp" />
+									<field name="external_certification_ps_pp"/>
+									<field name="fill_material_type_ps_pp"/>
+									<field name="girth_size_ps_pp"/>
+									<field name="height_recommendation_ps_pp"/>
+									<field name="health_benefits_ps_pp"/>
+									<field name="included_components_ps_pp"/>
+									<field name="includes_ac_adapter_ps_pp"/>
+									<field name="inner_material_type_ps_pp"/>
+									<field name="is_expiration_dated_product_ps"/>
+									<field name="is_portable_ps_pp"/>
+									<field name="item_display_diameter_ps_pp"/>
+									<field name="item_form_ps_pp"/>
+									<field name="item_thickness_ps_pp"/>
+									<field name="light_output_luminance_ps_pp"/>
+									<field name="max_ordering_quantity_ps_pp"/>
+									<field name="maximum_age_recommendation_ps_pp"/>
+									<field name="mfg_warranty_description_labor_ps_pp"/>
+									<field name="mfg_warranty_description_parts_ps_pp"/>
+									<field name="mfg_warranty_description_type_ps_pp"/>
+									<field name="minimum_age_recommendation_ps_pp"/>
+									<field name="nutrition_facts_ps_pp"/>
+									<field name="outer_material_type_ps_pp"/>
+									<field name="pattern_name_ps_pp"/>
+									<field name="pet_life_stage_ps_pp"/>
+									<field name="pet_type_ps_pp"/>
+									<field name="product_feature_ps_pp"/>
+									<field name="product_sample_received_date_ps_pp"/>
+									<field name="recommended_uses_for_product_ps_pp"/>
+									<field name="scent_name_ps_pp"/>
+									<field name="storage_instructions_ps_pp"/>
+									<field name="tank_size_ps_pp"/>
+									<field name="width_size_ps_pp"/>
+									<field name="model_name_ps_pp"/>
+									<field name="material_features_ps_pp"/>
+							  <field name="legal_compliance_certification_regulatory_organization_name_pp"/>
+									<field name="legal_compliance_certification_geographic_jurisdiction_ps_pp"/>
+									<field name="legal_compliance_certification_status_ps_pp"/>
+									<field name="legal_compliance_certification_Value_ps_pp"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+					<page string="Wireless" attrs="{'invisible':[('product_data','!=','Wireless')]}">
+						<form string="Wireless Attribtes">
+							<group>
+						  		<separator string="Wireless Attributes" />
+						  	</group>
+						 
+							<group>
+							  	<group>		
+							  		<field name="battery_type_lithium_ion_hi_pp"/>		
+							  		<field name="battery_type_lithium_metal_hi_pp"/>	
+							  		<field name="lithium_voltage_li_pp"/>	
+							  		<field name="number_of_lithium_ion_cells_hi_pp"/>	
+							  	 </group>
+
+							  	<group>
+							  		<field name="lithium_content_li_pp"/>	
+							  		<field name="lithiumbatterypackaging_wire_pp"/>	
+							  		<field name="lithium_weight_li_pp"/>	
+							  		<field name="number_of_lithium_metal_cells_hi_pp"/>	
+							  	</group>
+							</group>
+
+						<group>
+							<group>
+								<field name="lithiumbatterypackaging_wire_pp"/>
+		             			<field name="additionalfeatures_wire_pp"/>
+		             			<field name="solar_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="refillable_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="extended_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="slim_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<!-- <field name="color" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/> -->
+		             			
+		             			<field name="color_map_hi_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+							</group>
+							<group>
+								<field name="auxiliary_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="batterytype_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="antennatype_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="manufacturername_wire_pp"/>
+		             			<field name="keywords_wire_pp"/>
+		             			<field name="itempackagequantity_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="headsettype_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="headsetstyle_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+
+		             			<field name="manufacturername_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessDownloads')]}"/>
+		             			<field name="additionalfeatures_wire_pp"/>
+		             			<field name="keywords_wire_pp" />
+		             			<field name="applicationversion_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessDownloads')]}"/>
+		             			<field name="power_plug_type_hi_pp"/>
+
+		             			<field name="talk_time_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="standby_time_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="charging_time_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="batterypower_headphone_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="compatible_phone_models_wire_pp"/>
+		             			<field name="prepaid_features_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="phone_type_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="phone_style_wire_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="operatingsystem_gp_pp" attrs="{'invisible':[('product_type_wirelessaccessories','!=','WirelessAccessories')]}"/>
+		             			<field name="power_plug_type_hi_pp"/>		             			
+					  		</group>
+				 		</group>
+				 	</form>
+				    </page>
+
+				    <page string="Large Appliances" attrs="{'invisible':[('product_data','!=','LargeAppliances')]}">
+						<form string="Large Appliances Attributes">
+							<group>
+						  		<separator string="Large Appliances Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="battery_life_la_pp" />
+									<field name="capacity_hi_pp"/>
+									<field name="diameter_home_pp"/>
+									<field name="efficiency_hi_pp"/>
+									<field name="energy_consumption_hi_pp"/>
+
+									<field name="burner_type_la_pp" attrs="{'invisible':[('product_type_largeappliances','!=','CookingOven')]}"/>
+									<field name="drawer_type_la_pp" attrs="{'invisible':[('product_type_largeappliances','!=','CookingOven')]}"/>
+									<field name="fuel_type_tg_pp" attrs="{'invisible':[('product_type_largeappliances','!=','CookingOven')]}"/>
+								</group>
+								<group>
+									<field name="installation_type_la_pp"/>
+									<field name="item_thickness_la_pp"/>
+
+									<field name="included_components_ps_pp"/>
+									<field name="lithiumbatterypackaging_wire_pp"/>
+
+									<field name="racks_la_pp" attrs="{'invisible':[('product_type_largeappliances','not in',['CookingOven','MicrowaveOven'])]}"/>
+
+									<field name="freezer_capacity_la_pp" attrs="{'invisible':[('product_type_largeappliances','!=','RefrigerationAppliance')]}"/>
+
+									<field name="ice_capacity_la_pp" attrs="{'invisible':[('product_type_largeappliances','!=','RefrigerationAppliance')]}"/>
+									
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+
+				    <page string="Toys And games" attrs="{'invisible':[('product_data','!=','Toys')]}">
+						<form string="Toys Attribtes">
+						<group>
+					  		<separator string="Toys Attributes" />
+					  	</group>
+					 
+						<group>
+						  	<group>	
+						  		<field name="assembly_time_tg_pp"/>
+						  		<field name="edition_tg_pp"/>
+						  		<field name="is_assembly_required_tg_pp"/>
+						  		<field name="manufacturer_safety_warning_tg_pp"/>
+						  		<field name="weight_recommendation_tg_pp"/>
+						  		<field name="manufacturer_warranty_description_hi_pp"/>
+						  		<field name="numberofpieces_home_pp"/>
+						  		<field name="assembly_instructions_tg_pp"/>
+						  	</group>
+
+						  	<group>
+						  		<field name="number_of_players_tg_pp"/>
+						  		<field name="part_number_tg_pp"/>
+						  		<field name="size_map_tg_pp"/>
+						  		<field name="subject_character_tg_pp"/>
+						  		<field name="isadultproduct_toys_tg_pp"/>
+						  		<field name="size" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+								<field name="stylename_li_pp"/>
+						  	</group>
+						</group>
+
+						<group>
+							<group>
+
+								<field name="color_pp" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+							    <field name="Flavor_pp" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+
+								<field name="battery_average_life_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="battery_average_life_standby_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}" />
+								<field name="battery_charge_time_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="mfr_warranty_description_labor_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="mfr_warranty_description_parts_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="mfr_warranty_description_type_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="number_of_lithium_ion_cells_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="number_of_lithium_metal_cells_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="seller_warranty_description_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="battery_type_lithium_ion_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="battery_type_lithium_metal_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="display_length_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="display_volume_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="display_weight_hi_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="specialfeatures_li_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="targetgender_gift_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="ingredients_beauty_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+
+								<field name="awards_won_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="color_map_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="directions_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="number_of_control_channels_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="frequency_bands_supported_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="language_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="includes_remote_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="power_source_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="recommended_use_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="remote_control_technology_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="rail_gauge_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="region_of_origin_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="drive_system_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>								
+								<field name="fuel_capacity_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="fuel_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="material_composition_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="care_instructions_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="handle_height_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="seat_length_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="seat_width_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="tire_material_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="tire_diameter_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="style_keywords_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="warranty_description_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="scale_name_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="specification_met_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+								<field name="engine_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames')]}"/>
+							</group>
+							<group>
+
+								<field name="material_type_tg_pp" attrs="{'invisible':[('product_type_toys','=','CollectibleCard')]}"/> 
+								<field name="country_of_origin_hi_pp" attrs="{'invisible':[('product_type_toys','=','CollectibleCard')]}"/> 
+
+							    <field name="control_type_hi_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="specific_uses_for_product_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+
+							    <field name="active_surface_area_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="wing_area_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="collection_name_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="initial_print_run_rarity_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="brake_style_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="drive_system_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    
+							    <field name="frame_material_type_tg_pp" attrs="{'invisible':[('product_type_toys','not in',['ToysAndGames','Hobbies'])]}"/> 
+							    <field name="fuel_capacity_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="fuel_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="maximum_range_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="maximum_speed_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="motor_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="display_size_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="display_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="engine_displacement_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="liquid_volume_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="movement_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="surface_recommendation_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="radio_bands_supported_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="rail_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="scale_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="suspension_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="tire_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="wheel_diameter_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="wheel_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','Hobbies')]}"/> 
+
+
+							    <field name="lithium_content_li_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="lithiumbatterypackaging_wire_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="lithium_voltage_li_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="lithium_weight_li_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="publisher_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="number_of_frequency_channels_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="is_electric_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="animal_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="skill_level_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="toy_award_name_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="publisher_contributor_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="distribution_designation_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+							    <field name="country_string_tg_pp" attrs="{'invisible':[('product_type_toys','!=','ToysAndGames'),('product_type_toys','!=','Hobbies')]}"/> 
+
+							    <field name="collection_tg_pp" attrs="{'invisible':[('product_type_toys','!=','CollectibleCard')]}"/> 
+							    <field name="rarity_tg_pp" attrs="{'invisible':[('product_type_toys','!=','CollectibleCard')]}"/> 
+							    <field name="card_number_tg_pp" attrs="{'invisible':[('product_type_toys','!=','CollectibleCard')]}"/> 
+							    <field name="card_type_tg_pp" attrs="{'invisible':[('product_type_toys','!=','CollectibleCard')]}"/> 
+
+							    <field name="educational_objective_tg_pp" attrs="{'invisible':[('product_type_toys','=','Costume')]}"/>
+							    
+							    <field name="genre_gift_pp" attrs="{'invisible':[('product_type_toys','not in',['Hobbies','CollectibleCard'])]}"/> 
+							    
+					  		</group>
+				 		</group>
+				 	</form>
+				    </page>
+
+
+				    <page string="RawMaterials" attrs="{'invisible':[('product_data','!=','RawMaterials')]}">
+						<form string="Raw Materials Attributes">
+							<group>
+						  		<separator string="Raw Materials Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="country_of_origin_hi_pp"/>
+									<field name="gauge_string_hi_pp"/>
+									<field name="itemdiameter_li_pp"/>
+									<field name="item_thickness_ps_pp"/>
+									<field name="measurement_system_hi_pp"/>
+									<field name="specification_met_tg_pp"/>
+									<field name="wire_diameter_string_rm_pp"/>
+									<field name="void_volume_percentage_rm_pp"/>
+									<field name="upper_temperature_rating_rm_pp"/>
+									<field name="upper_bubbling_pressure_rm_pp"/>
+									<field name="tubing_wall_type_rm_pp"/>
+									<field name="tolerance_held_rm_pp"/>
+									<field name="thread_diameter_string_rm_pp"/>
+									<field name="tensile_strength_rm_pp"/>
+									<field name="standard_construction_rm_pp"/>
+									<field name="slot_width_rm_pp"/>
+									<field name="slot_depth_rm_pp"/>
+									<field name="shim_type_rm_pp"/>
+									<field name="notch_width_rm_pp"/>
+									<field name="notch_depth_rm_pp"/>
+									<field name="metal_construction_type_rm_pp"/>
+									<field name="mesh_opening_size_rm_pp"/>
+									<field name="mesh_openin_shape_rm_pp"/>
+									<field name="mesh_number_rm_pp"/>
+									<field name="mesh_form_rm_pp"/>
+								</group>
+								<group>
+									<field name="mesh_count_rm_pp"/>
+									<field name="maximum_pressure_rm_pp"/>
+									<field name="air_entry_pressure_rm_pp"/>
+									<field name="backing_type_rm_pp"/>
+									<field name="ball_type_rm_pp"/>
+									<field name="compatible_with_tube_gauge_rm_pp"/>
+									<field name="corner_style_rm_pp"/>
+									<field name="disc_diameter_string_rm_pp"/>
+									<field name="durometer_hardness_rm_pp"/>
+									<field name="exterior_finish_rm_pp"/>
+									<field name="foam_structure_rm_pp"/>
+									<field name="grade_rating_rm_pp"/>
+									<field name="hole_count_rm_pp"/>
+									<field name="inside_diameter_string_rm_pp"/>
+									<field name="inside_diameter_tolerance_string_rm_pp"/>
+									<field name="item_diameter_tolerance_string_rm_pp"/>
+									<field name="item_hardness_rm_pp"/>
+									<field name="item_length_tolerance_string_rm_pp"/>
+									<field name="item_shape_rm_pp"/>
+									<field name="item_temper_rm_pp"/>
+									<field name="item_thickness_tolerance_string_rm_pp"/>
+									<field name="item_width_tolerance_string_rm_pp"/>
+									<field name="lower_bubbling_pressure_rm_pp"/>
+									
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+				    <page string="Food Servies And Jan San" attrs="{'invisible':[('product_data','!=','FoodServiceAndJanSan')]}">
+						<form string="Food Servies And Jan San Attributes">
+							<group>
+						  		<separator string="Food Servies And Jan San Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="item_volume_fs_pp"/>
+									<field name="holding_time_fs_pp"/>
+									<field name="heat_time_fs_pp"/>
+									<field name="graduation_range_fs_pp"/>
+									<field name="graduation_interval_fs_pp"/>
+									<field name="extension_length_fs_pp"/>
+									<field name="current_rating_fs_pp"/>
+									<field name="coolant_consumption_rate_fs_pp"/>
+									<field name="coolant_capacity_fs_pp"/>
+									<field name="cap_size_fs_pp"/>
+								</group>
+								<group>
+									<field name="age_range_description_fs_pp"/>
+									<field name="capacity_hi_pp"/>
+									<field name="captype_li_pp"/>
+									<field name="country_of_origin_hi_pp"/>
+									<field name="fuel_type_tg"/>
+									<field name="horsepower_hi_pp"/>
+									<field name="item_depth_by_pp"/>
+									<field name="itemdiameter_li_pp"/>
+									<field name="item_shape_rm_pp"/>
+									<field name="item_thickness_ps_pp"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+
+					<page string="Home Improvements" attrs="{'invisible':[('product_data','!=','HomeImprovement')]}">
+						<form string="Home Improvements Attribtes">	
+							<group>
+						  		<separator string="Home Attributes" />
+						  	</group>		 
+
+							<group>
+							  	<group>							  	
+								  	<field name="battery_average_life_hi_pp" />
+								  	<field name="battery_average_life_standby_hi_pp" />
+								  	<field name="battery_charge_time_hi_pp" />
+								  	<field name="battery_type_lithium_ion_hi_pp" />
+								  	<field name="battery_type_lithium_metal_hi_pp" />
+								  	<field name="country_of_origin_hi_pp" />
+								  	<field name="item_display_area_hi_pp" />
+								  	<field name="lithium_content_li_pp" />
+								  	<field name="lithiumbatterypackaging_wire_pp" />
+								  	<field name="lithium_voltage_li_pp" />
+							  	 </group>
+
+							  	<group>
+							  		<field name="lithium_weight_li_pp" />
+							  		<field name="mfr_warranty_description_labor_hi_pp" />
+							  		<field name="mfr_warranty_description_parts_hi_pp" />
+							  		<field name="mfr_warranty_description_type_hi_pp" />
+							  		<field name="number_of_lithium_ion_cells_hi_pp" />
+							  		<field name="number_of_lithium_metal_cells_hi_pp" />
+							  		<field name="warnings_home_pp"/>
+							  		<field name="fabrictype_home_pp" />
+							  		<field name="import_designation_hi_pp" />
+							  	</group>
+							</group>
+
+							<group>
+								<group>
+									  	<field name="accessory_connection_type_hi_pp" />
+									  	<field name="battery_capacity_hi_pp" />
+									  	<field name="blade_edge_hi_pp" />
+									  	<field name="blade_length_hi_pp" />
+									  	<field name="brightness_hi_pp" />
+									  	<field name="bulb_type_hi_pp"/>
+									  	<field name="center_length_hi_pp" />
+									  	<field name="color_pp" />
+									  	<field name="color_map_hi_pp" />
+									  	<field name="compatible_devices_hi_pp" />
+									  	<field name="compatible_fastener_range_hi_pp" />
+									  	<field name="cooling_method_hi_pp" />
+									  	<field name="cooling_wattage_hi_pp" />
+									  	<field name="corner_radius_hi_pp" />
+									  	<field name="coverage_hi_pp" />
+									  	<field name="cut_type_hi_pp" />
+									  	<field name="cutting_width_hi_pp"/>
+									  	<field name="cutting_diameter_hi_pp" />
+									  	<field name="customer_package_type_hi_pp" />
+									  	<field name="display_diameter_hi_pp"  attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures')]}"/>
+									  	<field name="device_type_hi_pp" />
+									  	<field name="display_style_hi_pp" />
+									  	<field name="energy_consumption_hi_pp" />
+									  	<field name="energy_efficiency_ratio_cooling_hi_pp" />
+									  	<field name="environmental_description_hi_pp" />
+									  	<field name="eu_energy_efficiency_class_heating_hi_pp" />
+									  	<field name="eu_energy_label_efficiency_class_hi_pp" />
+									  	<field name="external_testing_certification_hi_pp" />
+									  	<field name="horsepower_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','in',['PlumbingFixtures','BuildingMaterials'])]}"/>
+									  	<field name="flush_type_hi_pp" />
+									  	<field name="folded_knife_size_hi_pp" />
+									  	<field name="grit_rating_hi_pp" />
+									  	<field name="handle_material_hi_pp" />
+									  	<field name="inside_diameter_hi_pp" />
+									  	<field name="heater_wattage_hi_pp" />
+									  	<field name="laser_beam_color_hi_pp" />
+									  	<field name="maximum_power_hi_pp" />
+									  	<field name="measurement_accuracy_hi_pp" />
+									  	<field name="measurement_system_hi_pp"/>
+									  	<field name="minimum_efficiency_reporting_value_hi_pp" />
+									  	<field name="minimum_age_hi_pp" />
+									  	<field name="number_of_basins_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures')]}"/>
+									  	<field name="number_of_holes_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures')]}"/>
+									  	<field name="number_of_items_hi_pp" />
+									  	<field name="outside_diameter_hi_pp"/>
+									  	<field name="performance_description_hi_pp" />
+									  	<field name="recycled_content_percentage_hi_pp" />
+									  	<field name="speed_hi_pp"/>
+									  	<field name="rough_in_hi_pp"/>
+									  	<field name="size_pp" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+									  	<field name="spout_height_hi_pp" />
+									  	<field name="spout_reach_hi_pp" />
+									  	
+									  	<field name="customer_restriction_type_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','=','Electrical')]}"/>
+
+									  	<field name="thread_size_hi_pp" />
+									  	<field name="tool_tip_description_hi_pp" />
+									  	<field name="torque_hi_pp" />
+									  	<field name="r_value_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','=','BuildingMaterials')]}"/>
+									</group>
+									<group>
+									  	<field name="uv_protection_hi_pp" />
+									  	<field name="viewing_area_hi_pp" />
+									  	
+									  	<field name="head_style_hi_pp"/>
+									  	<field name="material_hi_pp" />
+									  	<field name="display_volume_hi_pp" />
+									  	<field name="display_length_hi_pp" />
+									  	<field name="display_weight_hi_pp" />
+									  	<field name="display_width_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures')]}"/>
+									  	<field name="display_height_hi_pp" />
+									  	<field name="manufacturer_warranty_description_hi_pp" />
+									  	<field name="plug_format_hi_pp" />
+									  	<field name="plug_profile_hi_pp"/>
+									  	<field name="power_source_hi_pp" />
+									  	<field name="seller_warranty_description_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','=','Hardware')]}"/>
+									  	<field name="switch_style_hi_pp" />
+									  	<field name="switch_type_hi_pp" />
+									  	<field name="voltage_hi_pp" />
+									  	<field name="wattage_hi_pp" />
+									  	<field name="base_diameter_hi_pp" />
+									  	<field name="beam_angle_hi_pp" />
+									  	<field name="blade_color_hi_pp" />
+									  	<field name="circuit_breaker_type_hi_pp" />
+									  	<field name="efficiency_hi_pp" />
+									  	<field name="international_protection_rating_hi_pp" />
+									  	<field name="light_source_operating_life_hi_pp" />
+									  	<field name="lighting_method_hi_pp" />
+									  	<field name="maximum_compatible_light_source_wattage_hi_pp" />
+									  	<field name="number_of_blades_hi_pp" />
+									  	<field name="number_of_light_sources_hi_pp" />
+									  	<field name="shade_diameter_hi_pp" />
+									  	<field name="shade_material_type_hi_pp" />
+									  	<field name="short_product_description_hi_pp" />
+									  	<field name="start_up_time_description_hi_pp" />
+									  	<field name="strands_hi_pp" />
+									  	<field name="tubing_outside_Diameter_hi_pp" />
+									  	<field name="legal_compliance_certification_metadata_hi_pp" />
+									  	<field name="legal_compliance_certification_date_of_issue_hi_pp" />
+									  	<field name="legal_compliance_certification_expiration_date_hi_pp" />
+									  	<field name="power_plug_type_hi"  attrs="{'invisible':[('product_type_homeimprovement','=','PlumbingFixtures'),('product_type_homeimprovement','=','BuildingMaterials')]}"/>
+
+									  	<field name="base_width_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="capacity_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="control_type_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="drain_type_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="form_factor_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="gauge_string_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="handle_type_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="input_power_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="mounting_type_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="number_of_settings_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+									  	<field name="roll_quantity_hi_pp" attrs="{'invisible':[('product_type_homeimprovement','!=','PlumbingFixtures')]}"/>
+		             		  		</group>
+		             		</group>	
+		             	</form>						 
+		                </page>
+
+
+
+						<page string="Beauty" attrs="{'invisible':[('product_data','!=','Beauty')]}">
+							<form string="Beauty Attribtes">
+								<group attrs="{'invisible':[('product_type_beauty','!=','BeautyMisc')]}" string="Beauty Attribtes" colspan="4">
+									<group>
+				             			<field name="size_pp" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+				             			<field name="capacity_hi_pp"/>
+				             			<field name="color_pp" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+				             			<field name="scent_beauty_pp"/>
+				             			<field name="pattern_name_beauty_pp"/>
+				             			<field name="unit_count_beauty_pp"/>
+				             			<field name="uom_beauty_pp"/>
+				             			<field name="count_beauty_pp"/>
+				             			<field name="no_of_items_beauty_pp"/>
+				             			<field name="battry_average_life_beauty_pp"/>
+				             			<field name="battry_charge_time_beauty_pp"/>
+				             			<field name="battry_descriptn_beauty_pp"/>
+									</group>
+									<group>
+										<field name="battry_power_beauty_pp"/>
+				             			<field name="skin_type_beauty_pp"/>
+				             			<field name="skin_tone_beauty_pp"/>
+				             			<field name="hair_type_beauty_pp"/>
+				             			<field name="ingredients_beauty_pp"/>
+				             			<field name="mrf_warrant_type_beauty_pp"/>
+				             			<field name="material_type_beauty_pp"/>
+				             			<field name="warnings_home_pp"/>
+				             			<field name="Flavor_pp" attrs="{'invisible':[('parentage','!=','parent')]}"/>
+				             			<field name="isadultproduct_toys_tg"/>
+				             			<field name="target_gender_beauty_pp"/>
+				             			<field name="seller_warranty_description_hi_pp"/>
+									</group>
+								</group>
+							</form>
+						</page> 
+
+
+						<page string="Clothing And Accessories" attrs="{'invisible':[('product_data','!=','Clothing')]}">
+							<form string="Clothing Attribtes" >
+								<group attrs="{'invisible':[('product_type_clothingaccessories','!=','ClothingAccessories')]}">
+									<group>
+										<field name="size_tem_map_pp"/>
+										<field name="size_pp" attrs="{'invisible':['|',('parentage','!=','parent')]}"/>
+										<field name="color_pp" attrs="{'invisible':['|',('parentage','!=','parent')]}"/>
+										<field name="department_cloth_pp"/>
+										<field name="material_cloth_pp"  />
+										<field name="furdescription_cloth_pp"  />
+										<field name="materialopacity_cloth_pp"  />
+										<field name="fabricwash_cloth_pp"  />
+										<field name="patternstyle_cloth_pp"  />
+										<field name="apparelclosuretype_cloth_pp"  />
+										<field name="occasionandlifestyle_cloth_pp"  />
+										<field name="stylename_li_pp"  />
+										<field name="stylenumber_cloth_pp"  />
+										<field name="department_temp_name_pp"  />
+										<field name="collartype_cloth_pp"  />
+										<field name="sleevetype_cloth_pp"  />
+										<field name="cufftype_cloth_pp"  />
+										<field name="pocketdescription_cloth_pp"  />
+										<!-- <field name="material_temp_type" /> -->
+									</group>
+									<group>
+										<field name="frontpleattype_cloth_pp"  />
+										<field name="color_temp_map_pp"/>
+
+										<field name="cloth_type_pp"  attrs="{'required':[('amazon_export','=',True)]}"/>
+
+										<field name="topstyle_cloth_pp"  />
+
+										<field name="bottomstyle_cloth_pp"  />
+										<field name="waistsize_cloth_pp"  />
+										<field name="inseamlength_cloth_pp"  />
+										<field name="sleevelength_cloth_pp"  />
+										<field name="necksize_cloth_pp"  />
+										<field name="neckstyle_cloth_pp"  />
+										<field name="chestsize_cloth_pp"  />
+										<field name="size_pp" attrs="{'invisible':['|',('parentage','!=','parent')]}"/>
+									</group>
+								</group>
+							</form>
+						</page>
+
+					<page string="Computers" attrs="{'invisible':[('product_data','!=','Computers')]}">
+						<form string="Computer Attribtes">
+							<group>
+						  		<separator string="Computer Attribtes"/>
+						  	</group>
+
+							<group>
+								<group>
+									<field name="assembly_required_pp"/> 
+									<field name="manufacturer_warranty_type_pp"/> 
+									<field name="color_pp"/> 
+									<field name="size_pp"/> 
+									<field name="display_length_hi_pp"/> 
+
+									<field name="hand_orientation_pp" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>                
+									<field name="input_device_design_style_pp" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>
+									<field name="keyboard_description_pp" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>
+									<field name="model_number_pp" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>            
+									<field name="voltage_hi_pp" attrs="{'invisible':[('product_type_com','not in',['Keyboards','NetworkingDevice'])]}"/>
+									<field name="wattage_hi_pp" attrs="{'invisible':[('product_type_com','not in',['Keyboards','NetworkingDevice'])]}"/>
+									<field name="wireless_input_device_protocol_pp" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>
+									<field name="wireless_input_device_technology_pp" attrs="{'invisible':[('product_type_com','!=','Keyboards')]}"/>
+
+									<field name="additional_features_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="additional_functionality_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="ipprotocol_standards_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="lanportbandwidth_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="lan_port_number_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="maxdownstreamtransmissionrate_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="maxupstreamtransmissionRate_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="model_number_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="modem_type_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>         
+									<field name="network_adapter_type_type_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+									<field name="operating_system_compatability_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+								</group>
+
+								<group>     
+									<field name="included_components_ps_pp"/> 
+									<field name="is_portable_ps_pp"/> 
+									<field name="lithiumbatterypackaging_wire_pp"/> 
+									<field name="mfr_warranty_description_parts_hi_pp"/> 
+									<field name="seller_warranty_description_hi_pp"/> 
+									
+								 	<field name="securityprotocol_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					              	<field name="simultaneous_sessions_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					              
+					              	<field name="wirelessdatatransferrate_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					                <field name="wirelessroutertransmissionband_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					             	<field name="wirelesstechnology_net_pp" attrs="{'invisible':[('product_type_com','!=','NetworkingDevice')]}"/>
+					          
+									<field name="hasgreyscale_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="lightsourcetype_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxinputsheetcapacity_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxprintresolutionblackwhite_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxprintresolutioncolor_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxprintspeedblackwhite_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxprintspeedcolor_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="maxscanningsize_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>            
+									<field name="minscanningsize_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printermediasizemaximum_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printeroutputtype_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printerwirelesstype_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printing_media_type_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="printingtechnology_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="scanrate_scanner_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+									<field name="scannerresolution_scanner_pp" attrs="{'invisible':[('product_type_com','not in',['Scanner','Printer'])]}"/>
+						  		</group>
+					 		</group>
+					 	</form>
+					</page>
+
+
+				    <page string="Sports" attrs="{'invisible':[('product_data','!=','Sports')]}">
+						<form string="Sports Atributes">
+							<group>
+						  		<separator string="Sports Attributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="model_year_s_pp"/>
+									<field name="customizable_template_name_s_pp"/>
+									<field name="is_customizable_s_pp"/>
+									<field name="grip_size_s_pp"/>
+									<field name="design_s_pp"/>
+									<field name="age_gender_category_s_pp"/>
+									<field name="bike_rim_size_s_pp"/>
+									<field name="boot_size_s_pp"/>
+									<field name="calf_size_s_pp"/>
+								</group>
+								<group>
+									<field name="color_pp"/>
+									<field name="size_pp"/>
+									<field name="customer_package_type_hi_pp"/>
+									<field name="department_cloth_pp"/>
+									<field name="item_thickness_ps_pp"/>
+									<field name="material_hi_pp"/>
+									<field name="number_of_items_hi_pp"/>
+									<field name="isadultproduct_toys_tg_pp"/>
+									<field name="can_ship_in_original_container_g_pp"/>
+									<field name="care_instructions_tg_pp"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+				    <page string="Tools" attrs="{'invisible':[('product_data','!=','Tools')]}">
+						<form string="Tools Atributes">
+							<group>
+						  		<separator string="Tools Atributes" />
+						  	</group>
+							<group>
+								<group>
+									<field name="wattage_hi_pp"/>
+									<field name="voltage_hi_pp"/>
+									<field name="battery_type_lithium_ion_hi_pp"/>
+									<field name="battery_type_lithium_metal_hi_pp"/>
+									<field name="lithium_content_li_pp"/>
+									<field name="lithiumbatterypackaging_wire_pp"/>
+									<field name="lithium_voltage_li_pp"/>
+									<field name="lithium_weight_li_pp"/>
+								</group>
+								<group>
+									<field name="number_of_lithium_ion_cells_hi_pp"/>
+									<field name="number_of_lithium_metal_cells_hi_pp"/>
+									<field name="customer_restriction_type_hi_pp"/>
+									<field name="power_plug_type_hi_pp"/>
+									<field name="power_source_t_pp"/>
+									<field name="number_of_items_inpackage_t_pp"/>
+									<field name="material_hi_pp"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+				     <page string="Sports Memorabilia" attrs="{'invisible':[('product_data','!=','SportsMemorabilia')]}">
+						<form string="Sports Memorabilia Atributes">
+							<group>
+						  		<separator string="Sports Memorabilia Atributes" />
+						  	</group>
+						 
+							<group>
+								<group>
+									<field name="material_hi_pp"/>
+									<field name="numberofpieces_home_pp"/>
+									<field name="unit_count_g_pp"/>
+									<field name="packaging_sm_pp"/>
+									<field name="player_name_sm_pp"/>
+									<field name="authenticated_by_sm_pp"/>
+									<field name="signed_by_sm_pp"/>
+									<field name="autographed_sm_pp"/>
+									<field name="jersey_type_sm_pp"/>
+									<field name="league_name_sm_pp"/>
+								</group>
+								<group>
+									<field name="season_sm_pp"/>
+									<field name="sport_sm_pp"/>
+									<field name="team_name_sm_pp"/>
+									<field name="uniform_number_sm_pp"/>
+									<field name="year_sm_pp"/>
+									<field name="whats_in_the_box_sm_pp"/>
+									<field name="is_very_high_value_sm_pp"/>
+									<field name="game_used_sm_pp"/>
+									<field name="authenticity_certificate_number_sm_pp"/>
+								</group>
+					 		</group>
+					 	</form>
+				    </page>
+
+
+
+
+
+						
+					
+					</notebook>
+				</page>
+			</xpath>
+
+			<xpath expr="//div[@name='options']" position="inside">
+				<div>
+					<field name="amazon_product"/>
+					<label for="amazon_product" />
+					<field name="amazon_export" />
+					<label for="amazon_export" />
+				</div>
+			</xpath>
+
+			<!-- <xpath expr="//field[@name='purchase_ok']" position="after">
+				<div class="oe_left" name="options">
+					<div>
+						<field name="amazon_product"/>
+						<label for="amazon_product" />
+						<field name="amazon_export" />
+						<label for="amazon_export" />
+					</div>
+				</div>
+			</xpath> -->
+
+
+
+
+
+
+
+
+		</field>
+	</record>
+	<record id="view_amazon_product_listing_tree" model="ir.ui.view">
+		<field name="name">amazon.product.listing</field>
+		<field name="model">amazon.product.listing</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Product Amazon Listing">
+				<field name="shop_id" />
+				<field name="name" />
+				<field name="new_lstn" invisible="1" />
+				<field name="title" invisible="1" />
+				<field name="default_code" />
+				<field name="asin" />
+				<field name="listing_id" invisible="1" />
+				<field name="quantity" invisible="1" />
+				<field name="currency_id" />
+				<field name="price" invisible="1" />
+			</tree>
+		</field>
+	</record>
+	<record id="view_product_filter" model="ir.ui.view">
+		<field name="name">product.product.list</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_search_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='name']" position="after">
+				<filter name="prime_group" string="Prime Product" domain="[('is_prime','=',True)]"/>
+				<filter string="Exported Product" name="exported_product"
+				domain="[('amazon_product','=',True),('updated_data','=',True)]" help="Product that has been Exported" />
+				<filter string="Product To Exported" name="draft"
+				domain="[('amazon_product','=',True),('updated_data','!=',True)]" help="Product that has to be Exported" />
+			</xpath>
+		</field>
+	</record>
+	<record id="view_amazon_product_listing_form" model="ir.ui.view">
+		<field name="name">amazon.product.listing</field>
+		<field name="model">amazon.product.listing</field>
+<!--		<field name="context">{'default_new_lstn': True}</field>-->
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Product Amazon Listing">
+				<sheet>
+					<group cols="4">
+						<field name="shop_id"/>
+						<field name="new_lstn" invisible="1" />
+<!--						context="{'new_lstn': True}" -->
+						<field name="name" />
+						<field name="title"/>
+						<field name="default_code" />
+						<field name="fulfillment_by" />
+						<field name="asin"/>
+						<field name="code_type"/>
+						<field name="currency_id"/>
+						<field name="price"/>
+						<field name="quantity"/>
+						<field name="amazon_condition" />
+						<field name="condition"/>
+						<field name="prod_dep"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<!-- <record id="amazon_product_template_tree_view_inherit" model="ir.ui.view">
+	<field name="name">product.product.product.tree</field>
+	<field name="model">product.template</field>
+	<field name="inherit_id" ref="product.product_template_tree_view" />
+	<field name="arch" type="xml">
+	<xpath expr="//field[@name='categ_id']" position="after">
+
+	<field name="small_image_url" />
+	</xpath>
+	</field>
+	</record> -->
+
+	<!-- <record id="product.product_template_action" model="ir.actions.act_window">
+	<field name="name">Products</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">product.template</field>
+	<field name="view_mode">kanban,tree,form</field>
+	<field name="view_type">form</field>
+	<field name="view_id" ref="product.product_template_kanban_view" />
+	<field name="domain">[('amazon_product','=',False)]</field>
+	<field name="context">{"search_default_filter_to_sell":1}</field>
+	</record> -->
+	<record id="amazon_product_template_action" model="ir.actions.act_window">
+		<field name="name">Products</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.template</field>
+		<field name="view_mode">kanban,tree,form</field>
+<!--		<field name="view_type">form</field>-->
+		<field name="view_id" ref="product.product_template_kanban_view" />
+<!--		<field name="context">{"search_default_filter_to_sell":1}</field>-->
+		<field name="domain">[('amazon_product','=',True)]</field>
+	</record>
+	<!--Product Product Views -->
+	<record id="amazon_product_product_action" model="ir.actions.act_window">
+		<field name="name">Product Variants</field>
+		<field name="res_model">product.product</field>
+		<field name="view_mode">tree,kanban,form</field>
+<!--		<field name="view_type">form</field>-->
+		<field name="view_id" ref="product.product_kanban_view" />
+<!--		<field name="context">{"search_default_filter_to_purchase": 1}</field>-->
+		<field name="domain">[('amazon_product','=',True)]</field>
+	</record>
+	<!-- <record id="product_normal_form_view_inherit" model="ir.ui.view">
+		<field name="name">product.product.form</field>
+		<field name="model">product.product</field>
+		<field name="mode">primary</field>
+		<field eval="7" name="priority" />
+		<field name="inherit_id" ref="product.product_normal_form_view" />
+		<field name="arch" type="xml">
+			
+			<form position="attributes">
+				<attribute name="string">Product Variant</attribute>
+			</form>
+			<field name="active" position="after">
+				<field name="default_code" />
+				<field name="qty_override" />
+				<field name="amazon_price_new" />
+				<field name="price_amazon_current" />
+			</field>
+		</field>
+	</record> -->
+	<record id="amazon_product_product_tree_view_inherit_id" model="ir.ui.view">
+		<field name="name">product.product.tree</field>
+		<field name="model">product.product</field>
+		<field name="arch" type="xml">
+			<tree string="Product Variants">
+				<field name="default_code"/>
+				<field name="amazon_product" />
+				<field name="small_image_url"/>
+				<field name="name"/>
+<!--				<field name="attribute_value_ids" widget="many2many_tags" groups="product.group_product_variant"/>-->
+				<field name="lst_price" invisible="1"/>
+				<field name="amazon_price"  string="Amazon Price"/>
+				<field name="uom_id" options="{'no_open': True, 'no_create': True}" groups="product.group_uom"/>
+				<!--                     <field name="barcode"/>
+				-->
+				<field name="product_tmpl_id" invisible="1"/>
+				<field name="active" invisible="1"/>
+			</tree>
+		</field>
+	</record>
+	<record id="amazon_product_template_action_inherit" model="ir.actions.act_window">
+		<field name="name">Products</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.template</field>
+		<field name="view_mode">tree,form,kanban</field>
+<!--		<field name="view_type">form</field>-->
+		<field name="search_view_id" ref="product.product_template_search_view" />
+		<field name="domain">[('amazon_product','=',True)]</field>
+	</record>
+	<record id="amazon_product_normal_action_inherit" model="ir.actions.act_window">
+		<field name="name">Product Variants</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.product</field>
+		<field name="view_mode">tree,form,kanban</field>
+<!--		<field name="view_type">form</field>-->
+		<field name="search_view_id" ref="product.product_search_form_view" />
+		<field name="domain">[('amazon_product','=',True)]</field>
+	</record>
+
+	<!-- <record model="ir.actions.act_window" id="action_amazon_product_view">
+	<field name="name">Amazon Products</field>
+	<field name="res_model">product.product</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">kanban,tree,form</field>
+	<field name="view_id" eval="False" />
+	<field name="domain" eval="[('amazon_product','=',True)]" />
+	<field name="context">{'default_amazon_product':True}</field>
+	</record> -->
+	<!-- Changes -->
+	<!-- <record model="ir.actions.act_window.view" id="action_amazon_product_tree_view">
+	<field name="sequence" eval="1"/>
+	<field name="view_mode">tree</field>
+	<field name="view_id" ref="amazon_product_product_tree_view_inherit_id"/>
+	<field name="act_window_id" ref="action_amazon_product_view"/>
+	</record>
+
+	<record model="ir.actions.act_window.view" id="action_amazon_product_form_view">
+	<field name="sequence" eval="2"/>
+	<field name="view_mode">form</field>
+	<field name="view_id" ref="product_normal_form_view_inherit"/>
+	<field name="act_window_id" ref="action_amazon_product_view"/>
+	</record> -->
+	<record model="ir.actions.act_window" id="action_amazon_product_updated">
+		<field name="name">Products Updated</field>
+		<field name="res_model">product.product</field>
+		<field name="type">ir.actions.act_window</field>
+<!--		<field name="view_type">form</field>-->
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="view_id" eval="False"/>
+		<field name="domain" eval="[('amazon_product','=',True),('update_data','=',True)]"/>
+	</record>
+	<record model="ir.actions.act_window" id="action_amazon_product_ntupdated">
+		<field name="name">Products To Exported</field>
+		<field name="res_model">product.product</field>
+		<field name="type">ir.actions.act_window</field>
+<!--		<field name="view_type">form</field>-->
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="view_id" eval="False" />
+		<field name="domain" eval="[('amazon_product','=',True),('update_data','!=',True)]"/>
+	</record>
+</odoo>
+<!-- old code -->

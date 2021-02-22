@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- Amazon marketplace configuration in odoo -->
+		<record id="amazonerp_view_shop_form" model="ir.ui.view">
+			<field name="name">amazonerp.view.shop.form</field>
+			<field name="model">sale.shop</field>
+			<field name="arch" type="xml">
+				<form string="Warehouse">
+					<sheet>
+
+						<label for="name" class="oe_edit_only" />
+						<h1>
+							<field name="name" />
+						</h1>
+						<group name="market_info">
+							<group name="marketplace_information">
+								<label for="id" string="MarketPlace Information" />
+								<div name="marketplace_infor_div">
+									<div name="amazon_instance_id">
+										<label for="amazon_instance_id" string="MarketPlace ID"
+											style="font-weight: bold;" />
+										<field name="amazon_instance_id" class="oe_inline"
+											attrs="{'readonly': [('amazon_instance_id', '!=', False)]}" />
+									</div>
+									<div name="aws_market_place_id">
+										<label for="aws_market_place_id" string="MarketPlace ID"
+											style="font-weight: bold;" />
+										<field name="aws_market_place_id" class="oe_inline"
+											readonly="1" />
+									</div>
+									<div name="domain">
+										<label for="domain" string="Domain" style="font-weight: bold;" />
+										<field name="domain" class="oe_inline" readonly="1" />
+									</div>
+									<div name="domain_name">
+										<label for="domain_name" string="Domain Name" style="font-weight: bold;" />
+										<field name="domain_name" class="oe_inline" readonly="1" />
+									</div>
+									<div name="res_country">
+										<label for="res_country" string="Country" style="font-weight: bold;" />
+										<field name="res_country" class="oe_inline" readonly="1" />
+									</div>
+									<div name="res_lang">
+										<label for="res_lang" string="Language" style="font-weight: bold;" />
+										<field name="res_lang" class="oe_inline" readonly="1" />
+									</div>
+									<div name="res_currency">
+										<label for="res_currency" string="Currency" style="font-weight: bold;" />
+										<field name="res_currency" class="oe_inline" readonly="1" />
+									</div>
+									<div name="amazon_shop">
+										<label for="amazon_shop" string="Amazon Shop" style="font-weight: bold;" />
+										<field name="amazon_shop" class="oe_inline"
+											attrs="{'readonly': [('amazon_shop', '=', True)]}" />
+									</div>
+									<div name="active_shop">
+										<label for="active_shop" string="Active Amazon Shop" style="font-weight: bold;" />
+										<field name="active_shop" class="oe_inline"/>
+									</div>
+									<div name="amazon_sales_channel">
+										<label for="amazon_sales_channel" string="Amazon Sales Channel" style="font-weight: bold;" />
+										<field name="amazon_sales_channel" required="1" class="oe_inline"/>
+									</div>
+								</div>
+							</group>
+						</group>
+						<separator string="Configuration" />
+						<group name="product_information">
+							<label for="id" string="Products" />
+							<div name="product_information_div">
+								<div name="product_import_condition">
+									<label for="product_import_condition"
+										string="Create New Product if Product not in System while import order"
+										style="font-weight: bold;" />
+									<field name="product_import_condition" class="oe_inline" />
+
+								</div>
+								<!-- <div name="route_ids">
+									<label for="route_ids" string="Routes" style="font-weight: bold;" />
+									<field name="route_ids" required="True" widget="many2many_checkboxes"
+										class="oe_inline" />
+								</div> -->
+								<div name="shipment_fee_product_id">
+									<label for="shipment_fee_product_id" string="Shipment Fee"
+										style="font-weight: bold;" />
+									<field name="shipment_fee_product_id" required="True"
+										class="oe_inline" />
+								</div>
+								<div name="gift_wrapper_fee_product_id">
+									<label for="gift_wrapper_fee_product_id" string="Gift Wrapper Fee"
+										style="font-weight: bold;" />
+									<field name="gift_wrapper_fee_product_id" required="True"
+										class="oe_inline" />
+								</div>
+								<div name="promotion_discount_product_id">
+									<label for="promotion_discount_product_id" string="Promotion Dicount"
+										style="font-weight: bold;" />
+									<field name="promotion_discount_product_id" required="True"
+										class="oe_inline" />
+								</div>
+								<div name="shipment_discount_product_id">
+									<label for="shipment_discount_product_id" string="Shipment Discount"
+										style="font-weight: bold;" />
+									<field name="shipment_discount_product_id" required="True"
+										class="oe_inline" />
+								</div>
+								<div name="last_price_update_date">
+									<label for="last_price_update_date" string="Last Price Update Date" style="font-weight: bold;" />
+									<field name="last_price_update_date" class="oe_inline" />
+								</div>
+								<div name="last_image_update_date">
+									<label for="last_image_update_date" string="Last Images Update Date" style="font-weight: bold;" />
+									<field name="last_image_update_date" class="oe_inline" />
+								</div>
+							</div>
+						</group>
+						<group name="stock_information">
+							<label for="id" string="Stock Configuration" />
+							<div name="stock_configuration_div">
+								<div name="on_fly_update_stock">
+									<label for="on_fly_update_stock"
+										string="Update on Shop at time of Odoo Inventory Change"
+										style="font-weight: bold;" />
+									<field name="on_fly_update_stock" class="oe_inline" />
+								</div>
+								<div name="warehouse_id">
+									<label for="warehouse_id" string="Warehouse" style="font-weight: bold;" />
+									<field name="warehouse_id" required="True" class="oe_inline" />
+								</div>
+								<div name="last_inventory_update_date">
+									<label for="last_inventory_update_date" string="Last Inventory Update Date" style="font-weight: bold;" />
+									<field name="last_inventory_update_date" class="oe_inline" />
+								</div>
+								<div name="afn_warehouse">
+									<label for="afn_warehouse" string="AFN Warehouse" style="font-weight: bold;" />
+									<field name="afn_warehouse" class="oe_inline" />
+								</div>
+								
+							</div>
+						</group>
+						<group name="order_configuration">
+							<label for="id" string="Order Configuration" />
+							<div name="prefix">
+								<div name="prefix">
+									<label for="prefix" string="Prefix" style="font-weight: bold;" />
+									<field name="prefix" required="True" class="oe_inline" />
+								</div>
+								<div name="suffix">
+									<label for="suffix" string="Suffix" style="font-weight: bold;" />
+									<field name="suffix" class="oe_inline" />
+								</div>
+								<div name="partner_id">
+									<label for="partner_id" string="Default Custome(Guest Customer)"
+										style="font-weight: bold;" />
+									<field name="partner_id" required="True" class="oe_inline" />
+								</div>
+								<div name="company_id">
+									<label for="company_id" string="Company" style="font-weight: bold;" />
+									<field name="company_id" required="True" class="oe_inline" />
+								</div>
+								<div name="pricelist_id">
+									<label for="pricelist_id" string="Pricelist" style="font-weight: bold;" />
+									<field name="pricelist_id" required="True" class="oe_inline" />
+								</div>
+								<div name="based_on_odoo_workflow">
+									<label for="based_on_odoo_workflow" style="font-weight: bold;" />
+									<field name="based_on_odoo_workflow" class="oe_inline" option="{'no_edit': True}" />
+								</div>
+								<div name="last_amazon_order_import_date">
+									<label for="last_amazon_order_import_date" style="font-weight: bold;" />
+									<field name="last_amazon_order_import_date" class="oe_inline"/>
+								</div>
+								<div name="amazon_workflow_id" attrs="{'invisible': [('based_on_odoo_workflow', '=', False)]}">
+									<label for="amazon_workflow_id" string="Order Workflow" style="font-weight: bold;" />
+									<field name="amazon_workflow_id" class="oe_inline" option="{'no_edit': True}" attrs="{'required': [('based_on_odoo_workflow', '!=', False)]}" />
+								</div>
+								<div name="amazon_fiscal_pid">
+									<label for="amazon_fiscal_pid" string="Fiscal Postion" style="font-weight: bold;" />
+									<field name="amazon_fiscal_pid" class="oe_inline"/>
+								</div>
+							</div>
+						</group>
+						
+						<group name="settlement_report">
+							<label for="id" string="Settlement Report" />
+							<div name="sync_date">
+								<div name="settlement_report_last_sync_on">
+									<label for="settlement_report_last_sync_on" string="Settlement last Sync Date" style="font-weight: bold;" />
+									<field name="settlement_report_last_sync_on" class="oe_inline" />
+								</div>
+								<div name="settlement_report_journal">
+									<label for="settlement_report_journal_id" string="Settlement Report Journal" style="font-weight: bold;" />
+									<field name="settlement_report_journal_id" class="oe_inline" />
+								</div>
+								<div name="ending_balance_account">
+									<label for="ending_balance_account_id" string="Ending Balance Account" style="font-weight: bold;" />
+									<field name="ending_balance_account_id" class="oe_inline" />
+								</div>
+								<!-- <div name="ending_balance_account">
+									<label for="ending_balance_account_id" string="Ending Balance Account" style="font-weight: bold;" />
+									<field name="ending_balance_account_id" class="oe_inline" />
+								</div> -->
+							</div>
+						</group>
+						
+						<group name="schedular_configuration">
+							<label for="id" string="Schedular Configuration" />
+							<div name="schedular_configuration_div">
+								<div name="auto_import_order">
+									<label for="auto_import_order" string="Auto Import Order"
+										style="font-weight: bold;" />
+									<field name="auto_import_order" class="oe_inline" />
+								</div>
+								<div name="auto_import_products">
+									<label for="auto_import_products" string="Auto Import Products"
+										style="font-weight: bold;" />
+									<field name="auto_import_products" class="oe_inline" />
+								</div>
+								<div name="auto_update_inventory">
+									<label for="auto_update_inventory" string="Auto Update Inventory"
+										style="font-weight: bold;" />
+									<field name="auto_update_inventory" class="oe_inline" />
+								</div>
+								<div name="auto_import_order">
+									<label for="auto_update_order_status" string="Auto Update Order Status"
+										style="font-weight: bold;" />
+									<field name="auto_update_order_status" class="oe_inline" />
+								</div>
+								<div name="auto_update_price">
+									<label for="auto_update_price" string="Auto Update Price"
+										style="font-weight: bold;" />
+									<field name="auto_update_price" class="oe_inline" />
+								</div>
+							</div>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_sale_shop_tree" model="ir.ui.view">
+			<field name="name">sale.shop.tree</field>
+			<field name="model">sale.shop</field>
+			<field name="arch" type="xml">
+				<tree string="Shops">
+					<field name="name" />
+					<field name="partner_id" />
+				</tree>
+			</field>
+		</record>
+		
+		<record id="view_amazon_shop_search" model="ir.ui.view">
+			<field name="name">view.amazon.shop.search</field>
+			<field name="model">sale.shop</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Sale Shop">
+					<field name="name" />
+				</search>
+			</field>
+		</record>
+
+		<record id="act_amazonerp_shop_form" model="ir.actions.act_window">
+			<field name="name">Amazon Shops</field>
+			<field name="res_model">sale.shop</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="view_amazon_shop_search" />
+			<field name="domain">[('amazon_shop', '=', True),('active_shop','=',True)]</field>
+		</record>
+		
+		<record model="ir.actions.act_window.view" id="act_amazonerp_shop_form_view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="amazonerp_view_shop_form"/>
+            <field name="act_window_id" ref="act_amazonerp_shop_form"/>
+        </record>
+        
+        <record model="ir.actions.act_window.view" id="act_amazonerp_shop_tree_view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sale_shop_tree"/>
+            <field name="act_window_id" ref="act_amazonerp_shop_form"/>
+        </record>
+	</data>
+</odoo>

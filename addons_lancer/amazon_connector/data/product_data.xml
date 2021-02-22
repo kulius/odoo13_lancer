@@ -1,0 +1,126 @@
+<odoo>
+	<data noupdate="1">
+
+        <record id="res_customer_guest_customer" model="res.partner">
+            <field name="name">Guest Customer</field>
+       	</record>        
+        
+       	<record id="promotion_discount_product" model="product.product">
+            <field name="name">Promotion Discount</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">1</field>
+            <field name="list_price">1</field>
+            <field name="type">service</field>
+<!--            <field name="uom_id" ref="product.product_uom_hour"/>-->
+<!--            <field name="uom_po_id" ref="product.product_uom_hour"/>-->
+            <field name="description">Promotion Discount</field>
+        </record>
+        
+        <record id="shipment_discount_product" model="product.product">
+            <field name="name">Shipment Discount</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">1</field>
+            <field name="list_price">1</field>
+            <field name="type">service</field>
+<!--            <field name="uom_id" ref="product.product_uom_hour"/>-->
+<!--            <field name="uom_po_id" ref="product.product_uom_hour"/>-->
+            <field name="description">Shipment Discount</field>
+        </record>
+        
+        <record id="shipment_fee_product" model="product.product">
+            <field name="name">Shipping Fee</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">1</field>
+            <field name="list_price">1</field>
+            <field name="type">service</field>
+<!--            <field name="uom_id" ref="product.product_uom_hour"/>-->
+<!--            <field name="uom_po_id" ref="product.product_uom_hour"/>-->
+            <field name="description">Shipping Fee</field>
+        </record>
+        
+        <record id="gift_wrapper_fee_product" model="product.product">
+            <field name="name">Gift Wrapper Fee</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">1</field>
+            <field name="list_price">1</field>
+            <field name="type">service</field>
+<!--            <field name="uom_id" ref="product.product_uom_hour"/>-->
+<!--            <field name="uom_po_id" ref="product.product_uom_hour"/>-->
+            <field name="description">Gift Wrapper Fee</field>
+        </record>
+        
+        <!--Sale Shop's data file for Guest Customer-->
+
+		
+
+    </data>
+</odoo>
+
+
+<!-- ?xml version="1.0" encoding="utf-8"?> -->
+<!-- <AmazonEnvelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!-- 	xsi:noNamespaceSchemaLocation="amzn-envelope.xsd"> -->
+<!-- 	<Header> -->
+<!-- 		<DocumentVersion>1.01</DocumentVersion> -->
+<!-- 		<MerchantIdentifier>AIPVRG2XJ09OT</MerchantIdentifier> -->
+<!-- 	</Header> -->
+<!-- 	<MessageType>Inventory</MessageType> -->
+<!-- 	<Message> -->
+<!-- 		<MessageID>1</MessageID> -->
+<!-- 		<OperationType>Update</OperationType> -->
+<!-- 		<Inventory> -->
+<!-- 			<SKU>BKDS-04256-20</SKU> -->
+<!-- 			<Quantity>10</Quantity> -->
+<!-- 		</Inventory> -->
+<!-- 	</Message> -->
+<!-- </AmazonEnvelope> -->
+
+
+<!-- <?xml version="1.0" encoding="utf-8" ?> -->
+<!-- <AmazonEnvelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!-- 	xsi:noNamespaceSchemaLocation="amznenvelope.xsd"> -->
+<!-- 	<Header> -->
+<!-- 		<DocumentVersion>1.01</DocumentVersion> -->
+<!-- 		<MerchantIdentifier>AIPVRG2XJ09OT</MerchantIdentifier> -->
+<!-- 	</Header> -->
+<!-- 	<MessageType>Inventory</MessageType> -->
+<!-- 	<Message> -->
+<!-- 		<MessageID>1</MessageID> -->
+<!-- 		<OperationType>Update</OperationType> -->
+<!-- 		<Inventory> -->
+<!-- 			<SKU>TGLP1</SKU> -->
+<!-- 			<Quantity>10</Quantity> -->
+<!-- 			<FulfillmentLatency>1</FulfillmentLatency> -->
+<!-- 		</Inventory> -->
+<!-- 	</Message> -->
+<!-- </AmazonEnvelope> -->
+
+
+<!-- <?xml version="1.0" encoding="utf-8"?> -->
+<!-- <AmazonEnvelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!-- 	xsi:noNamespaceSchemaLocation="amzn-envelope.xsd"> -->
+<!-- 	<Header> -->
+<!-- 		<DocumentVersion>1.01</DocumentVersion> -->
+<!-- 		<MerchantIdentifier>M_SELLERON_82825133</MerchantIdentifier> -->
+<!-- 	</Header> -->
+<!-- 	<MessageType>OrderFulfillment</MessageType> -->
+<!-- 	<Message> -->
+<!-- 		<MessageID>1</MessageID> -->
+<!-- 		<OperationType>Update</OperationType> -->
+<!-- 		<OrderFulfillment> -->
+<!-- 			<AmazonOrderID>702-6065737-5691449</AmazonOrderID> -->
+<!-- 			<FulfillmentDate>2016-12-15T09:00:40-00:00</FulfillmentDate> -->
+<!-- 			<FulfillmentData> -->
+<!-- 				<CarrierName>Free</CarrierName> -->
+<!-- 				<ShippingMethod>Free</ShippingMethod> -->
+<!-- 				<ShipperTrackingNumber>23354546456</ShipperTrackingNumber> -->
+<!-- 			</FulfillmentData> -->
+<!-- 			<Item> -->
+<!-- 				<AmazonOrderItemCode>31565403041650</AmazonOrderItemCode> -->
+<!-- 				<Quantity>1</Quantity> -->
+<!-- 			</Item> -->
+<!-- 		</OrderFulfillment> -->
+<!-- 	</Message> -->
+<!-- </AmazonEnvelope> -->
+
+	

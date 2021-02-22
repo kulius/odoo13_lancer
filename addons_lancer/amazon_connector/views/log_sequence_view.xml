@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="amazon_log_sequence_id" model="ir.sequence">
+            <field name="name">Sequence Creation Form</field>
+            <field name="code">amazon.log</field>
+            <field name="prefix">AM_LOG_</field>
+            <field name="padding">5</field>
+        </record>
+    </data>
+</odoo>

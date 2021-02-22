@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<menuitem id="e_commerce" name="Amazon" icon="terp-sale"
+				  web_icon="amazon_connector,static/description/icon.png"
+			sequence="40" />
+<!--		MENU_ITEM action_invoice_refund_invoice_orders COMMENT-->
+		<!-- Settlement Report -->
+		
+		<!-- <menuitem id="new_menu_amazon_settlement" name="Settlements" parent="amazon_connector.e_commerce" sequence="50"/> -->
+		
+
+		<!-- Amazon Dashboard -->
+		<menuitem id="menu_marketplace_dashboard" name="Dashboard"
+			action="open_marketplace_dashboard" parent="amazon_connector.e_commerce" sequence="0" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+
+		<!--Amazon Product Main Menus -->
+		<menuitem id="menu_amazon_product_main_menu" name="Products"
+			parent="amazon_connector.e_commerce" sequence="1"  groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+        
+        <menuitem action="amazon_product_template_action" name="Products" id="menu_amazon_product" parent="menu_amazon_product_main_menu" sequence="1" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+		
+		<menuitem id="menu_product_variant_amazon" name="Product Variants" action="amazon_product_product_action"
+            parent="menu_amazon_product_main_menu" sequence="2" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+		
+		<!--Amazon products child Menus -->
+		<!-- <menuitem id="menusub_amazon_products" name="Products"
+			parent="amazon_connector.menu_amazon_product_main_menu" action='action_amazon_product_view'
+			sequence="0" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/> -->
+		<menuitem id="menusub_amazon_inventory" name="Amazon Inventory"
+			parent="amazon_connector.menu_amazon_product_main_menu" action='action_amazon_inventory_view'
+			sequence="1" />
+		
+		<!-- <menuitem id="menu_manage_listing" name="Manage Listing"
+			parent="amazon_connector.menu_amazon_product_main_menu" action="action_amazon_manage_listing"
+			sequence="2" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/> -->
+		<!--<menuitem id="menu_amazonerp_product_listings" name="Product Listings" 
+			parent="amazon_connector.menu_amazon_product_main_menu"/> -->
+		<menuitem id="menu_amazon_product_category" name="Amazon Categories"
+			parent="amazon_connector.menu_amazon_product_main_menu" action="amazon_action_product_category_action"
+			sequence="3" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+		<!-- <menuitem id="menu_amazon_categoy" name="Amazon Category"
+			parent="amazon_connector.menu_amazon_product_main_menu" sequence="4"
+			 groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager" action="amazon_action_product_category"/> -->
+		<!--Amazon Order Main Menus -->
+		<menuitem id="menu_amazon_order_main_menu" name="Orders"
+			parent="amazon_connector.e_commerce" sequence="2" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+		<menuitem id="menusub_amazon_orders" name="All Orders"
+			parent="amazon_connector.menu_amazon_order_main_menu" action='action_amazon_sale_view'
+			sequence="1" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+		<menuitem id="menusub_orders_cancelled" name="Cancelled Orders" parent="amazon_connector.menu_amazon_order_main_menu" 
+			action='action_amazon_orders_cancel' sequence="2" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+		<menuitem id="menusub_orders_pending" name="Pending orders" parent="amazon_connector.menu_amazon_order_main_menu" action='action_amazon_sale_pending' sequence="3" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+        <menuitem id="menusub_orders_done" name="Completed Orders" parent="amazon_connector.menu_amazon_order_main_menu" action='action_amazon_sale_done' sequence="4" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>    
+
+		<!--Amazon Invoice Main Menus -->
+		<menuitem id="menu_amazon_invoice_main_menu" name="Invoices"
+			parent="amazon_connector.e_commerce" sequence="3" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+<!--		<menuitem id="menusub_amazon_invoices" name="Invoices"-->
+<!--			parent="amazon_connector.menu_amazon_invoice_main_menu" action='action_amazon_invoice_orders'-->
+<!--			sequence="0" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>-->
+<!--		<menuitem id="menusub_amazon_invoices_refund" name="Refund Invoices"-->
+<!--			parent="amazon_connector.menu_amazon_invoice_main_menu" action='action_invoice_refund_invoice_orders'-->
+<!--			sequence="1" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>-->
+
+		<!--Amazon Log Main Menus -->
+		<menuitem id="menu_amazon_log_main_menu" name="Logs"
+			parent="amazon_connector.e_commerce" sequence="4" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+		<menuitem id="menu_amazon_orders_log" name="Amazon Log"
+			parent="amazon_connector.menu_amazon_log_main_menu" action='action_amazon_log_view'
+			sequence="1" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+			
+			
+<!-- 		Sales Activites Analysis
+ -->		<!-- <menuitem id="menu_amazon_analysis_main_menu" name="Analysis"
+			parent="amazon_connector.e_commerce" sequence="6" groups="amazon_connector.group_amazon_user,amazon_connector.group_amazon_configuration_manager"/>
+		<menuitem id="menu_amazon_sale_analysis_main_menu" name="Sale Analysis"
+			parent="amazon_connector.menu_amazon_analysis_main_menu" action='action_amazon_sales_analysis'
+			sequence="1"/> -->
+			
+			<!--&lt;!&ndash;  Amazon Category &ndash;&gt;-->
+			<!--&lt;!&ndash;&ndash;&gt;-->
+			<!--<menuitem id="menu_amazon_sale_analysis_main_menu" name="Sale Analysis"-->
+			<!--parent="amazon_connector.menu_amazon_analysis_main_menu" action='action_amazon_sales_analysis'-->
+			<!--sequence="1"/>-->
+			
+			
+		<!--Amazon Configuration Main Menu -->
+		<menuitem id="menu_amazon_configuration_main_menu" name="Configuration"
+			parent="e_commerce" sequence="7" groups="amazon_connector.group_amazon_configuration_manager"/>
+		<!--Amazon Configuration Child Menus -->
+		<menuitem id="menu_seller_configuration" name="Seller"
+			parent="amazon_connector.menu_amazon_configuration_main_menu" action="action_amazon_instance"
+			sequence="0" groups="amazon_connector.group_amazon_configuration_manager"/>
+		<menuitem id="menu_amazonerp_core_shops" name="MarketPlace"
+			parent="amazon_connector.menu_amazon_configuration_main_menu" action="act_amazonerp_shop_form"
+			sequence="1" groups="amazon_connector.group_amazon_configuration_manager"/>
+		<menuitem id="menu_amazon_order_workflow" name="Order Workflow"
+			parent="amazon_connector.menu_amazon_configuration_main_menu" action="action_amazon_order_workflow"
+			sequence="2" groups="amazon_connector.group_amazon_configuration_manager"/>
+
+		<!-- Display Amazon data in Partner menu of Sale -->
+		<!-- <menuitem id="amazon_shop_menu" name="Amazon Shop" parent="sales_team.menu_base_partner"
+			sequence="2" />
+		<menuitem id="amazon_order_menu" name="Amazon Orders" parent="amazon_shop_menu"
+			action="amazon_action_orders" sequence="2" />
+		<menuitem id="amazon_order_shipping" name="Shipping" parent="amazon_shop_menu"
+			action="amazon_action_picking_tree" sequence="5" />
+
+		<menuitem id="amazon_menu_partner_form" parent="amazon_shop_menu"
+			action="amazon_action_partner_form" sequence="1" />
+
+		<menuitem id="amazon_order_products" name="Product" parent="amazon_shop_menu"
+			action="amazon_product_template_action" sequence="3" />
+		<menuitem id="amazon_order_product_variants" name="Product Variants"
+			parent="amazon_shop_menu" action="amazon_product_normal_action_inherit"
+			sequence="4" /> -->
+
+		<!-- <menuitem id="menu_amazon" name="Amazon" icon="terp-sale" web_icon="images/amazon.png"
+			web_icon_hover="images/amazon-hover.png" parent="e_commerce"/> <menuitem
+			id="menu_amazon_core" name="Core Settings" parent="menu_amazon" /> <menuitem
+			id="menu_amazon_core_instances" name="Amazon Instances" parent="menu_amazon"
+			action="action_amazon_instance" /> <menuitem id="menu_amazonerp_core_shops"
+			name="Amazon Shops" parent="menu_amazon" action="act_amazonerp_shop_form"
+			/> <menuitem id="menu_manage_listing" name="Manage Listing" parent="menu_amazon"
+			action="action_amazon_manage_listing" /> <menuitem id="menu_amazonerp_product_listings"
+			name="Product Listings" parent="menu_amazon"/> <menuitem id="menu_amazon_products"
+			name="Amazon Products" parent="e_commerce" /> <menuitem id="menusub_amazon_products"
+			name="All Amazon Products" parent="menu_amazon_products" action='action_amazon_product_view'/>
+			<menuitem id="menusub_amazon_products_updated" name="Exported Products" parent="menu_amazon_products"
+			action='action_amazon_product_updated'/> <menuitem id="menusub_amazon_products_unupdated"
+			name="Products to Export" parent="menu_amazon_products" action='action_amazon_product_ntupdated'/>
+			<menuitem id="menusub_products_log" name="Amazon Products Log" parent="menu_amazon_products"
+			action='action_amazon_product_log_view'/> <menuitem id="menu_amazon_orders"
+			name="Amazon Orders" parent="e_commerce" /> <menuitem id="menusub_amazon_orders"
+			name="All Amazon orders" parent="menu_amazon_orders" action='action_amazon_sale_view'/>
+			<menuitem id="menusub_orders_pending" name="Pending orders" parent="menu_amazon_orders"
+			action='action_amazon_sale_pending'/> <menuitem id="menusub_orders_done"
+			name="Completed Orders" parent="menu_amazon_orders" action='action_amazon_sale_done'/>
+			<menuitem id="menusub_orders_updated" name="Updated Order Status" parent="menu_amazon_orders"
+			action='action_amazon_updated'/> <menuitem id="menusub_orders_ntupdated"
+			name="Order Status to Update" parent="menu_amazon_orders" action='action_amazon_not_updated'/>
+			<menuitem id="menusub_orders_cancelled" name="Cancelled Orders" parent="menu_amazon_orders"
+			action='action_amazon_orders_cancel'/> <menuitem id="menusub_orders_log"
+			name="Amazon Order Log" parent="menu_amazon_orders" action='action_amazon_order_log_view'/>
+			<menuitem id="menu_amazon_invoices" name="Amazon Invoices" parent="e_commerce"
+			/> <menuitem id="menusub_amazon_invoices" name="Invoices" parent="menu_amazon_invoices"
+			action='action_amazon_invoice_orders'/> <menuitem id="menusub_amazon_invoices_refund"
+			name="Refund Invoices" parent="menu_amazon_invoices" action='action_invoice_refund_invoice_orders'/> -->
+
+		<menuitem id="menu_amazon_settings_erp" name="Amazon Settings"
+			parent="e_commerce" groups="amazon_connector.group_amazon_configuration_manager"/>
+		<!-- <menuitem id="menusub_amazon_warehouse" name="Inventory" parent="menu_amazon_settings_erp" 
+			action='stock.action_warehouse_form'/> <menuitem id="menusub_amazon_company" 
+			name="Company" parent="menu_amazon_settings_erp" action='base.action_res_company_form'/> 
+			<menuitem id="menusub_amazon_language" name="Language" parent="menu_amazon_settings_erp" 
+			action='base.res_lang_act_window'/> -->
+
+		<!-- <menuitem id="menu_amazon_product_active_listings" name="Active Listings" 
+			parent="menu_amazonerp_product_listings" action="action_amazon_instance"/> -->
+
+		<!--<menuitem id="menu_amazon_category_master" name="Amazon Categories" 
+			parent="menu_amazon"/> -->
+
+	</data>
+</odoo>

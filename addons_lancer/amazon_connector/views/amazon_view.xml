@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- Amazon Form -->
+		<record id="amazon_seller_instance_form_view" model="ir.ui.view">
+			<field name="name">amazon.seller.instance.form</field>
+			<field name="model">amazon.seller.instance</field>
+			<field name="arch" type="xml">
+				<form string="Amazon Instance">
+					<header>
+						<button name="marketplace_list" string="List Marketplaces"
+							type="object" attrs="{'invisible': [('marketplace_count', '>', 0)]}" />
+						<!--<button name="marketplace_list" string="List Marketplaces"-->
+							<!--type="object"/>-->
+					</header>
+					<sheet>
+
+								<!-- attrs="{'invisible': [('marketplace_count', '=', 0)]}" -->
+						<div class="oe_button_box" name="button_box">
+							<button name="action_get_market_place" type="object"
+								class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('marketplace_count', '=', 0)]}">
+								<field name="marketplace_count" widget="statinfo" string="MarketPlace"/>
+							</button>
+						</div>
+						<div class="oe_title">
+							<label class="oe_edit_only" for="name" string="Seller" />
+							<h1>
+								<field name="name" placeholder="Seller Name" />
+							</h1>
+							<group><field name="amazon"/></group>
+							
+						</div>
+						<group name="credential" string="Account Credentials" attrs="{'invisible':[('amazon','=',False)]}">
+							<field name="aws_access_key_id" required="1" />
+							<field name="aws_secret_access_key" required="1" />
+							<field name="aws_merchant_id" required="1" />
+							<field name="domain"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_patient_info_tree">
+			<field name="name">amazon.seller.instance.tree</field>
+			<field name="model">amazon.seller.instance</field>
+			<field name="arch" type="xml">
+				<tree string="Amazon Instance">
+					<field name="name" />
+					<field name="aws_access_key_id" />
+					<field name="aws_secret_access_key" />
+					<field name="aws_merchant_id" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Amazon Instance Form,Tree Menu Action -->
+		<record model="ir.actions.act_window" id="action_amazon_instance">
+			<field name="name">Seller</field>
+			<field name="res_model">amazon.seller.instance</field>
+<!--			<field name="type">ir.actions.act_window</field>-->
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_patient_info_tree" />
+			<field name="domain">[('amazon','=',True)]</field>
+			<field name="context">{'amazon': True}</field>
+		</record>
+
+	</data>
+</odoo>

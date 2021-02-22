@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_upload_amazon_all_products" model="ir.ui.view">
+            <field name="name">upload amazon all products</field>
+            <field name="model">upload.amazon.all.products</field>
+            <field name="arch" type="xml">
+                <form string="upload amazon products" >
+                    <group col="4" colspan="4" string="Listing Details">
+                         <field name="shop_ids" widget="many2many_tags" domain="[('amazon_shop','=',True)]"/>
+                         <!-- <field name="bulk_upload"/> -->
+                         <newline/>
+                        <button name="upload_amazon_products" string="1.Upload Amazon Products"  type="object" />
+                        <br></br>
+                        <button name="upload_pricing" string="2.Upload Pricing" type="object" confirm="Are you sure?"/>
+                        <br></br>
+                        <button name="upload_inventory" string="3.Upload Inventory" type="object" confirm="Are you sure?"/>
+                        <br></br>
+                        <button name="update_image" string="4.Update/Add Images"  type="object" confirm="Are you sure?"/>
+                        <br></br>
+                        <button name="upload_zero_inventory" string="5.Upload Zero Inventory" type="object" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Update Amazon Listings"
+            res_model="upload.amazon.all.products"
+            target="new"
+            context="{'search_default_in_location':1}"
+            id="action_view_upload_amazon_products"/>
+        
+    </data>
+</odoo>

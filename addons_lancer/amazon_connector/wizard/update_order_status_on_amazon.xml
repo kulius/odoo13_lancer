@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_update_order_status_on_amazon_wiz" model="ir.ui.view">
+            <field name="name">update.order.status.on.amazon.wiz</field>
+            <field name="model">update.order.status.on.amazon</field>
+            <field name="arch" type="xml">
+                <form string="Update Order Staus on Amazon" >
+                	<footer>
+					<button string="Update" name="update_order_status" type="object"
+						class="btn-primary" />
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Update Order Status on Amazon"
+            res_model="update.order.status.on.amazon"
+            target="new"
+            id="action_update_order_status_on_amazon"/>
+        
+    </data>
+</odoo>

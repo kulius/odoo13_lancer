@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+		<record id="view_stock_inventory_inherit_12" model="ir.ui.view">
+			<field name="name">view_inventory_inherit_12</field>
+			<field name="model">stock.inventory.line</field>
+			<field name="inherit_id" ref="stock.view_inventory_line_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='product_id']" position="after">
+					<field name="amazon_inventory" invisible="1" />
+
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_inventory_form_inherit_1" model="ir.ui.view">
+			<field name="name">view_inventory_form_inherit_1</field>
+			<field name="model">stock.inventory</field>
+			<field name="inherit_id" ref="stock.view_inventory_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="sale_id" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_inventory_line_tree_inherit_1" model="ir.ui.view">
+			<field name="name">view_inventory_line_inherit_11</field>
+			<field name="model">stock.inventory</field>
+			<field name="inherit_id" ref="stock.view_inventory_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="after">
+					<field name='product_qty' />
+					<field name='asin_value' />
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="view_search_inventory_inherit_1" model="ir.ui.view">
+			<field name="name">stock.inventory.filter.inherit1</field>
+			<field name="model">stock.inventory</field>
+			<field name="inherit_id" ref="stock.view_inventory_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="asin_value" />
+				</xpath>
+				<xpath expr="//group" position="inside">
+					<filter string="Product Name" icon="terp-stock-effects-object-colorize"
+						domain="[]" context="{'group_by':'name'}" />
+				</xpath>
+
+			</field>
+		</record>
+
+		<record id="view_stock_inherit_1" model="ir.ui.view">
+			<field name="name">view.stock.inherit.1</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_out_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='origin']" position="after">
+					<field name="fullfilment_shop" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_stock_tree_inherit_5" model="ir.ui.view">
+			<field name="name">view.stock.tree.inherit.5</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_out_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='partner_id']" position="after">
+					<field name="fullfilment_shop" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_stock_search_filter_inherit111" model="ir.ui.view">
+			<field name="name">stock.search.filter.inherit111</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_out_search" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="fullfilment_shop" />
+					<filter string="Fullfillment By Merchant" domain="[('fullfilment_shop','=','MFN')]"
+						help="MFN Orders" icon="terp-personal" name="merchant_sale_orders_filter" />
+					<filter string="Fullfillment By Amazon" domain="[('fullfilment_shop','=','AFN')]"
+						help="AFN Orders" icon="terp-personal" name="amazon_sale_orders_filter" />
+
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

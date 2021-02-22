@@ -1,0 +1,118 @@
+<odoo>
+	<record id="view_import_amazon_connector_wizard_form_view" model="ir.ui.view">
+		<field name="name">view.import.amazon.connector.wizard.form.view</field>
+		<field name="model">amazon.connector.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Import">
+				<group name="shops" string="Shops">
+					<field name="shop_ids" readonly="1" domain="[('amazon_shop', '=', True)]"
+						widget="many2many_tags" options="{'no_create': True, 'no_edit': True, 'no_open': True}" />
+				</group>
+				<group name="operations">
+					<group name="import" string="Import"
+						invisible="context.get('from_export', False) or context.get('from_update', False)">
+						<field name="import_browsenode" string="Import Category"/>
+						<field name="import_products"/>
+						<field name="last_date_of_product_import" attrs="{'invisible':[('import_products','=',False)]}"/>
+						<field name="import_inventory"/>
+						<field name="import_FBA_inventory"/>
+						<field name="import_orders"/>
+						<field name="last_amazon_order_import_date" attrs="{'invisible':[('import_orders','=',False)]}"/>
+					</group>
+					<group name="export" string="Update"
+						invisible="context.get('from_import', False) or context.get('from_export', False)">
+						<field name="update_inventory"/>
+						<field name="update_price"/>
+						<field name="update_image"/>
+						<field name="update_order_status"/>
+					</group>
+				</group>
+				<group name="operations">
+					<group name="Export" string="export"
+						invisible="context.get('from_import', False) or context.get('from_update', False)">
+						<field name="export_product" />
+					</group>
+					<group>
+					</group>
+				</group>
+				<footer>
+					<button string="Run" name="import_amazon" type="object"
+						class="btn-primary" />
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+<record id="action_amazon_operation" model="ir.actions.act_window">
+		<field name="name">Amazon Operation</field>
+<!--		<field name="type">ir.actions.act_window</field>-->
+		<field name="res_model">amazon.connector.wizard</field>
+<!--		<field name="view_type">form</field>-->
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_import_amazon_connector_wizard_form_view" />
+		<field name="target">new</field>
+
+	</record>
+
+<!--	<record model="ir.default" id="amazonerp_operation_shop">-->
+<!--		<field name="object" eval="1" />-->
+<!--		<field name="name">Amazon operation</field>-->
+<!--		<field name="key2">client_action_multi</field>-->
+<!--		<field name="value"-->
+<!--			eval="'ir.actions.act_window,' + str(ref('action_amazon_operation'))" />-->
+<!--		<field name="key">action</field>-->
+<!--		<field name="model">sale.shop</field>-->
+<!--	</record>-->
+
+        
+<!--        <act_window id="action_amazon_operation"-->
+<!--           name="Create Amazon Shop"-->
+<!--           res_model="amazon.connector.wizard"-->
+<!--           target="new"/>  -->
+
+<record id="view_import_amazon_pricelist_wizard_form_view" model="ir.ui.view">
+		<field name="name">view.import.amazon.pricelist.wizard.form.view</field>
+		<field name="model">amazon.pricelist.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Pricelist">
+				<group name="shops" string="Shops">
+					<field name="wiz_shop_ids" widget="many2many_tags"/>
+				</group>
+				<footer>
+					<button string="Run" name="get_pricelist_product" type="object"
+						class="btn-primary" />
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	
+      <act_window id="action_amazon_pricelist"
+         name="Create Amazon Shop"
+         res_model="amazon.pricelist.wizard"
+         target="new"/>  
+	
+<!-- 	<record id="action_amazon_pricelist" model="ir.actions.act_window">
+		<field name="name">Amazon Pricelist</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">amazon.pricelist.wizard</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_import_amazon_pricelist_wizard_form_view" />
+		<field name="target">new</field>
+		
+	</record>
+	
+	<record model="ir.values" id="amazon_pricelist_shop">
+		<field name="object" eval="1" />
+		<field name="name">Amazon Pricelist operation</field>
+		<field name="key2">client_action_multi</field>
+		<field name="value"
+			eval="'ir.actions.act_window,' + str(ref('action_amazon_pricelist'))" />
+		<field name="key">action</field>
+		<field name="model">product.pricelist</field>
+	</record>
+ -->	
+	
+</odoo>

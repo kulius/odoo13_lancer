@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+<!--		<record id="view_invoice_inherit_1" model="ir.ui.view">-->
+<!--			<field name="name">view.invoice.inherit.1</field>-->
+<!--			<field name="model">account.invoice</field>-->
+<!--			<field name="inherit_id" ref="account.invoice_form" />-->
+<!--			<field name="arch" type="xml">-->
+<!--				<xpath expr="//tree/field[@name='price_unit']" position="after">-->
+<!--					<field name="new_tax_amount" invisible="1"/>-->
+<!--				</xpath>-->
+<!--				<xpath-->
+<!--					expr="//field[@name='invoice_line']/tree/field[@name='price_unit']"-->
+<!--					position="attributes">-->
+<!--					<attribute name="string">Item Price</attribute>-->
+<!--				</xpath>-->
+<!--				<xpath-->
+<!--					expr="//field[@name='invoice_line']/tree/field[@name='price_unit']"-->
+<!--					position="after">-->
+<!--					<field name='shipping_price' />-->
+<!--					<field name="gift_cost" />-->
+<!--				</xpath> -->
+
+<!--			</field>-->
+<!--		</record>-->
+
+
+		<!-- <record id="view_invoice_tree_inherit_1" model="ir.ui.view">
+			<field name="name">view.invoice.tree.inherit.1</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='partner_id']" position="after">
+					<field name="fullfilment_shop" />
+				</xpath>
+			</field>
+		</record> -->
+
+		<!-- <record id="view_account_invoice_filter_inherit111" model="ir.ui.view">
+			<field name="name">account.invoice.filter.inherit111</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.view_account_invoice_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='number']" position="after">
+					<field name="fullfilment_shop" />
+					<filter string="Fullfillment By Merchant" domain="[('fullfilment_shop','=','MFN')]"
+						help="MFN Orders" icon="terp-personal" name="merchant_sale_orders_filter" />
+					<filter string="Fullfillment By Amazon" domain="[('fullfilment_shop','=','AFN')]"
+						help="AFN Orders" icon="terp-personal" name="amazon_sale_orders_filter" />
+
+				</xpath>
+			</field>
+		</record> -->
+		<record id="view_tax_form_amazon" model="ir.ui.view">
+            <field name="name">account.tax.form.amazon</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='amount_type']" position="after">
+                    <field name="amazon_country_id"/>
+                    <field name="amazon_state_id"/>
+                </xpath>
+            </field>
+        </record>
+
+	</data>
+</odoo>

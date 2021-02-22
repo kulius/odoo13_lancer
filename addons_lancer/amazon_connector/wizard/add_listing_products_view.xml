@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="form_view_add_listing_products" model="ir.ui.view">
+            <field name="name">form.view.add.listing.products</field>
+            <field name="model">add.listing.products</field>
+            <field name="arch" type="xml">
+                <form string="Add Products" version="7.0">
+                    <group>
+                        <field name="supplier_id" domain="[('supplier','=',True)]"/>
+                    </group>
+                    <field name="act_list_id" invisible="1" />
+                    <field name="listing_ids" context="{'supplier_id': supplier_id, 'list_id' : act_list_id}">
+                    </field>
+                    <footer>
+                    <button name="select" type="object" string="Add" />
+                    or
+                    <button special="cancel" string="_Cancel" icon="gtk-cancel"/>
+                </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_add_listing" model="ir.actions.act_window">
+            <field name="name">Add Products</field>
+<!--            <field name="type">ir.actions.act_window</field>-->
+            <field name="res_model">add.listing.products</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            
+        </record>
+
+    </data>
+</odoo>

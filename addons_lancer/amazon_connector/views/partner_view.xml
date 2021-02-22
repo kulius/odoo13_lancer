@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+<!--		VIEW_TYPE COMMENT-->
+		<record id="view_partner_form_amazon_site" model="ir.ui.view">
+			<field name="name">view.partner.from.amazon.site</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//notebook" position="inside">
+					<page string="Amazon Information">
+						<group>
+							<field name="amazon_customer" invisible="1" />
+						</group>
+						<separator string="Amazon Shops" colspan="4" />
+						<field colspan="4" name="amazon_shop_ids" nolabel="1"
+							widget="one2many_list">
+							<tree string="Amazon Shops">
+								<field name="name" />
+							</tree>
+						</field>
+
+					</page>
+				</xpath>
+			</field>
+		</record>
+		<record id="base.action_partner_form" model="ir.actions.act_window">
+			<field name="name">Customers</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">kanban,tree,form</field>
+<!--			<field name="domain">[('amazon_customer', '=', False)]</field>-->
+			<field name="context">{"search_default_customer":1}</field>
+			<field name="search_view_id" ref="base.view_res_partner_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to add a contact in your address book.
+				</p>
+				<p>
+					Odoo helps you easily track all activities related to
+					a customer; discussions, history of business opportunities,
+					documents, etc.
+				</p>
+			</field>
+		</record>
+		<record id="amazon_action_partner_form" model="ir.actions.act_window">
+			<field name="name">Customers</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">kanban,tree,form</field>
+<!--			<field name="domain">[('amazon_customer', '=', True)]</field>-->
+			<field name="context">{"search_default_customer":1}</field>
+			<field name="search_view_id" ref="base.view_res_partner_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to add a contact in your address book.
+				</p>
+				<p>
+					Odoo helps you easily track all activities related to
+					a customer; discussions, history of business opportunities,
+					documents, etc.
+				</p>
+			</field>
+		</record>
+		<record id="amazon_action_partner_form_view1" model="ir.actions.act_window.view">
+			<field eval="0" name="sequence" />
+			<field name="view_mode">kanban</field>
+			<field name="view_id" ref="base.res_partner_kanban_view" />
+<!--			<field name="domain">[('amazon_customer', '=', True)]</field>-->
+			<field name="act_window_id" ref="amazon_action_partner_form" />
+		</record>
+		<record id="amazon_action_partner_form_view2" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="base.view_partner_form" />
+<!--			<field name="domain">[('amazon_customer', '=', True)]</field>-->
+			<field name="act_window_id" ref="amazon_action_partner_form" />
+		</record>
+		<record id="amazon_action_partner_tree_view1" model="ir.actions.act_window.view">
+			<field name="sequence" eval="1" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="base.view_partner_tree" />
+<!--			<field name="domain">[('amazon_customer', '=', True)]</field>-->
+			<field name="act_window_id" ref="amazon_action_partner_form" />
+		</record>
+
+	</data>
+</odoo>

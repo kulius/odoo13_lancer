@@ -1,0 +1,166 @@
+<odoo>
+
+	<!--Amazon MarketPlace Dashboard -->
+	<record id="amazon_market_place_dashboard_kanban" model="ir.ui.view">
+		<field name="name">amazon.market.place.dashboard.kanban</field>
+		<field name="model">sale.shop</field>
+		<field name="arch" type="xml">
+			<kanban create="false"
+				class="oe_background_grey o_kanban_dashboard o_salesteam_kanban">
+				<field name="id" />
+				<field name="name"/>
+				<field name="amazon_kanban_dashboard"/>
+				<field name="amazon_instance_id" />
+				<templates>
+					<t t-name="kanban-box">
+						<div t-attf-class="#{kanban_color(0)}">
+							<t t-value="JSON.parse(record.amazon_kanban_dashboard.raw_value)" t-set="dashboard"/>
+							<t t-value="dashboard.id" t-set="sid"/>
+							<div class="o_kanban_card_header">
+								<div class="o_kanban_card_header_title">
+									<div class="o_primary">
+										<field name="name" />
+									</div>
+									<div class="o_secondary">
+										<field name="amazon_instance_id" />
+									</div>
+								</div>
+								<!-- <div class="o_kanban_manage_button_section">
+									<a class="o_kanban_manage_toggle_button" href="#">
+										More
+										<i class="fa fa-caret-down" />
+									</a>
+								</div> -->
+							</div>
+							<div class="container o_kanban_card_content o_visible">
+								<div class="row">
+									<div class="col-xs-6 o_kanban_primary_left">
+										<button class="btn btn-primary" name="%(amazon_connector.action_amazon_operation)d"
+											type="action" context="{'from_import': True}">Import</button>
+										<button class="btn btn-primary" name="%(amazon_connector.action_amazon_operation)d"
+											type="action" context="{'from_update': True}">Update</button>
+										<button class="btn btn-primary" name="%(amazon_connector.action_amazon_operation)d"
+											type="action" context="{'from_export': True}">Export</button>
+									</div>
+									<div class="col-xs-6 o_kanban_primary_right">
+									</div>
+								</div>
+							</div>
+							<div class="container o_kanban_card_manage_pane o_visible">
+								<div class="row">
+									<div
+										class="col-xs-4 o_kanban_card_manage_section o_kanban_manage_view">
+										<div class="o_kanban_card_manage_title">
+											<span>Orders</span>
+										</div>
+										<div t-if="dashboard.all_order" class="row">
+											 <div class="col-xs-9">
+                                                    <a type="object" name="action_view_order"> All Order</a>
+                                               </div>
+                                               <div class="col-xs-3 text-right">
+                                                   <t t-esc="dashboard.all_order"/>
+                                               </div>
+										</div>	
+										
+										<div t-if="dashboard.pending_order" class="row">
+											<div class="col-xs-9">
+                                                    <a type="object" name="action_amazon_pending_order"> Pending Order</a>
+                                               </div>
+                                               <div class="col-xs-3 text-right">
+                                                   <t t-esc="dashboard.pending_order"/>
+                                               </div>
+										</div>
+										<div t-if="dashboard.complete_order" class="row">
+											<div class="col-xs-9">
+                                                    <a type="object" name="action_amazon_complete_order"> Completed Order</a>
+                                               </div>
+                                               <div class="col-xs-3 text-right">
+                                                   <t t-esc="dashboard.complete_order"/>
+                                               </div>
+										</div>
+										<div t-if="dashboard.cancel_order" class="row">
+											<div class="col-xs-9">
+                                                    <a type="object" name="action_view_cance_order"> Cancelled Order</a>
+                                               </div>
+                                               <div class="col-xs-3 text-right">
+                                                   <t t-esc="dashboard.cancel_order"/>
+                                               </div>
+											
+										</div>
+									</div>
+									<div
+										class="col-xs-4 o_kanban_card_manage_section o_kanban_manage_new">
+										<div class="o_kanban_card_manage_title" >
+											<span>Products</span>
+										</div>
+										<div t-if="dashboard.all_product" class="row">
+											<div class="col-xs-9">
+                                                    <a type="object" name="action_view_all_product"> All Products</a>
+                                               </div>
+                                               <div class="col-xs-3 text-right">
+                                                   <t t-esc="dashboard.all_product"/>
+                                               </div>
+											
+										</div>
+										<div t-if="dashboard.exported_product" class="row">
+											<div class="col-xs-9">
+                                                    <a type="object" name="action_view_product_exported"> Exported Products</a>
+                                               </div>
+                                               <div class="col-xs-3 text-right">
+                                                   <t t-esc="dashboard.exported_product"/>
+                                               </div>
+											
+										</div>
+										<div t-if="dashboard.to_exported_product" class="row">
+											<div class="col-xs-9">
+                                                    <a type="object" name="action_view_product_tobe_exported"> Products To Export</a>
+                                               </div>
+                                               <div class="col-xs-3 text-right">
+                                                   <t t-esc="dashboard.to_exported_product"/>
+                                               </div>
+                      
+										</div>	
+									</div>
+									<div class="col-xs-4 o_kanban_card_manage_section o_kanban_manage_reports">
+										<div class="o_kanban_card_manage_title">
+											<span>Invoice</span>
+										</div>
+										<div t-if="dashboard.all_invoice">
+											<div class="col-xs-9">
+												<a type="object" name="action_view_all_amazon_invoices">Invoices</a>
+											</div>
+											<div class="col-xs-3">
+												<t t-esc="dashboard.all_invoice"/>
+											</div>
+										</div>
+										<div t-if="dashboard.all_refund">
+											<div class="col-xs-9">
+												<a type="object" name="action_view_refund_invoice">Refund Invoices</a>
+											</div>
+											<div class="col-xs-3">
+												<t t-esc="dashboard.all_refund"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</t>
+				</templates>
+			</kanban>
+		</field>
+	</record>
+
+	<record id="open_marketplace_dashboard" model="ir.actions.act_window">
+		<field name="name">MarketPlace Dashboard</field>
+		<field name="res_model">sale.shop</field>
+<!--		<field name="view_type">form</field>-->
+		<field name="view_mode">kanban,form</field>
+		<field name="usage">menu</field>
+		<field name="context">{'search_default_dashboard':1}</field>
+		<field name="domain">[('amazon_instance_id.amazon','=',True),('active_shop','=',True)]</field>
+	</record>
+
+</odoo>
+
+

@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sequence_reset_period
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"X-Generator: Poedit 2.2.1\n"
+"Last-Translator: \n"
+"Language: zh_TW\n"
+
+#. module: sequence_reset_period
+#: selection:ir.sequence,range_reset:0
+msgid "Daily"
+msgstr "每天"
+
+#. module: sequence_reset_period
+#: selection:ir.sequence,range_reset:0
+msgid "Monthly"
+msgstr "每月"
+
+#. module: sequence_reset_period
+#: model:ir.model.fields,field_description:sequence_reset_period.field_ir_sequence__range_reset
+msgid "Range Reset"
+msgstr "時間區間編碼重置"
+
+#. module: sequence_reset_period
+#: selection:ir.sequence,range_reset:0
+msgid "Weekly"
+msgstr "每週"
+
+#. module: sequence_reset_period
+#: selection:ir.sequence,range_reset:0
+msgid "Yearly"
+msgstr "每年"
+
+#. module: sequence_reset_period
+#: model:ir.model,name:sequence_reset_period.model_ir_sequence
+msgid "ir.sequence"
+msgstr "ir.sequence"

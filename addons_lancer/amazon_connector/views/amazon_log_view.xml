@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="view_amazon_log_form" model="ir.ui.view">
+			<field name="name">amazon.log</field>
+			<field name="model">amazon.log</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Amazon Log" create='false'>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<!-- <field name="res_id" /> -->
+								<field name="marketplace_id" />
+							</group>
+							<group>
+								<field name="res_model_id" />
+								<field name="log_type" />
+							</group>
+							<group>
+								<field name="create_date" />
+								<field name="description"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="view_amazon_log_tree" model="ir.ui.view">
+			<field name="name">amazon.log</field>
+			<field name="model">amazon.log</field>
+			<field name="arch" type="xml">
+				<tree string="Amazon Log" create='false'>
+					<field name="create_date" />
+					<field name="name" />
+					<field name="description"/>
+					<!-- <field name="res_id" /> -->
+					<field name="res_model_id" />
+					<field name="marketplace_id" />
+					<field name="log_type" />
+					
+				</tree>
+			</field>
+		</record>
+
+		<!--<record id="view_amzon_log_filter" model="ir.ui.view">-->
+			<!--<field name="name">view.amzon.log.filter</field>-->
+			<!--<field name="model">amazon.log</field>-->
+			<!--<field name="arch" type="xml">-->
+				<!--<search string="Search amazon log">-->
+					<!--<field name="name" />-->
+					<!--<field name="description" />-->
+					<!--<field name="res_model_id" />-->
+					<!--<field name="marketplace_id" />-->
+					<!--<field name="log_type" />-->
+					<!--<separator />-->
+					<!--<filter string="Log Description" name="name" />-->
+					<!--<filter string="Model" name="res_model_id" />-->
+					<!--<separator />-->
+					<!--<filter name="marketplace_id" string="Marketplace ID" />-->
+					<!--<filter string="Type" name="log_type" />-->
+					<!--<group expand="0" string="Group By">-->
+						<!--<filter string="Sequence" domain="[]"-->
+							<!--context="{'group_by':'name'}" />-->
+						<!--<filter string="Marketplace ID"-->
+							<!--domain="[]" context="{'group_by':'marketplace_id'}" />-->
+						<!--<filter string="Model" domain="[]"-->
+							<!--context="{'group_by':'res_model_id'}" /> -->
+						<!--<filter string="Type" domain="[]"-->
+							<!--context="{'group_by':'log_type'}" /> -->
+					<!--</group>-->
+				<!--</search>-->
+			<!--</field>-->
+		<!--</record>-->
+
+		<record model="ir.actions.act_window" id="action_amazon_log_view">
+			<field name="name">Amazon Log</field>
+			<field name="res_model">amazon.log</field>
+			<field name="type">ir.actions.act_window</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">kanban,tree,form</field>
+			<field name="view_id" eval="view_amazon_log_tree" />
+		</record>
+
+		
+
+	</data>
+</odoo>
+	

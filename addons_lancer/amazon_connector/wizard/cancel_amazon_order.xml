@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_cancel_amazon_orders" model="ir.ui.view">
+            <field name="name">cancel.uploaded.amazon.orders</field>
+            <field name="model">cancel.uploaded.amazon.orders</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Orders" >
+                    <group col="4" colspan="4" string="Listing Details">
+                         <field name="reason" help="Reason For Cancelling The Order/s On Amazon"/>
+                         <newline/>
+                         <footer>
+                        	<button name="cancel_amazon_orders" string="Cancel Amazon Orders"  type="object" icon="gtk-apply"/>
+                        	 or
+                    		<button special="cancel" string="Exit" icon="gtk-cancel"/>
+                    	</footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+         <act_window name="Cancel Orders in Amazon"
+            res_model="cancel.uploaded.amazon.orders"
+            target="new"
+            context="{'search_default_in_location':1}"
+            id="action_view_cancel_amazon_orderss"/>
+        
+    </data>
+</odoo>

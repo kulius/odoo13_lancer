@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+			
+        <record id="view_sale_Amazon_form" model="ir.ui.view">
+            <field name="name">view_shipping_info</field>
+            <field name="model">sale.amazon</field>
+            <field name="arch" type="xml">
+                <form string="Shipping" version="7.0">
+                    <group >
+                    	<field name="partner_id"/>
+                     <field name="address_line1"/>
+       				<field name="address_line2"/>
+       				<field name="city"/>
+       				<field name="state"/>
+       				<field name="postal_code"/>
+       				<field name="country_code"/>
+                    </group>
+                     <notebook>
+                        <page string="Order Lines" >
+                            <field name="order_line1">
+                                <tree>
+                                    	<field name="seller_sku"/>
+       							<field name="quantity"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                   <field name="seller_sku"/>
+       							<field name="quantity"/>
+                                    </group>
+                                   
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="create_inbound_shipment" string="Shipment" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer> 
+                </form>
+            </field>
+        </record>
+        <act_window id="action_view_ship_order"
+                    name="Product Shipping Information"
+                    res_model="sale.amazon"
+                    target="new"/>
+			
+			
+    </data>
+</odoo>
+
+

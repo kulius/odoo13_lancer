@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- Amazon Category views -->
+		<record id="amazon_product_category_from_view" model="ir.ui.view">
+			<field name="name">amazon.category.from.view</field>
+			<field name="model">amazon.category</field>
+			<field name="arch" type="xml">
+				<form string="Category">
+				<sheet>
+				<div class="oe_title">
+						<label for="name" string="Category name" class="oe_edit_only" />
+						<h1>
+							<field name="name" placeholder="eg. Tricycle" />
+						</h1>
+					</div>
+					<group name="first" col="2" string="Category Type">
+						<field name="parent_id" domain="[('amazon_category', '=', True)]" />
+					</group>
+					<group name="Amazon Information">
+						<field name="amazon_category" readonly="4"></field>
+						<field name="amazon_cat_id" readonly="4" attrs="{'invisible':[('amazon_category','=',False)]}"></field>
+					</group>
+					<group name="shops" string="Shops">
+						<field name="shop_ids" nolabel="1" colspan="4"/>
+					</group>
+				</sheet>
+ 					</form>
+			</field>
+		</record>
+
+		<!-- <record id="amazon_product_category_tree_view" model="ir.ui.view">
+			<field name="name">amazon.category.tree.view</field>
+			<field name="model">amazon.category</field>
+			<field name="arch" type="xml">
+				<tree string="Category">
+					<field name="display_name" />
+					<field name="amazon_category" />
+					<field name="amazon_cat_id"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="amazon_product_category_search_view" model="ir.ui.view">
+			<field name="name">amazon.category.search.view</field>
+			<field name="model">amazon.category</field>
+			<field name="arch" type="xml">
+				<search string="Category">
+					<field name="name"/>
+				</search>
+			</field>
+		</record>
+ -->
+		<!-- <record model="ir.actions.act_window" id="amazon_action_product_category">
+			<field name="name">Amazon Category</field>
+			<field name="res_model">amazon.category</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('amazon_category', '=', True)]</field>
+			<field name="search_view_id"
+				ref="amazon_connector.amazon_product_category_search_view" />
+		</record> -->
+
+	<!-- 	<record model="ir.actions.act_window.view" id="amazon_action_product_category_tree_view">
+			<field name="sequence" eval="1" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="amazon_connector.amazon_product_category_tree_view" />
+			<field name="act_window_id"
+				ref="amazon_connector.amazon_action_product_category_action" />
+		</record>
+
+		<record model="ir.actions.act_window.view" id="amazon_action_product_category_form_view">
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="amazon_connector.amazon_product_category_from_view" />
+ 	</record> -->
+	</data>
+</odoo>
+
