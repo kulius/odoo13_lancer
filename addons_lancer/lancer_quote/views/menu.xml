@@ -1,46 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<data>
-		<menuitem id="lancer_quote" name="義成報價系統" icon="terp-sale"
-				  web_icon="lancer_quote,static/description/icon.png" groups="lancer_quote.group_lancer_base_user"
-			sequence="0" />
+    <data>
+        <menuitem id="lancer_quote" name="義成報價系統" icon="terp-sale"
+                  web_icon="lancer_quote,static/description/icon.png" groups="lancer_quote.group_lancer_base_user"
+                  sequence="0"/>
 
-		<!--客戶基本資料維護 -->
-		<menuitem id="menu_lancer_partner_main_menu" name="客戶"
-			parent="lancer_quote.lancer_quote" sequence="1"/>
+        <!-- 基本資料 -->
+        <menuitem id="menu_lancer_base_main_menu" name="基本資料設定"
+                  parent="lancer_quote.lancer_quote" sequence="1"/>
+        <!--客戶基本資料維護 -->
+        <menuitem id="menu_lancer_partner_main_menu" name="客戶" action="base.action_partner_customer_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="1"/>
+        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="員工"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="2"/>
 
 
-		<!--產品基本資料維護 -->
-		<menuitem id="menu_lancer_product_main_menu" name="產品"
-			parent="lancer_quote.lancer_quote" sequence="2"/>
+        <!--產品基本資料維護 -->
+        <menuitem id="menu_lancer_product_main_menu" name="產品"
+                  parent="lancer_quote.lancer_quote" sequence="2"/>
 
-			<menuitem id="menu_lancer_product_menu" name="產品"
-				parent="menu_lancer_product_main_menu" sequence="1"
-				/>
+        <menuitem id="menu_lancer_product_menu" name="產品"
+                  parent="menu_lancer_product_main_menu" sequence="1"
+        />
 
-			<menuitem id="menu_lancer_product_category_menu" name="產品類別"
-				parent="menu_lancer_product_main_menu" sequence="2"
-				/>
+        <menuitem id="menu_lancer_product_category_menu" name="產品類別"
+                  parent="menu_lancer_product_main_menu" sequence="2"
+        />
 
-		<!--報價 -->
-		<menuitem id="menu_lancer_quote_main_menu" name="報價"
-			parent="lancer_quote.lancer_quote" sequence="3"/>
+        <!--報價 -->
+        <menuitem id="menu_lancer_quote_main_menu" name="報價"
+                  parent="lancer_quote.lancer_quote" sequence="3"/>
 
-			<menuitem id="menu_lancer_quote_menu" name="細項報價"
-				parent="menu_lancer_quote_main_menu" sequence="1"
-				/>
+        <menuitem id="menu_lancer_quote_menu" name="細項報價"
+                  parent="menu_lancer_quote_main_menu" sequence="1"
+        />
 
-			<menuitem id="menu_lancer_quote_fast_menu" name="快速報價"
-				parent="menu_lancer_quote_main_menu" sequence="2"
-				/>
+        <menuitem id="menu_lancer_quote_fast_menu" name="快速報價"
+                  parent="menu_lancer_quote_main_menu" sequence="2"
+        />
 
-		<!-- 報價單基本資料維護 -->
-			<menuitem id="menu_lancer_quote_main_menu" name="報價基本資料設定"
-			parent="lancer_quote.lancer_quote" sequence="4"/>
-			<menuitem action="action_lancer_payment_term_form" name="付款條件"
-            id="menu_lancer_payment_term" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="1"/>
+        <!-- 報價單基本資料維護 -->
+        <menuitem id="menu_lancer_quote_main_menu" name="報價基本資料設定"
+                  parent="lancer_quote.lancer_quote" sequence="3"/>
+        <menuitem action="action_lancer_payment_term_form" name="付款條件"
+                  id="menu_lancer_payment_term" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="1"/>
 
-			<menuitem action="action_lancer_incoterms_tree" id="menu_action_lancer_incoterm_open" name="貿易條件"
+        <menuitem action="action_lancer_incoterms_tree" id="menu_action_lancer_incoterm_open" name="貿易條件"
                   parent="lancer_quote.menu_lancer_quote_main_menu" sequence="2"/>
-	</data>
+
+        <!-- 外購基本資料維護 -->
+        <menuitem id="menu_lancer_quote_subcontract_main_menu" name="外購基本資料設定"
+                  parent="lancer_quote.lancer_quote" sequence="4" groups="lancer_quote.group_lancer_base_user"/>
+        <menuitem id="menu_lancer_partner_supplier_main_menu" name="供應商" action="base.action_partner_supplier_form"
+                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="1" groups="lancer_quote.group_lancer_base_user"/>
+        <menuitem id="menu_lancer_subcontract_category_main_menu" name="品項分類" action="lancer_quote.action_lancer_subcontract_category_form"
+                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="lancer_quote.group_lancer_base_user"/>
+        <menuitem id="menu_lancer_subcontract_material_main_menu" name="材質" action="lancer_quote.action_lancer_subcontract_material_form"
+                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="lancer_quote.group_lancer_base_user"/>
+        <menuitem id="menu_lancer_subcontract_treatment_main_menu" name="表面處理" action="lancer_quote.action_lancer_subcontract_treatment_form"
+                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="lancer_quote.group_lancer_base_user"/>
+
+
+        <!-- 包裝基本資料維護 -->
+        <menuitem id="menu_lancer_quote_package_main_menu" name="包裝基本資料設定"
+                  parent="lancer_quote.lancer_quote" sequence="5"/>
+        <menuitem action="action_lancer_package_setting_form" name="包裝材料項目"
+                  id="menu_lancer_package_setting" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="1"/>
+        <menuitem action="action_lancer_package_expense_form" name="包裝費用項目"
+                  id="menu_lancer_package_expense" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="2"/>
+
+
+
+
+    </data>
 </odoo>
