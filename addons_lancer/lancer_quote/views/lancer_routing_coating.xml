@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="lancer_routing_coating_view_search" model="ir.ui.view">
+            <field name="name">lancer.routing.coating.search</field>
+            <field name="model">lancer.routing.coating</field>
+            <field name="arch" type="xml">
+                <search string="製程鍍層">
+                    <field name="name"/>
+                    <field name="active"/>
+                    <separator/>
+                    <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_lancer_routing_coating_tree" model="ir.ui.view">
+            <field name="name">lancer.routing.coating.tree</field>
+            <field name="model">lancer.routing.coating</field>
+            <field name="arch" type="xml">
+                <tree string="製程鍍層設定">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_lancer_routing_coating_form" model="ir.ui.view">
+            <field name="name">lancer.routing.coating.form</field>
+            <field name="model">lancer.routing.coating</field>
+            <field name="arch" type="xml">
+                <form string="製程鍍層設定">
+                    <sheet>
+                        <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <group>
+                            <group>
+                                <field name="active" invisible="1"/>
+                                <field name="name"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_lancer_routing_coating_form" model="ir.actions.act_window">
+            <field name="name">製程鍍層設定</field>
+            <field name="res_model">lancer.routing.coating</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="lancer_routing_coating_view_search"/>
+        </record>
+
+
+    </data>
+</odoo>
