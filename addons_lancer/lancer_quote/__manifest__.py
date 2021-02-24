@@ -28,6 +28,7 @@
         'views/lancer_routing_wages.xml',
         'views/lancer_routing_material.xml',
         'views/lancer_product.xml',
+        'views/lancer_quote.xml',
         'views/menu.xml',
     ],
     "active": False,

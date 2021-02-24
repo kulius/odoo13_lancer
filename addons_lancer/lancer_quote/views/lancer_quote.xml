@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="lancer_quote_view_search" model="ir.ui.view">
+            <field name="name">lancer.quote.search</field>
+            <field name="model">lancer.quote</field>
+            <field name="arch" type="xml">
+                <search string="報價單">
+                    <field name="name"/>
+                    <field name="active"/>
+                    <separator/>
+                    <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_lancer_quote_tree" model="ir.ui.view">
+            <field name="name">lancer.quote.tree</field>
+            <field name="model">lancer.quote</field>
+            <field name="arch" type="xml">
+                <tree string="報價單">
+                    <field name="name"/>
+                    <field name="parnter_id"/>
+                    <field name="product_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_lancer_quote_form" model="ir.ui.view">
+            <field name="name">lancer.quote.form</field>
+            <field name="model">lancer.quote</field>
+            <field name="arch" type="xml">
+                <form string="報價單">
+                    <sheet>
+                        <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+
+                        <group col="6">
+                            <field name="name"/>
+                            <field name="version"/>
+                            <field name="user_id"/>
+                            <field name="parnter_id"/>
+                            <field name="product_id"/>
+                            <field name="create_date" />
+                        </group>
+                        <notebook>
+                            <page string="報價內容">
+                                <group col="6">
+                                    <field name="main_count"/>
+                                    <field name="subcontract_count"/>
+                                    <field name="active" invisible="1"/>
+                                </group>
+                                <group col="6">
+                                    <field name="routing_amount"/>
+                                    <field name="subcontract_amount"/>
+                                    <field name="package_amount"/>
+                                </group>
+                            </page>
+                            <page string="報價條件">
+                                <group col="6">
+                                    <field name="payment_term_id"/>
+                                    <field name="moq"/>
+                                    <field name="shipping_term_id"/>
+                                    <field name="delivery_before"/>
+                                    <field name="quote_validdate"/>
+                                    <field name="mov"/>
+                                </group>
+                            </page>
+                            <page string="其他費用條件">
+                                <group col="6">
+                                    <field name="certification_amount"/>
+                                    <field name="customs_rate"/>
+                                    <field name="exchange_rate"/>
+                                    <field name="test_amount"/>
+                                    <field name="certificate_amount"/>
+                                </group>
+                            </page>
+                        </notebook>
+
+                        <notebook>
+                            <page string="自製">
+                                <field name="quote_lines" widget="one2many">
+                                    <tree string="自製明細"  editable="bottom" >
+                                        <field name="sequence" />
+                                        <field name="main_category_id" />
+                                        <field name="name" />
+                                        <field name="material_amount" />
+                                        <field name="work_amount" />
+                                        <field name="factory_amount" />
+                                        <field name="total_amount" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="外購">
+                                <field name="subcontract_ids">
+                                    <tree string="外購明細" editable="bottom">
+                                        <field name="sequence" />
+                                        <field name="partner_id" />
+                                        <field name="subcontract_category_id" />
+                                        <field name="name" />
+                                        <field name="partno" />
+                                        <field name="material_id" />
+                                        <field name="treatment_id" />
+                                        <field name="handle_amount" />
+                                        <field name="subcontract_amount" />
+                                        <field name="build_amount" />
+                                        <field name="cost_amount" />
+                                        <field name="mould_amount" />
+                                        <field name="manage_rate" />
+                                        <field name="profit_rate" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="包裝">
+                                <field name="package_ids">
+                                    <tree string="包裝明細" editable="bottom">
+                                        <field name="package_setting_id" />
+                                        <field name="quant" />
+                                        <field name="amount" />
+                                        <field name="mould_amount" />
+                                        <field name="name" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="其餘費用">
+                                <field name="expense_ids">
+                                    <tree string="費用明細" editable="bottom">
+                                        <field name="package_expense_id" />
+                                        <field name="quant" />
+                                        <field name="amount" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_lancer_quote_form" model="ir.actions.act_window">
+            <field name="name">報價單</field>
+            <field name="res_model">lancer.quote</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="lancer_quote_view_search"/>
+        </record>
+
+
+    </data>
+</odoo>

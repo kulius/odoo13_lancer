@@ -1,4 +1,15 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_lancer_quote_user,lancer.quote,model_lancer_quote,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_quote_manage,lancer.quote,model_lancer_quote,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_quote_line_user,lancer.quote.line,model_lancer_quote_line,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_quote_line_manage,lancer.quote.line,model_lancer_quote_line,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_quote_subcontract_user,lancer.quote.subcontract,model_lancer_quote_subcontract,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_quote_subcontract_manage,lancer.quote.subcontract,model_lancer_quote_subcontract,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_quote_package_user,lancer.quote.package,model_lancer_quote_package,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_quote_package_manage,lancer.quote.package,model_lancer_quote_package,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_quote_expense_user,lancer.quote.expense,model_lancer_quote_expense,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_quote_expense_manage,lancer.quote.expense,model_lancer_quote_expense,lancer_quote.group_lancer_base_manage,1,1,1,1
+
 access_payment_term_user,payment.term,model_payment_term,lancer_quote.group_lancer_base_user,1,0,0,0
 access_payment_term_manager,payment.term,model_payment_term,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_incoterms_user,lancer.incoterms,model_lancer_incoterms,lancer_quote.group_lancer_base_user,1,0,0,0

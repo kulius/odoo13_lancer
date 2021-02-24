@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from . import lancer_quote
 from . import payment_term
 from . import lancer_incoterms
 from . import lancer_package_setting

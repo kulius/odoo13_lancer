@@ -5,6 +5,14 @@
                   web_icon="lancer_quote,static/description/icon.png" groups="lancer_quote.group_lancer_base_user"
                   sequence="0"/>
 
+        <!-- 報價單 -->
+        <menuitem id="menu_lancer_quote_menu" name="報價單"
+                  parent="lancer_quote.lancer_quote" sequence="0"/>
+        <!--客戶基本資料維護 -->
+        <menuitem id="menu_lancer_quote__menu" name="報價單" action="action_lancer_quote_form"
+                  parent="lancer_quote.menu_lancer_quote_menu" sequence="1"/>
+
+
         <!-- 基本資料 -->
         <menuitem id="menu_lancer_base_main_menu" name="基本資料設定"
                   parent="lancer_quote.lancer_quote" sequence="1"/>
@@ -27,17 +35,6 @@
         <menuitem id="menu_lancer_other_main_item_category_menu" name="品項分類" action="action_lancer_main_item_category_form"
                   parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="2"/>
 
-        <!--報價 -->
-        <menuitem id="menu_lancer_quote_main_menu" name="報價"
-                  parent="lancer_quote.lancer_quote" sequence="3"/>
-
-        <menuitem id="menu_lancer_quote_menu" name="細項報價"
-                  parent="menu_lancer_quote_main_menu" sequence="1"
-        />
-
-        <menuitem id="menu_lancer_quote_fast_menu" name="快速報價"
-                  parent="menu_lancer_quote_main_menu" sequence="2"
-        />
 
         <!-- 報價單基本資料維護 -->
         <menuitem id="menu_lancer_quote_main_menu" name="報價基本資料設定"
