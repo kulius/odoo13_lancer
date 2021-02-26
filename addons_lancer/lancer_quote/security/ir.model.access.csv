@@ -9,6 +9,11 @@ access_lancer_quote_package_user,lancer.quote.package,model_lancer_quote_package
 access_lancer_quote_package_manage,lancer.quote.package,model_lancer_quote_package,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_quote_expense_user,lancer.quote.expense,model_lancer_quote_expense,lancer_quote.group_lancer_base_user,1,1,1,1
 access_lancer_quote_expense_manage,lancer.quote.expense,model_lancer_quote_expense,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_main_user,lancer.main,model_lancer_main,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_main_manage,lancer.main,model_lancer_main,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_main_item_user,lancer.main.item,model_lancer_main_item,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_main_item_manage,lancer.main.item,model_lancer_main_item,lancer_quote.group_lancer_base_manage,1,1,1,1
+
 
 access_payment_term_user,payment.term,model_payment_term,lancer_quote.group_lancer_base_user,1,0,0,0
 access_payment_term_manager,payment.term,model_payment_term,lancer_quote.group_lancer_base_manage,1,1,1,1

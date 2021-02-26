@@ -18,14 +18,19 @@
                   parent="lancer_quote.lancer_quote" sequence="1"/>
         <!--客戶基本資料維護 -->
         <menuitem id="menu_lancer_partner_main_menu" name="客戶" action="base.action_partner_customer_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="3"/>
-        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="員工"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="4"/>
+        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="員工"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="5"/>
 
         <!--產品基本資料維護 -->
         <menuitem id="menu_lancer_product_main_menu" name="產品" action="action_lancer_product_form"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="1"/>
 
+        <menuitem id="menu_lancer_main_main_menu" name="主件" action="action_lancer_main_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="2"/>
+
+        <menuitem id="menu_lancer_main_item_main_menu" name="品項" action="action_lancer_main_item_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="3"/>
 
         <!-- 其他設定 -->
         <menuitem id="menu_lancer_base_other_setting_menu" name="其他設定"

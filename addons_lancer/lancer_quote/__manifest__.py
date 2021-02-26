@@ -28,6 +28,8 @@
         'views/lancer_routing_wages.xml',
         'views/lancer_routing_material.xml',
         'views/lancer_product.xml',
+        'views/lancer_main.xml',
+        'views/lancer_main_item.xml',
         'views/lancer_quote.xml',
         'views/menu.xml',
     ],
