@@ -41,7 +41,28 @@
                                 <field name="main_category_id"/>
                             </group>
                         </group>
+                        <group col="8">
+                            <field name="main_material_cost"/>
+                            <field name="main_process_cost"/>
+                            <field name="main_manufacture_cost"/>
+                            <field name="main_total_cost"/>
+                        </group>
+                       <notebook>
+                           <page string="品項列表">
 
+                            <field name="main_item_ids">
+                                <tree>
+                                    <field name="id" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="material_cost"/>
+                                    <field name="process_cost"/>
+                                    <field name="manufacture_cost"/>
+                                    <field name="item_total_cost"/>
+                                </tree>
+                            </field>
+
+                           </page>
+                       </notebook>
                     </sheet>
                 </form>
             </field>

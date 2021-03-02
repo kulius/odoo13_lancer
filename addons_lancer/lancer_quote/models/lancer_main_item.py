@@ -12,6 +12,14 @@ class LancerMainItem(models.Model):
     _order = "name, id"
     _description = 'Lancer main Item'
 
+    @api.depends('material_cost', 'process_cost', 'manufacture_cost')
+    def _amount_all(self):
+        """
+            Compute the amounts by the Material_Cost、Process_Cost、Manufacture_Cost.
+        """
+        price = self.material_cost + self.process_cost + self.manufacture_cost
+        self.update({'item_total_cost': price})
+
     active = fields.Boolean(default=True, string='是否啟用')
     name = fields.Char(string='品項品名規格')
     main_id = fields.Many2one(comodel_name="lancer.main", string="所屬主件", required=True, )
@@ -20,6 +28,11 @@ class LancerMainItem(models.Model):
     item_routing = fields.Selection(string="加工製程段",
                                     selection=[('metal', '金屬加工'), ('handle', '手柄射出'), ('assembly', '組裝')],
                                     required=True, )
+    material_cost = fields.Float(string='料')
+    process_cost = fields.Float(string='工')
+    manufacture_cost = fields.Float(string='費')
+    item_total_cost = fields.Float(string='總價', store=True, readonly=True, compute='_amount_all')
+
     metal_blade = fields.Boolean(string="加工鋼刃", default=True)
     metal_shape_id = fields.Many2one(comodel_name="lancer.routing.shape", string="形狀", required=False, )
     metal_coating_id = fields.Many2one(comodel_name="lancer.routing.coating", string="鍍層", required=False, )

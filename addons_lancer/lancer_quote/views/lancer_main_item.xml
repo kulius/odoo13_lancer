@@ -42,6 +42,12 @@
                             <field name="main_item_category_id"/>
                             <field name="item_routing"/>
                         </group>
+                        <group col="8">
+                            <field name="material_cost"/>
+                            <field name="process_cost"/>
+                            <field name="manufacture_cost"/>
+                            <field name="item_total_cost"/>
+                        </group>
                         <notebook attrs="{'invisible': ['|', ('item_routing', '!=', 'metal'), ('item_routing', '=', False)]}">
                             <page string="金屬加工">
                                 <group>

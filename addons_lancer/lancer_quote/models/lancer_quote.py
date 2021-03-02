@@ -10,7 +10,8 @@ class LancerQuote(models.Model):
     _order = "name"
     _description = '報價單'
 
-    name = fields.Char(string='報價單編碼', required=True, copy=False, readonly=True, index=True, default=lambda self: _('New'))
+    name = fields.Char(string='報價單編碼', required=True, copy=False, readonly=True, index=True,
+                       default=lambda self: _('New'))
     version = fields.Char(string='版次')
     active = fields.Boolean(default=True, string='是否啟用')
     user_id = fields.Many2one('res.users', string='報價者', default=lambda self: self.env.user)
@@ -30,7 +31,7 @@ class LancerQuote(models.Model):
     quote_validdate = fields.Date(string="報價有效期", required=False, )
     mov = fields.Integer(string="MOV", required=False, )
 
-    certification_amount = fields.Float(string="認證費用",  required=False, )
+    certification_amount = fields.Float(string="認證費用", required=False, )
     customs_rate = fields.Float(string="報關費率", required=False, )
     exchange_rate = fields.Float(string="匯率", required=False, )
     test_amount = fields.Float(string="測試費用", required=False, )
@@ -49,20 +50,21 @@ class LancerQuote(models.Model):
         result = super(LancerQuote, self).create(vals)
         return result
 
+
 class LancerQuoteLine(models.Model):
     _name = 'lancer.quote.line'
-    _rec_name = 'name'
-    _order = "name"
+    _order = "sequence, id"
     _description = '報價單-自製'
 
     quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, )
-    name = fields.Char(string='主件品名規格')
+    main_id = fields.Many2one(comodel_name='lancer.main', string='主件品名規格')
     main_category_id = fields.Many2one(comodel_name="lancer.main.category", string="主件分類", required=True, )
     sequence = fields.Integer(string='項次', required=True, default=10)
-    material_amount = fields.Integer(string="料", required=False, )
-    work_amount = fields.Integer(string="工", required=False, )
-    factory_amount = fields.Integer(string="費", required=False, )
-    total_amount = fields.Integer(string="總價", required=False, )
+    material_amount = fields.Float(related='main_id.main_material_cost', string="料", required=False, )
+    work_amount = fields.Float(related='main_id.main_process_cost', string="工", required=False, )
+    factory_amount = fields.Float(related='main_id.main_manufacture_cost', string="費", required=False, )
+    total_amount = fields.Float(related='main_id.main_total_cost', string="總價", required=False, )
+
 
 class LancerQuoteSubcontract(models.Model):
     _name = 'lancer.quote.subcontract'
@@ -73,7 +75,8 @@ class LancerQuoteSubcontract(models.Model):
     quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, )
     sequence = fields.Integer(string='項次', required=True, default=10)
     partner_id = fields.Many2one(comodel_name="res.partner", string="廠商", required=False, )
-    subcontract_category_id = fields.Many2one(comodel_name="lancer.subcontract.category", string="品項大類", required=False, )
+    subcontract_category_id = fields.Many2one(comodel_name="lancer.subcontract.category", string="品項大類",
+                                              required=False, )
     name = fields.Char(string="品名規格", required=False, )
     partno = fields.Char(string="參考料號", required=False, )
     material_id = fields.Many2one(comodel_name="lancer.subcontract.material", string="材質", required=False, )
@@ -85,6 +88,7 @@ class LancerQuoteSubcontract(models.Model):
     mould_amount = fields.Float(string="模具費用", required=False, )
     manage_rate = fields.Float(string="管銷百分比", required=False, )
     profit_rate = fields.Float(string="利潤百分比", required=False, )
+
 
 class LancerQuotePackage(models.Model):
     _name = 'lancer.quote.package'
@@ -99,6 +103,7 @@ class LancerQuotePackage(models.Model):
     amount = fields.Float(string="價格", required=False, )
     mould_amount = fields.Float(string="模具/版費", required=False, )
 
+
 class LancerQuotExpense(models.Model):
     _name = 'lancer.quote.expense'
     _rec_name = 'name'
@@ -110,13 +115,3 @@ class LancerQuotExpense(models.Model):
     name = fields.Char(string='說明')
     quant = fields.Float(string="數量", required=False, )
     amount = fields.Float(string="價格", required=False, )
-
-
-
-
-
-
-
-
-
-
