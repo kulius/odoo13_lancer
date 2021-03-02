@@ -39,6 +39,17 @@
                   parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="1"/>
         <menuitem id="menu_lancer_other_main_item_category_menu" name="品項分類" action="action_lancer_main_item_category_form"
                   parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="2"/>
+        <menuitem id="menu_lancer_metal_type_menu" name="鋼材規格設定" action="action_lancer_metal_type_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="3"/>
+        <menuitem id="menu_lancer_metal_spec_menu" name="鋼材種類設定" action="action_lancer_metal_spec_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="4"/>
+        <menuitem id="menu_lancer_metal_cutting_long_menu" name="下料長度(mm)設定" action="action_lancer_metal_cutting_long_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="5"/>
+        <menuitem id="menu_lancer_handlematerial_process_menu" name="自製手柄加工工序設定" action="action_lancer_handlematerial_process_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="6"/>
+        <menuitem id="menu_lancer_handlematerial_material_menu" name="自製手柄材質設定" action="action_lancer_handlematerial_material_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="7"/>
+
 
 
         <!-- 報價單基本資料維護 -->
