@@ -2,7 +2,8 @@
 # Author: Jason Wu (jaronemo@msn.com)
 
 from odoo import api, fields, models
-
+import json
+from lxml import etree
 
 class LancerMainItem(models.Model):
     _name = 'lancer.main.item'
@@ -16,7 +17,7 @@ class LancerMainItem(models.Model):
     main_item_category_id = fields.Many2one(comodel_name="lancer.main.item.category", string="品項分類", required=True, )
 
     item_routing = fields.Selection(string="加工製程段", selection=[('metal', '金屬加工'), ('handle', '手柄射出'), ('assembly', '組裝')], required=True, )
-    metal_blade = fields.Boolean(string="加工鋼刃",  )
+    metal_blade = fields.Boolean(string="加工鋼刃", default=True)
     metal_shape_id = fields.Many2one(comodel_name="lancer.routing.shape", string="形狀", required=False, )
     metal_coating_id = fields.Many2one(comodel_name="lancer.routing.coating", string="鍍層", required=False, )
     metal_cutting_id = fields.Many2one(comodel_name="lancer.routing.cutting", string="刃口", required=False, )
@@ -72,6 +73,7 @@ class LancerMainItem(models.Model):
     assembly_material_ids = fields.One2many(comodel_name="lancer.main.item.assemblymaterial", inverse_name="main_item_id", string="選擇材料", required=False, )
     assembly_manage_rate = fields.Float(string="管銷百分比", required=False, )
     assembly_profit_rate = fields.Float(string="利潤百分比", required=False, )
+
 
 # 金屬加工-內製委外加工成本
 class LancerMainItemProcesscost(models.Model):

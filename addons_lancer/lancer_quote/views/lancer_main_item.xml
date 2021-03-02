@@ -42,7 +42,7 @@
                             <field name="main_item_category_id"/>
                             <field name="item_routing"/>
                         </group>
-                        <notebook>
+                        <notebook attrs="{'invisible': ['|', ('item_routing', '!=', 'metal'), ('item_routing', '=', False)]}">
                             <page string="金屬加工">
                                 <group>
                                     <field name="metal_blade"/>
@@ -54,7 +54,7 @@
                                     <field name="metal_outer_id"/>
                                 </group>
                                 <notebook>
-                                    <page string="用料成本">
+                                    <page string="用料成本" attrs="{'invisible': [('metal_blade', '=', False)]}">
                                         <group col="4">
                                             <field name="metal_type"/>
                                             <field name="metal_spec"/>
@@ -72,13 +72,13 @@
                                         </group>
                                         <field name="metal_item_processcost_ids">
                                             <tree string="內置委外加工成本" editable="bottom">
-                                                <field name="process" />
-                                                <field name="process_num" />
-                                                <field name="std_hour" />
-                                                <field name="process_cost" />
-                                                <field name="unit_price" />
-                                                <field name="out_price" />
-                                                <field name="inout" />
+                                                <field name="process"/>
+                                                <field name="process_num"/>
+                                                <field name="std_hour"/>
+                                                <field name="process_cost"/>
+                                                <field name="unit_price"/>
+                                                <field name="out_price"/>
+                                                <field name="inout"/>
                                             </tree>
                                         </field>
                                     </page>
@@ -100,7 +100,10 @@
                                     </page>
                                 </notebook>
                             </page>
-                            <page string="手柄射出">
+                  </notebook>
+
+                  <notebook attrs="{'invisible': ['|', ('item_routing', '!=', 'handle'), ('item_routing', '=', False)]}">
+                    <page string="手柄射出">
                                 <group col="6">
                                     <field name="handle_series_id"/>
                                     <field name="handle_handle_id"/>
@@ -110,72 +113,74 @@
                                     <page string="用料成本">
                                         <field name="handle_materialcost_ids">
                                             <tree string="用料成本" editable="bottom">
-                                                <field name="process" />
-                                                <field name="material" />
-                                                <field name="cavity_num" />
-                                                <field name="original_price" />
-                                                <field name="dyeing" />
-                                                <field name="net_weight" />
-                                                <field name="gross_weight" />
-                                                <field name="material_cost" />
+                                                <field name="process"/>
+                                                <field name="material"/>
+                                                <field name="cavity_num"/>
+                                                <field name="original_price"/>
+                                                <field name="dyeing"/>
+                                                <field name="net_weight"/>
+                                                <field name="gross_weight"/>
+                                                <field name="material_cost"/>
                                             </tree>
                                         </field>
                                     </page>
                                     <page string="內製/委外加工成本">
                                         <field name="handle_processcost_ids">
                                             <tree string="內製/委外加工成本" editable="bottom">
-                                                <field name="process_hour" />
-                                                <field name="wage" />
-                                                <field name="process_price" />
-                                                <field name="inout" />
+                                                <field name="process_hour"/>
+                                                <field name="wage"/>
+                                                <field name="process_price"/>
+                                                <field name="inout"/>
                                             </tree>
                                         </field>
                                     </page>
                                     <page string="材質+模具費+製造費用">
                                         <group>
                                             <group name="item_mold" string="材質+模具費">
-                                                <field name="handle_moldcost1" />
-                                                <field name="handle_moldcost2" />
-                                                <field name="handle_moldcost3" />
-                                                <field name="handle_moldcost4" />
-                                                <field name="handle_moldcost5" />
-                                                <field name="handle_moldcost6" />
-                                                <field name="handle_mandrel" />
-                                                <field name="handle_elecmandrel" />
+                                                <field name="handle_moldcost1"/>
+                                                <field name="handle_moldcost2"/>
+                                                <field name="handle_moldcost3"/>
+                                                <field name="handle_moldcost4"/>
+                                                <field name="handle_moldcost5"/>
+                                                <field name="handle_moldcost6"/>
+                                                <field name="handle_mandrel"/>
+                                                <field name="handle_elecmandrel"/>
                                             </group>
                                             <group name="item_work" string="製造費用">
-                                                <field name="handle_work_make" />
-                                                <field name="handle_work_mould" />
-                                                <field name="handle_work_efficiency" />
-                                                <field name="handle_work_yield" />
-                                                <field name="handle_work_sum" />
+                                                <field name="handle_work_make"/>
+                                                <field name="handle_work_mould"/>
+                                                <field name="handle_work_efficiency"/>
+                                                <field name="handle_work_yield"/>
+                                                <field name="handle_work_sum"/>
                                             </group>
                                         </group>
                                     </page>
                                 </notebook>
                             </page>
-                            <page string="組裝">
+                  </notebook>
+                  <notebook attrs="{'invisible': ['|', ('item_routing', '!=', 'assembly'), ('item_routing', '=', False)]}">
+                    <page string="組裝">
                                 <group>
                                     <group>
                                         <field name="assembly_wage_ids">
                                             <tree string="選擇工資項目" editable="bottom">
-                                                <field name="routing_wages_id" />
-                                                <field name="num" />
-                                                <field name="price" />
+                                                <field name="routing_wages_id"/>
+                                                <field name="num"/>
+                                                <field name="price"/>
                                             </tree>
                                         </field>
                                     </group>
                                     <group>
                                         <field name="assembly_material_ids">
                                             <tree string="選擇材料" editable="bottom">
-                                                <field name="routing_material_id" />
-                                                <field name="price" />
+                                                <field name="routing_material_id"/>
+                                                <field name="price"/>
                                             </tree>
                                         </field>
                                     </group>
                                 </group>
                             </page>
-                        </notebook>
+                  </notebook>
 
                     </sheet>
                 </form>
