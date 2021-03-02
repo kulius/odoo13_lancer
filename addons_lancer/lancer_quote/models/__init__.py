@@ -21,3 +21,6 @@ from . import lancer_routing_handle
 from . import lancer_routing_wages
 from . import lancer_routing_material
 from . import lancer_product
+from . import lancer_metal_type
+from . import lancer_metal_spec
+from . import lancer_metal_cutting_long

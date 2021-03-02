@@ -23,10 +23,10 @@ class LancerMainItem(models.Model):
     metal_cutting_id = fields.Many2one(comodel_name="lancer.routing.cutting", string="刃口", required=False, )
     metal_outer_id = fields.Many2one(comodel_name="lancer.routing.outer", string="外徑", required=False, )
 
-    metal_type = fields.Char(string="鋼材規格", required=False, )
-    metal_spec = fields.Char(string="鋼材種類", required=False, )
+    metal_type = fields.Many2one('lancer.metal.type', string="鋼材規格", required=False, )
+    metal_spec = fields.Many2one('lancer.metal.spec', string="鋼材種類", required=False, )
     metal_long = fields.Char(string="物料長(mm)", required=False, )
-    metal_cutting_long = fields.Char(string="下料長度(mm)", required=False, )
+    metal_cutting_long = fields.Many2one('lancer.metal.cutting.long', string="下料長度(mm)", required=False, )
     metal_cut = fields.Char(string="切料節數", required=False, )
     metal_weight = fields.Char(string="鋼刃單隻重量", required=False, )
     metal_material = fields.Char(string="材料(元/KG)", required=False, )
