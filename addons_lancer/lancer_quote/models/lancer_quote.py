@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: Jason Wu (jaronemo@msn.com)
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class LancerQuote(models.Model):
@@ -10,10 +10,10 @@ class LancerQuote(models.Model):
     _order = "name"
     _description = '報價單'
 
-    name = fields.Char(string='報價單編碼')
+    name = fields.Char(string='報價單編碼', required=True, copy=False, readonly=True, index=True, default=lambda self: _('New'))
     version = fields.Char(string='版次')
     active = fields.Boolean(default=True, string='是否啟用')
-    user_id = fields.Char(string='報價者')
+    user_id = fields.Many2one('res.users', string='報價者', default=lambda self: self.env.user)
     parnter_id = fields.Many2one(comodel_name="res.partner", string="客戶", required=True, )
     product_id = fields.Many2one(comodel_name="lancer.product", string="產品名稱", required=True, )
 
@@ -40,6 +40,14 @@ class LancerQuote(models.Model):
     subcontract_ids = fields.One2many(comodel_name="lancer.quote.subcontract", inverse_name="quote_id", string="外購明細")
     package_ids = fields.One2many(comodel_name="lancer.quote.package", inverse_name="quote_id", string="包裝明細")
     expense_ids = fields.One2many(comodel_name="lancer.quote.expense", inverse_name="quote_id", string="其餘費用明細")
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', _('New')) == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('lancer.quote') or _('New')
+
+        result = super(LancerQuote, self).create(vals)
+        return result
 
 class LancerQuoteLine(models.Model):
     _name = 'lancer.quote.line'
