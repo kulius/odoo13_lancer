@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+approval_flow_all,approval_flow.all,model_approval_flow,base.group_user,1,1,1,1
+approval_flow_node_all,approval_flow_node.all,model_approval_flow_node,base.group_user,1,1,1,1
+approval_flow_node_action_all,approval_flow_node_action.all,model_approval_flow_node_action,base.group_user,1,1,1,1
+approval_flow_instance_all,approval_flow_instance.all,model_approval_flow_instance,base.group_user,1,1,1,1
+approval_flow_instance_node_all,approval_flow_instance_node.all,model_approval_flow_instance_node,base.group_user,1,1,1,1
+approval_all,approval.all,model_approval,base.group_user,1,1,1,1
+wait_approval_all,wait_approval.all,model_wait_approval,base.group_user,1,1,1,1
+wait_approval_summary_all,wait_approval_summary.all,model_wait_approval_summary,base.group_user,1,1,1,1
+record_approval_state_all,record_approval_state.all,model_record_approval_state,base.group_user,1,1,1,1
+increase_type_all,increase_type.all,model_increase_type,base.group_user,1,1,1,1

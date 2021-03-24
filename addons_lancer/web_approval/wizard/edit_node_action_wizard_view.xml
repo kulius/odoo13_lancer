@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="edit_node_action_wizard_form" model="ir.ui.view">
+            <field name="name">edit.node.action.wizard.form</field>
+            <field name="model">edit.node.action.wizard</field>
+            <field name="arch" type="xml">
+                <form string="编辑动作向导">
+                    <group>
+                        <group>
+                            <field name="condition"/>
+                        </group>
+                        <group/>
+                    </group>
+                    <footer>
+                        <button name="button_ok" type="object" string="确认" class="oe_highlight"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id='view_wait_approval_summary_kanban' model='ir.ui.view'>
+            <field name='name'>wait.approval.summary kanban</field>
+            <field name='model'>wait.approval.summary</field>
+            <field name='arch' type='xml'>
+                <kanban create="0">
+                    <field name='model_id'/>
+                    <field name='wait_approval_count'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div>
+                                <div>
+                                    <span style="font-size:16px;display:inline-block">
+                                        <field name='model_id'/>
+                                    </span>
+                                    <span class="badge">
+                                        <field name='wait_approval_count'/>
+                                    </span>
+                                </div>
+                                <div>
+                                    <button type="object" class="btn btn-primary pull-right btn-sm" name="to_approval">查看并处理</button>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id='wait_approval_summary_action' model='ir.actions.act_window'>
+            <field name='name'>待审批单据</field>
+            <field name='res_model'>wait.approval.summary</field>
+            <field name='view_mode'>kanban</field>
+        </record>
+
+
+        <menuitem id='menu_wait_approval_summary_action' name='我的审批' action='wait_approval_summary_action'
+                  parent="web_approval.menu_wait_approval_main" sequence='10'/>
+
+    </data>
+</odoo>

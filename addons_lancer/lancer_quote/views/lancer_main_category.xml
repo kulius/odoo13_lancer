@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <search string="主件分類">
                     <field name="name"/>
+                    <field name="main_categ_code"/>
                     <field name="active"/>
                     <separator/>
                     <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
@@ -21,6 +22,7 @@
             <field name="arch" type="xml">
                 <tree string="主件分類設定">
                     <field name="sequence" widget="handle"/>
+                    <field name="main_categ_code"/>
                     <field name="name"/>
                 </tree>
             </field>
@@ -37,6 +39,7 @@
                         <group>
                             <group>
                                 <field name="active" invisible="1"/>
+                                <field name="main_categ_code"/>
                                 <field name="name"/>
                             </group>
                         </group>

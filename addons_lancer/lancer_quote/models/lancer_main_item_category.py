@@ -10,5 +10,17 @@ class LancerMainItemCategory(models.Model):
     _description = 'Lancer Main Item Category'
 
     name = fields.Char(string='品項分類名稱')
+    item_categ_code = fields.Char(string='品項分類代碼')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
+
+    def name_get(self):
+        res = []
+        for rec in self:
+            name = rec.name
+            if rec.item_categ_code:
+                name = '[' + rec.item_categ_code + '] ' + name
+            else:
+                name = name
+            res.append((rec.id, name))
+        return res

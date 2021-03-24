@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="ApprovalTemplate">
+        <div style="display: block;" class="approval-wizard">
+            <div class="wizard-container">
+                <div class="wizard-container-title">
+                    <t t-set="approval_state_value" t-value="approval_state === 'active' ? '审批中' : approval_state === 'complete' ? '完成' : approval_state === 'pause' ? '暂停' : '取消'"/>
+                    <span>审批
+                    (<t t-esc="approval_state_value" />)
+                    </span>
+                </div>
+                <t t-if="approval_state !== 'cancel'">
+
+
+                    <t t-foreach="instance_nodes" t-as="instance_node">
+                        <t t-set="class_value" t-value="instance_node.state == 'running' || instance_node.state == 'complete' ? 'wizard-row active' : 'wizard-row'"/>
+                        <!--显示审批信息-->
+                        <t t-foreach="instance_node.approval_info" t-as="approval">
+
+                            <div t-att-class="class_value">
+                                <t t-call="ApprovalHeader"/>
+                                <t t-call="ApprovalContent"/>
+                            </div>
+
+                        </t>
+                        <t t-if="instance_node.state !== 'complete'">
+                            <div t-att-class="class_value">
+                                <t t-call="ApprovalHeader"/>
+                                <div class="wizard-content">
+                                    <div>
+                                        <t t-call="ApprovalTemplate.button-accept" t-if="instance_node.can_approval"/> <!--审批-->
+
+                                        <t t-call="ApprovalTemplate.button-increase" t-if="instance_node.allow_increase"/> <!--加签-->
+                                        <t t-call="ApprovalTemplate.button-turn-to" t-if="instance_node.allow_turn_to"/> <!--转签-->
+                                        <t t-call="ApprovalTemplate.button-delete-increase" t-if="instance_node.can_delete"/> <!--删除加签-->
+
+                                        <t t-call="ApprovalTemplate.button-delete-turn-to" t-if="instance_node.can_delete_turn_to"/> <!--删除转签-->
+                                        <t t-call="ApprovalTemplate.button-edit-turn-to" t-if="instance_node.can_edit_turn_to"/> <!--编辑转签-->
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+
+                    <div class="wizard-container-foot"/>
+
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <!--审批按钮-->
+    <t t-name="ApprovalTemplate.button-accept">
+        <button type="button"
+                class="btn btn-sm btn-primary btn-approval"
+                t-att-data-instance_node_id="instance_node.id">
+            审批
+        </button>
+    </t>
+    <!--加签按钮-->
+    <t t-name="ApprovalTemplate.button-increase">
+        <button type="button"
+                class="btn btn-sm btn-default btn-increase"
+                t-att-data-instance_node_id="instance_node.id">
+            加签
+        </button>
+    </t>
+    <!--删除加签-->
+    <t t-name="ApprovalTemplate.button-delete-increase">
+        <button type="button"
+                class="btn btn-sm btn-default btn-delete-increase"
+                t-att-data-instance_node_id="instance_node.id">
+            删除加签
+        </button>
+    </t>
+    <!--转签按钮-->
+    <t t-name="ApprovalTemplate.button-turn-to">
+        <button type="button"
+                class="btn btn-sm btn-default btn-turn-to"
+                t-att-data-instance_node_id="instance_node.id">
+            转签
+        </button>
+    </t>
+
+    <!--删除转签按钮-->
+    <t t-name="ApprovalTemplate.button-delete-turn-to">
+        <button type="button"
+                class="btn btn-sm btn-default btn-delete-turn-to"
+                t-att-data-instance_node_id="instance_node.id">
+            删除转签
+        </button>
+    </t>
+
+    <!--编辑转签按钮-->
+    <t t-name="ApprovalTemplate.button-edit-turn-to">
+        <button type="button"
+                class="btn btn-sm btn-default btn-edit-turn-to"
+                t-att-data-instance_node_id="instance_node.id">
+            编辑转签
+        </button>
+    </t>
+
+    <t t-name="ApprovalHeader">
+        <div class="wizard-header">
+            <div class="wizard-header-circle"/>
+            <div class="wizard-header-name">
+                <t t-esc="instance_node.node_info.node_name"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ApprovalContent">
+        <div class="wizard-content">
+            <div class="wizard-content-row">
+                <t t-esc="approval.user_name"/> <t t-esc="approval.approval_time"/> <t t-esc="approval.action_type"/>
+            </div>
+            <div class="wizard-content-row" t-if="approval.say">
+                <t t-esc="approval.say"/>
+            </div>
+            <div class="wizard-content-row" t-if="approval.can_edit">
+                <button type="button"
+                    class="btn btn-sm btn-default btn-edit-approval"
+                    t-att-data-approval_id="approval.id">
+                    编辑
+                </button>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ApprovalDiagramView">
+        <div id="diagramContainer"/>
+    </t>
+
+    <t t-name="ApprovalDiagramView.buttons">
+        <div t-if="widget.is_action_enabled('create')">
+            <button type="button" class="btn btn-primary btn-sm o_diagram_new_button">
+                新建节点
+            </button>
+        </div>
+    </t>
+
+    <t t-name="ApprovalDiagramView.node">
+        <div t-att-class="path.is_start? 'item is-start': path.is_end? 'item is-end': 'item'" t-att-id="'node_' + path.node_id">
+            <t t-esc="path.node_name"/>
+            <div class="ep" t-if="!path.is_end"/>
+        </div>
+    </t>
+</templates>
