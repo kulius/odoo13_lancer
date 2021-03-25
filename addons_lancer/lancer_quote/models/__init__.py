@@ -26,3 +26,7 @@ from . import lancer_metal_spec
 from . import lancer_metal_cutting_long
 from . import lancer_handlematerial_process
 from . import lancer_handlematerial_material
+from . import lancer_cost_wire_file
+from . import lancer_cost_cal_file
+from . import lancer_cost_map_file
+from . import lancer_cost_plat_file

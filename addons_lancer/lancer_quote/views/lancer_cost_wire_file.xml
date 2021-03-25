@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="lancer_cost_wire_file_view_search" model="ir.ui.view">
+            <field name="name">lancer.cost.wire.file.search</field>
+            <field name="model">lancer.cost.wire.file</field>
+            <field name="arch" type="xml">
+                <search string="材料單價">
+                    <field name="metal_spec_id"/>
+                    <field name="routing_shape_id"/>
+                    <field name="routing_outer_id"/>
+                    <field name="metal_type_id"/>
+                    <field name="active"/>
+                    <separator/>
+                    <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_lancer_cost_wire_file_tree" model="ir.ui.view">
+            <field name="name">lancer.cost.wire.file.tree</field>
+            <field name="model">lancer.cost.wire.file</field>
+            <field name="arch" type="xml">
+                <tree string="材料單價設定">
+                    <field name="sequence" widget="handle"/>
+                    <field name="metal_spec_id"/>
+                    <field name="routing_shape_id"/>
+                    <field name="routing_outer_id"/>
+                    <field name="metal_type_id"/>
+                    <field name="wire_cost"/>
+                    <field name="iron_spec"/>
+                    <field name="iron_cost"/>
+                    <field name="create_uid" string="建立者"/>
+                    <field name="create_date" string="建立日期"/>
+                    <field name="write_uid" string="修改者"/>
+                    <field name="write_date" string="修改日期"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_lancer_cost_wire_file_form" model="ir.ui.view">
+            <field name="name">lancer.cost.wire.file.form</field>
+            <field name="model">lancer.cost.wire.file</field>
+            <field name="arch" type="xml">
+                <form string="材料單價設定">
+                    <sheet>
+                        <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <group>
+                            <group>
+                                <field name="active" invisible="1"/>
+                                <field name="metal_spec_id"/>
+                                <field name="routing_shape_id"/>
+                                <field name="routing_outer_id"/>
+                                <field name="metal_type_id"/>
+                                <field name="wire_cost"/>
+                                <field name="iron_spec"/>
+                                <field name="iron_cost"/>
+                            </group>
+                            <group>
+                                <field name="create_uid" string="建立者"/>
+                                <field name="create_date" string="建立日期"/>
+                                <field name="write_uid" string="修改者"/>
+                                <field name="write_date" string="修改日期"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_lancer_cost_wire_file_form" model="ir.actions.act_window">
+            <field name="name">材料單價設定</field>
+            <field name="res_model">lancer.cost.wire.file</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="lancer_cost_wire_file_view_search"/>
+        </record>
+
+
+    </data>
+</odoo>

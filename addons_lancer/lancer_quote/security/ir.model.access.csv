@@ -75,3 +75,11 @@ access_lancer_routing_handle_user,lancer.routing.handle,model_lancer_routing_han
 access_lancer_routing_handle_manage,lancer.routing.handle,model_lancer_routing_handle,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_product_user,lancer.product,model_lancer_product,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_product_manage,lancer.product,model_lancer_product,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_cost_wire_file_user,lancer.lancer.cost.wire.file,model_lancer_cost_wire_file,lancer_quote.group_lancer_base_user,1,0,0,0
+access_lancer_cost_wire_file_manage,lancer.lancer.cost.wire.file,model_lancer_cost_wire_file,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_cost_cal_file_user,lancer.lancer.cost.cal.file,model_lancer_cost_cal_file,lancer_quote.group_lancer_base_user,1,0,0,0
+access_lancer_cost_cal_file_manage,lancer.lancer.cost.cal.file,model_lancer_cost_cal_file,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_cost_map_file_user,lancer.lancer.cost.map.file,model_lancer_cost_map_file,lancer_quote.group_lancer_base_user,1,0,0,0
+access_lancer_cost_map_file_manage,lancer.lancer.cost.map.file,model_lancer_cost_map_file,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_cost_plat_file_user,lancer.lancer.cost.plat.file,model_lancer_cost_plat_file,lancer_quote.group_lancer_base_user,1,0,0,0
+access_lancer_cost_plat_file_manage,lancer.lancer.cost.plat.file,model_lancer_cost_plat_file,lancer_quote.group_lancer_base_manage,1,1,1,1
