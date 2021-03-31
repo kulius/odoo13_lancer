@@ -117,11 +117,15 @@
 
                   <notebook attrs="{'invisible': ['|', ('item_routing', '!=', 'handle'), ('item_routing', '=', False)]}">
                     <page string="手柄射出">
-                                <group col="6">
-                                    <field name="handle_series_id"/>
-                                    <field name="handle_handle_id"/>
-                                    <field name="handle_version_id"/>
-                                </group>
+                        <group>
+                            <button name="handle_cost_calc" string="成本試算" type="object" class="btn-primary" />
+                            <button name="handle_cost_calc_safe" string="試算結束存儲" type="object" class="btn-primary" />
+                        </group>
+                        <group col="6">
+                            <field name="handle_series_id"/>
+                            <field name="handle_handle_id"/>
+                            <field name="handle_version_id"/>
+                        </group>
                                 <notebook>
                                     <page string="用料成本">
                                         <field name="handle_materialcost_ids">
@@ -133,7 +137,7 @@
                                                 <field name="dyeing"/>
                                                 <field name="net_weight"/>
                                                 <field name="gross_weight"/>
-                                                <field name="material_cost"/>
+                                                <field name="material_cost" sum="總材料成本"/>
                                             </tree>
                                         </field>
                                     </page>

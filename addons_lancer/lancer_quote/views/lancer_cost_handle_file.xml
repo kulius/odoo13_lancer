@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="lancer_cost_handle_file_view_search" model="ir.ui.view">
+            <field name="name">lancer.cost.handle.file.search</field>
+            <field name="model">lancer.cost.handle.file</field>
+            <field name="arch" type="xml">
+                <search string="手柄用料">
+                    <field name="handle_series_id"/>
+                    <field name="handle_handle_id"/>
+                    <field name="process"/>
+                    <field name="material"/>
+                    <field name="active"/>
+                    <separator/>
+                    <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_lancer_cost_handle_file_tree" model="ir.ui.view">
+            <field name="name">lancer.cost.handle.file.tree</field>
+            <field name="model">lancer.cost.handle.file</field>
+            <field name="arch" type="xml">
+                <tree string="手柄用料" editable="top">
+                    <field name="sequence" widget="handle"/>
+                    <field name="handle_series_id"/>
+                    <field name="handle_handle_id"/>
+                    <field name="process"/>
+                    <field name="material"/>
+                    <field name="cavity_num"/>
+                    <field name="original_price"/>
+                    <field name="dyeing"/>
+                    <field name="net_weight"/>
+                    <field name="gross_weight"/>
+                    <field name="material_cost"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_lancer_cost_handle_file_form" model="ir.ui.view">
+            <field name="name">lancer.cost.handle.file.form</field>
+            <field name="model">lancer.cost.handle.file</field>
+            <field name="arch" type="xml">
+                <form string="手柄用料">
+                    <sheet>
+                        <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <group>
+                            <group>
+                                <field name="active" invisible="1"/>
+
+                            </group>
+                            <group>
+                                <field name="create_uid" string="建立者"/>
+                                <field name="create_date" string="建立日期"/>
+                                <field name="write_uid" string="修改者"/>
+                                <field name="write_date" string="修改日期"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_lancer_cost_handle_file_form" model="ir.actions.act_window">
+            <field name="name">手柄用料</field>
+            <field name="res_model">lancer.cost.handle.file</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="lancer_cost_handle_file_view_search"/>
+        </record>
+
+
+    </data>
+</odoo>

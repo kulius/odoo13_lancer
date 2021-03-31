@@ -85,3 +85,6 @@ access_lancer_cost_plat_file_user,lancer.lancer.cost.plat.file,model_lancer_cost
 access_lancer_cost_plat_file_manage,lancer.lancer.cost.plat.file,model_lancer_cost_plat_file,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_cost_pro_file_user,lancer.lancer.cost.pro.file,model_lancer_cost_pro_file,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_cost_pro_file_manage,lancer.lancer.cost.pro.file,model_lancer_cost_pro_file,lancer_quote.group_lancer_base_manage,1,1,1,1
+
+access_lancer_cost_handle_file_user,lancer.lancer.cost.handle.file,model_lancer_cost_handle_file,lancer_quote.group_lancer_base_user,1,0,0,0
+access_lancer_cost_handle_file_manage,lancer.lancer.cost.handle.file,model_lancer_cost_handle_file,lancer_quote.group_lancer_base_manage,1,1,1,1

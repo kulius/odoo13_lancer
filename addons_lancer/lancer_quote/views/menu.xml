@@ -59,6 +59,8 @@
                   parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
         <menuitem id="menu_lancer_cost_pro_file_menu" name="內製/委外 加工成本" action="action_lancer_cost_pro_file_form"
                   parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
+        <menuitem id="menu_lancer_cost_handle_file_menu" name="手柄用料" action="action_lancer_cost_handle_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
 
 
 
