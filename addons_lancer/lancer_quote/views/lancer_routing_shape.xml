@@ -20,7 +20,7 @@
             <field name="name">lancer.routing.shape.tree</field>
             <field name="model">lancer.routing.shape</field>
             <field name="arch" type="xml">
-                <tree string="製程形狀設定">
+                <tree string="製程形狀設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="shape_code"/>
                     <field name="name"/>

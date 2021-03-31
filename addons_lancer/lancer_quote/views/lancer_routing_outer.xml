@@ -20,10 +20,13 @@
             <field name="name">lancer.routing.outer.tree</field>
             <field name="model">lancer.routing.outer</field>
             <field name="arch" type="xml">
-                <tree string="製程外徑設定">
+                <tree string="製程外徑設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="outer_code"/>
                     <field name="name"/>
+                    <field name="outer_size"/>
+                    <field name="outer_rate"/>
+                    <field name="outer_dye_blackhead_price"/>
                 </tree>
             </field>
         </record>
@@ -41,6 +44,9 @@
                                 <field name="active" invisible="1"/>
                                 <field name="outer_code"/>
                                 <field name="name"/>
+                                <field name="outer_size"/>
+                                <field name="outer_rate"/>
+                                <field name="outer_dye_blackhead_price"/>
                             </group>
                         </group>
 

@@ -61,15 +61,21 @@
                                 </group>
                                 <notebook>
                                     <page string="用料成本" attrs="{'invisible': [('metal_blade', '=', False)]}">
-                                        <group col="4">
-                                            <field name="metal_type"/>
-                                            <field name="metal_spec"/>
-                                            <field name="metal_long"/>
-                                            <field name="metal_cutting_long"/>
-                                            <field name="metal_cut"/>
-                                            <field name="metal_weight"/>
-                                            <field name="metal_material"/>
-                                            <field name="metal_price"/>
+                                        <group>
+                                            <group>
+                                                <field name="metal_spec_id"/>
+                                                <field name="metal_type_id"/>
+                                                <field name="metal_long"/>
+                                                <field name="metal_cutting_long_id"/>
+
+                                            </group>
+                                            <group>
+                                                <field name="metal_cut"/>
+                                                <field name="metal_weight"/>
+                                                <field name="metal_material"/>
+                                                <field name="metal_price"/>
+                                                <field name="metal_count"/>
+                                            </group>
                                         </group>
                                     </page>
                                     <page string="內置委外加工成本">
@@ -81,10 +87,11 @@
                                                 <field name="process"/>
                                                 <field name="process_num"/>
                                                 <field name="std_hour"/>
-                                                <field name="process_cost"/>
-                                                <field name="unit_price"/>
-                                                <field name="out_price"/>
-                                                <field name="inout"/>
+                                                <field name="process_cost" sum="加工成本合計"/>
+                                                <field name="unit_price" />
+                                                <field name="out_price" sum="委外單價合計"/>
+                                                <field name="is_inout"/>
+                                                <field name="calc_role"/>
                                             </tree>
                                         </field>
                                     </page>

@@ -11,6 +11,11 @@ class LancerRoutingOuter(models.Model):
 
     name = fields.Char(string='鋼刄外徑名稱')
     outer_code = fields.Char(string='鋼刄外徑代碼')
+
+    outer_size = fields.Float(string='鋼刄外徑')
+    outer_rate = fields.Float(string='換算率', digits=(1, 5))
+    outer_dye_blackhead_price = fields.Float(string='染黑頭單價')
+
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
 

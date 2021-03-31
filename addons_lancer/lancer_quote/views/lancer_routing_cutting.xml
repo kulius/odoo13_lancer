@@ -20,7 +20,7 @@
             <field name="name">lancer.routing.cutting.tree</field>
             <field name="model">lancer.routing.cutting</field>
             <field name="arch" type="xml">
-                <tree string="製程刃口設定">
+                <tree string="製程刃口設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="cutting_code"/>
                     <field name="name"/>

@@ -20,7 +20,7 @@
             <field name="name">lancer.routing.coating.tree</field>
             <field name="model">lancer.routing.coating</field>
             <field name="arch" type="xml">
-                <tree string="製程鍍層設定">
+                <tree string="製程鍍層設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="coating_code"/>
                     <field name="name"/>

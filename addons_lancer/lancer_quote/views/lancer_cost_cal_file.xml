@@ -21,18 +21,14 @@
             <field name="name">lancer.cost.cal.file.tree</field>
             <field name="model">lancer.cost.cal.file</field>
             <field name="arch" type="xml">
-                <tree string="單重長度表設定">
+                <tree string="單重長度表設定" editable="top">
                     <field name="sequence" widget="handle"/>
+                    <field name="routing_shape_id"/>
                     <field name="routing_coating_id"/>
                     <field name="routing_cutting_id"/>
                     <field name="routing_outer_id"/>
-                    <field name="routing_shape_id"/>
                     <field name="cal_change"/>
                     <field name="calc_long"/>
-                    <field name="create_uid" string="建立者"/>
-                    <field name="create_date" string="建立日期"/>
-                    <field name="write_uid" string="修改者"/>
-                    <field name="write_date" string="修改日期"/>
                     <field name="active"/>
                 </tree>
             </field>
@@ -49,10 +45,10 @@
                         <group>
                             <group>
                                 <field name="active" invisible="1"/>
+                                <field name="routing_shape_id"/>
                                 <field name="routing_coating_id"/>
                                 <field name="routing_cutting_id"/>
                                 <field name="routing_outer_id"/>
-                                <field name="routing_shape_id"/>
                                 <field name="cal_change"/>
                                 <field name="calc_long"/>
                             </group>

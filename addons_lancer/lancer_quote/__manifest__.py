@@ -9,6 +9,7 @@
     "data": [
         'data/ir_sequence_data.xml',
         'data/lancer_base_system.xml',
+        'data/lancer_base_param.xml',
         'security/ir.model.access.csv',
         'views/payment_term.xml',
         'views/lancer_incoterms.xml',
@@ -39,6 +40,7 @@
         'views/lancer_handlematerial_material.xml',
         'views/lancer_cost_wire_file.xml',
         'views/lancer_cost_cal_file.xml',
+        'views/lancer_cost_pro_file.xml',
         'views/lancer_cost_map_file.xml',
         'views/lancer_cost_plat_file.xml',
         'views/menu.xml',

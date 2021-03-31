@@ -18,7 +18,7 @@
             <field name="name">lancer.cost.plat.file.tree</field>
             <field name="model">lancer.cost.plat.file</field>
             <field name="arch" type="xml">
-                <tree string="電鍍單價表設定">
+                <tree string="電鍍單價表設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="routing_coating_id"/>
                     <field name="plat_begin"/>
@@ -26,10 +26,10 @@
                     <field name="plat_long_being"/>
                     <field name="plat_long_end"/>
                     <field name="plat_cost"/>
-                    <field name="create_uid" string="建立者"/>
-                    <field name="create_date" string="建立日期"/>
-                    <field name="write_uid" string="修改者"/>
-                    <field name="write_date" string="修改日期"/>
+<!--                    <field name="create_uid" string="建立者"/>-->
+<!--                    <field name="create_date" string="建立日期"/>-->
+<!--                    <field name="write_uid" string="修改者"/>-->
+<!--                    <field name="write_date" string="修改日期"/>-->
                     <field name="active"/>
                 </tree>
             </field>
