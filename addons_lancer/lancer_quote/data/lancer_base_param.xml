@@ -18,5 +18,26 @@
             <field name="key">lancer_metal_work_yield</field>
             <field name="value">0.95</field>
         </record>
+<!--        手柄射出參數-->
+        <record id="config_lancer_handle_process_wage" model="ir.config_parameter">
+            <field name="key">lancer_handle_process_wage</field>
+            <field name="value">3500</field>
+        </record>
+        <record id="config_lancer_handle_work_mould" model="ir.config_parameter">
+            <field name="key">lancer_handle_work_mould</field>
+            <field name="value">0.3</field>
+        </record>
+        <record id="config_lancer_handle_work_make" model="ir.config_parameter">
+            <field name="key">lancer_handle_work_make</field>
+            <field name="value">1.6</field>
+        </record>
+        <record id="config_lancer_handle_work_efficiency" model="ir.config_parameter">
+            <field name="key">lancer_handle_work_efficiency</field>
+            <field name="value">0.95</field>
+        </record>
+        <record id="config_handle_work_yield" model="ir.config_parameter">
+            <field name="key">lancer_handle_work_yield</field>
+            <field name="value">0.95</field>
+        </record>
     </data>
 </odoo>

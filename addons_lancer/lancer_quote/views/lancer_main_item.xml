@@ -127,7 +127,7 @@
                             <field name="handle_version_id"/>
                         </group>
                                 <notebook>
-                                    <page string="用料成本">
+                                    <page string="用料成本 內製/委外加工成本">
                                         <field name="handle_materialcost_ids">
                                             <tree string="用料成本" editable="bottom">
                                                 <field name="process"/>
@@ -138,19 +138,23 @@
                                                 <field name="net_weight"/>
                                                 <field name="gross_weight"/>
                                                 <field name="material_cost" sum="總材料成本"/>
-                                            </tree>
-                                        </field>
-                                    </page>
-                                    <page string="內製/委外加工成本">
-                                        <field name="handle_processcost_ids">
-                                            <tree string="內製/委外加工成本" editable="bottom">
                                                 <field name="process_hour"/>
                                                 <field name="wage"/>
-                                                <field name="process_price"/>
+                                                <field name="process_price" sum="總金額"/>
                                                 <field name="inout"/>
                                             </tree>
                                         </field>
                                     </page>
+<!--                                    <page string="內製/委外加工成本">-->
+<!--                                        <field name="handle_processcost_ids">-->
+<!--                                            <tree string="內製/委外加工成本" editable="bottom">-->
+<!--                                                <field name="process_hour"/>-->
+<!--                                                <field name="wage"/>-->
+<!--                                                <field name="process_price" sum="總金額"/>-->
+<!--                                                <field name="inout"/>-->
+<!--                                            </tree>-->
+<!--                                        </field>-->
+<!--                                    </page>-->
                                     <page string="材質+模具費+製造費用">
                                         <group>
                                             <group name="item_mold" string="材質+模具費">
@@ -162,6 +166,7 @@
                                                 <field name="handle_moldcost6"/>
                                                 <field name="handle_mandrel"/>
                                                 <field name="handle_elecmandrel"/>
+                                                <field name="handle_mold_total" />
                                             </group>
                                             <group name="item_work" string="製造費用">
                                                 <field name="handle_work_make"/>
@@ -177,26 +182,30 @@
                   </notebook>
                   <notebook attrs="{'invisible': ['|', ('item_routing', '!=', 'assembly'), ('item_routing', '=', False)]}">
                     <page string="組裝">
-                                <group>
-                                    <group>
-                                        <field name="assembly_wage_ids">
-                                            <tree string="選擇工資項目" editable="bottom">
-                                                <field name="routing_wages_id"/>
-                                                <field name="num"/>
-                                                <field name="price"/>
-                                            </tree>
-                                        </field>
-                                    </group>
-                                    <group>
-                                        <field name="assembly_material_ids">
-                                            <tree string="選擇材料" editable="bottom">
-                                                <field name="routing_material_id"/>
-                                                <field name="price"/>
-                                            </tree>
-                                        </field>
-                                    </group>
-                                </group>
-                            </page>
+                        <group col="4">
+                            <field name="assembly_manage_rate"/>
+                            <field name="assembly_profit_rate"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="assembly_wage_ids">
+                                    <tree string="選擇工資項目" editable="bottom">
+                                        <field name="routing_wages_id"/>
+                                        <field name="num"/>
+                                        <field name="price" sum="總金額"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="assembly_material_ids">
+                                    <tree string="選擇材料" editable="bottom">
+                                        <field name="routing_material_id"/>
+                                        <field name="price" sum="總金額"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </page>
                   </notebook>
 
                     </sheet>

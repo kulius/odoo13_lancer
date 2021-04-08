@@ -90,8 +90,8 @@ class LancerMainItemCalcMetal(models.Model):
         result['domain'] = {'metal_type_id': [('id', 'in', list)]}
         return result
 
-    # 形狀、外徑、鋼材種類、鋼材規格 計算成本
-    @api.onchange('metal_shape_id', 'metal_outer_id', 'metal_spec_id', 'metal_type_id')
+    # 形狀、外徑、鋼材種類、鋼材規格、下料長度 計算成本
+    @api.onchange('metal_shape_id', 'metal_outer_id', 'metal_spec_id', 'metal_type_id', 'metal_cutting_long_id', 'metal_long')
     def onchange_metal_type(self):
         if not (self.metal_shape_id and self.metal_outer_id and self.metal_spec_id and self.metal_type_id and self.metal_cutting_long_id):
             return False
@@ -161,29 +161,34 @@ class LancerMainItemCalcMetal(models.Model):
             }
             self.metal_item_processcost_ids = [(0, 0, vals)]
 
-            #染黑頭
-            outer_size = self.metal_outer_id.outer_size # 外徑長度
-            # 下料長度*換算率+0.5
-            cos_cost4 = self.metal_outer_id.outer_rate * self.metal_cutting_long_id.name + self.metal_outer_id.outer_dye_blackhead_price
-            #鍍層單價
-            cost_plat_file = self.env['lancer.cost.plat.file'].search([('routing_coating_id', '=', self.metal_coating_id.id),
-                                                                       ('plat_begin', '<=',outer_size),
-                                                                       ('plat_end', '>=', outer_size),
-                                                                       ('plat_long_being', '<=', self.metal_cutting_long_id.name),
-                                                                       ('plat_long_end', '>=', self.metal_cutting_long_id.name),
-                                                                       ], limit=1)
-            if cost_plat_file:
-                self.metal_work_plating = cost_plat_file.plat_cost
-                self.metal_work_dye_blackhead = cost_plat_file.plat_cost + cos_cost4
-            self.metal_work_spray_blackhead = cost_plat_file.plat_cost + 0.3
+        #染黑頭
+        outer_size = self.metal_outer_id.outer_size # 外徑長度
+        # 下料長度*換算率+0.5
+        cos_cost4 = self.metal_outer_id.outer_rate * self.metal_cutting_long_id.name + self.metal_outer_id.outer_dye_blackhead_price
+        #鍍層單價
+        cost_plat_file = self.env['lancer.cost.plat.file'].search([('routing_coating_id', '=', self.metal_coating_id.id),
+                                                                   ('plat_begin', '<=',outer_size),
+                                                                   ('plat_end', '>=', outer_size),
+                                                                   ('plat_long_being', '<=', self.metal_cutting_long_id.name),
+                                                                   ('plat_long_end', '>=', self.metal_cutting_long_id.name),
+                                                                   ], limit=1)
+        if cost_plat_file:
+            self.metal_work_plating = cost_plat_file.plat_cost
+            self.metal_work_dye_blackhead = cost_plat_file.plat_cost + cos_cost4
+        self.metal_work_spray_blackhead = cost_plat_file.plat_cost + 0.3
 
-            #電鍍成本=((單支價格+人工成本+製造費)/效率/良率)+電鍍單價
-            sum_process_cost = sum([l.process_cost for l in self.metal_item_processcost_ids])
-            sum_out_price = sum([l.out_price for l in self.metal_item_processcost_ids])
+        #電鍍成本=((單支價格+人工成本+製造費)/效率/良率)+電鍍單價
+        sum_process_cost = sum([l.process_cost for l in self.metal_item_processcost_ids])
+        sum_out_price = sum([l.out_price for l in self.metal_item_processcost_ids])
 
-            self.metal_work_sum1 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_plating
-            self.metal_work_sum2 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_dye_blackhead
-            self.metal_work_sum3 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_spray_blackhead
+        self.metal_work_sum1 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_plating
+        self.metal_work_sum2 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_dye_blackhead
+        self.metal_work_sum3 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_spray_blackhead
+
+        #料工費 計算及取得
+        self.material_cost = self.metal_price
+        self.process_cost = sum_process_cost
+        self.manufacture_cost = self.metal_work_make
 
 # 品項 計算手柄射出
 class LancerMainItemCalcHandle(models.Model):
