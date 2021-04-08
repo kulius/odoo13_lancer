@@ -8,9 +8,15 @@
         <!-- 報價單 -->
         <menuitem id="menu_lancer_quote_menu" name="報價單"
                   parent="lancer_quote.lancer_quote" sequence="0"/>
-        <!--客戶基本資料維護 -->
+        <!--報價單 -->
         <menuitem id="menu_lancer_quote__menu" name="報價單" action="action_lancer_quote_form"
                   parent="lancer_quote.menu_lancer_quote_menu" sequence="1"/>
+
+        <menuitem id="menu_lancer_payment_term" name="付款條件" action="action_lancer_payment_term_form"
+                   parent="lancer_quote.menu_lancer_quote_menu" sequence="2"/>
+
+        <menuitem id="menu_action_lancer_incoterm_open" name="貿易條件" action="action_lancer_incoterms_tree"
+                  parent="lancer_quote.menu_lancer_quote_menu" sequence="3"/>
 
 
         <!-- 基本資料 -->
@@ -32,65 +38,73 @@
         <menuitem id="menu_lancer_main_item_main_menu" name="品項" action="action_lancer_main_item_form"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="3"/>
 
-        <!-- 其他設定 -->
-        <menuitem id="menu_lancer_base_other_setting_menu" name="其他設定"
-                  parent="lancer_quote.lancer_quote" sequence="2"/>
         <menuitem id="menu_lancer_other_main_category_menu" name="主件分類" action="action_lancer_main_category_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="1"/>
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="6"/>
         <menuitem id="menu_lancer_other_main_item_category_menu" name="品項分類" action="action_lancer_main_item_category_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="2"/>
-        <menuitem id="menu_lancer_metal_type_menu" name="鋼材規格設定" action="action_lancer_metal_type_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="3"/>
-        <menuitem id="menu_lancer_metal_spec_menu" name="鋼材種類設定" action="action_lancer_metal_spec_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="4"/>
-        <menuitem id="menu_lancer_metal_cutting_long_menu" name="下料長度(mm)設定" action="action_lancer_metal_cutting_long_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="5"/>
-        <menuitem id="menu_lancer_handlematerial_process_menu" name="自製手柄加工工序設定" action="action_lancer_handlematerial_process_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="6"/>
-        <menuitem id="menu_lancer_handlematerial_material_menu" name="自製手柄材質設定" action="action_lancer_handlematerial_material_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="7"/>
-        <menuitem id="menu_lancer_lancer_cost_wire_file_menu" name="材料單價設定" action="action_lancer_cost_wire_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="8"/>
-        <menuitem id="menu_lancer_cost_cal_file_menu" name="單重長度表設定" action="action_lancer_cost_cal_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="9"/>
-        <menuitem id="menu_lancer_cost_map_file_menu" name="特徵值關係表設定" action="action_lancer_cost_map_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
-        <menuitem id="menu_lancer_cost_plat_file_menu" name="電鍍單價表設定" action="action_lancer_cost_plat_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
-        <menuitem id="menu_lancer_cost_pro_file_menu" name="內製/委外 加工成本" action="action_lancer_cost_pro_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
-        <menuitem id="menu_lancer_cost_handle_file_menu" name="手柄用料" action="action_lancer_cost_handle_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="7"/>
+
+        <!-- 金屬加工設定 -->
+        <menuitem id="menu_lancer_base_other_setting_menu" name="金屬加工設定"
+                  parent="lancer_quote.lancer_quote" sequence="2"/>
+
+        <menuitem action="action_lancer_routing_version_form" name="金屬加工版本設定"
+                  id="menu_lancer_metal_version" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="1"/>
 
 
-
-        <!-- 報價單基本資料維護 -->
-        <menuitem id="menu_lancer_quote_main_menu" name="報價基本資料設定"
-                  parent="lancer_quote.lancer_quote" sequence="3"/>
-        <menuitem action="action_lancer_payment_term_form" name="付款條件"
-                  id="menu_lancer_payment_term" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="1"/>
-
-        <menuitem action="action_lancer_incoterms_tree" id="menu_action_lancer_incoterm_open" name="貿易條件"
-                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="2"/>
-
-
-        <!-- 加工製程設定 -->
-        <menuitem id="menu_lancer_routing_menu" name="加工製程設定"
-                  parent="lancer_quote.lancer_quote" sequence="4"/>
         <menuitem action="action_lancer_routing_shape_form" name="形狀"
-                  id="menu_lancer_routing_shape" parent="lancer_quote.menu_lancer_routing_menu" sequence="1"/>
+                  id="menu_lancer_routing_shape" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="2"/>
         <menuitem action="action_lancer_routing_coating_form" name="鍍層"
-                  id="menu_lancer_routing_coating" parent="lancer_quote.menu_lancer_routing_menu" sequence="2"/>
+                  id="menu_lancer_routing_coating" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="3"/>
         <menuitem action="action_lancer_routing_cutting_form" name="刃口"
-                  id="menu_lancer_routing_cutting" parent="lancer_quote.menu_lancer_routing_menu" sequence="3"/>
+                  id="menu_lancer_routing_cutting" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="4"/>
         <menuitem action="action_lancer_routing_outer_form" name="外徑"
-                  id="menu_lancer_routing_outer" parent="lancer_quote.menu_lancer_routing_menu" sequence="4"/>
+                  id="menu_lancer_routing_outer" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="5"/>
+
+        <menuitem id="menu_lancer_metal_type_menu" name="鋼材規格設定" action="action_lancer_metal_type_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="6"/>
+        <menuitem id="menu_lancer_metal_spec_menu" name="鋼材種類設定" action="action_lancer_metal_spec_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="7"/>
+        <menuitem id="menu_lancer_metal_cutting_long_menu" name="下料長度(mm)設定" action="action_lancer_metal_cutting_long_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="8"/>
+
+        <menuitem id="menu_lancer_lancer_cost_wire_file_menu" name="材料單價設定" action="action_lancer_cost_wire_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="9"/>
+        <menuitem id="menu_lancer_cost_cal_file_menu" name="單重長度表設定" action="action_lancer_cost_cal_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
+        <menuitem id="menu_lancer_cost_map_file_menu" name="特徵值關係表設定" action="action_lancer_cost_map_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="11"/>
+        <menuitem id="menu_lancer_cost_plat_file_menu" name="電鍍單價表設定" action="action_lancer_cost_plat_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="12"/>
+        <menuitem id="menu_lancer_cost_pro_file_menu" name="內製/委外 加工成本" action="action_lancer_cost_pro_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="13"/>
+
+
+
+
+        <!-- 手柄射出設定 -->
+        <menuitem id="menu_lancer_quote_main_menu" name="手柄射出設定"
+                  parent="lancer_quote.lancer_quote" sequence="3"/>
+
+        <menuitem action="action_lancer_routing_version_form" name="手柄射出版本設定"
+                  id="menu_lancer_routing_version" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="1"/>
+
+
         <menuitem action="action_lancer_routing_series_form" name="系列別"
-                  id="menu_lancer_routing_series" parent="lancer_quote.menu_lancer_routing_menu" sequence="5"/>
+                  id="menu_lancer_routing_series" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="2"/>
         <menuitem action="action_lancer_routing_handle_form" name="手柄尺吋"
-                  id="menu_lancer_routing_handle" parent="lancer_quote.menu_lancer_routing_menu" sequence="6"/>
-        <menuitem action="action_lancer_routing_version_form" name="版本版次"
-                  id="menu_lancer_routing_version" parent="lancer_quote.menu_lancer_routing_menu" sequence="7"/>
+                  id="menu_lancer_routing_handle" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="3"/>
+
+        <menuitem id="menu_lancer_handlematerial_process_menu" name="自製手柄加工工序設定" action="action_lancer_handlematerial_process_form"
+                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="4"/>
+        <menuitem id="menu_lancer_handlematerial_material_menu" name="自製手柄材質設定" action="action_lancer_handlematerial_material_form"
+                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="5"/>
+        <menuitem id="menu_lancer_cost_handle_file_menu" name="手柄用料" action="action_lancer_cost_handle_file_form"
+                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="6"/>
+
+        <!-- 組裝設定 -->
+        <menuitem id="menu_lancer_routing_menu" name="組裝設定"
+                  parent="lancer_quote.lancer_quote" sequence="4"/>
+
         <menuitem action="action_lancer_routing_wages_form" name="組裝-工資項目"
                   id="menu_lancer_routing_wages" parent="lancer_quote.menu_lancer_routing_menu" sequence="8"/>
         <menuitem action="action_lancer_routing_material_form" name="組裝-材料"
