@@ -190,10 +190,7 @@ class LancerMainItemCalcMetal(models.Model):
         self.process_cost = sum_process_cost
         self.manufacture_cost = self.metal_work_make
 
-# 品項 計算手柄射出
-class LancerMainItemCalcHandle(models.Model):
-    _inherit = 'lancer.main.item'
-    _description = '品項 計算手柄射出'
+
 
 
 

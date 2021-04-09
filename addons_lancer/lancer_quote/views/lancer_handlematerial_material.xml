@@ -20,7 +20,7 @@
             <field name="name">lancer.handlematerial.material.tree</field>
             <field name="model">lancer.handlematerial.material</field>
             <field name="arch" type="xml">
-                <tree string="自製手柄材質設定">
+                <tree string="自製手柄材質設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="material_code"/>
                     <field name="name"/>

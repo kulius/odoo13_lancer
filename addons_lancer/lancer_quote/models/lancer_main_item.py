@@ -52,7 +52,7 @@ class LancerMainItem(models.Model):
 
     active = fields.Boolean(default=True, string='是否啟用')
     name = fields.Char(string='品項品名規格')
-    main_id = fields.Many2one(comodel_name="lancer.main", string="所屬主件", required=True, )
+    main_id = fields.Many2one(comodel_name="lancer.main", string="所屬主件", required=True, ondelete='cascade')
     main_item_category_id = fields.Many2one(comodel_name="lancer.main.item.category", string="品項分類", required=True, )
 
     item_routing = fields.Selection(string="加工製程段",
@@ -227,7 +227,6 @@ class LancerMainItemHandleProcessCost(models.Model):
     _order = "id"
     _description = 'Lancer main Item handleprocesscost'
 
-
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
 
     process_hour = fields.Float(string='加工時間')
@@ -243,7 +242,7 @@ class LancerMainItemAssemblyWage(models.Model):
     _order = "id"
     _description = 'Lancer main Item assemblywage'
 
-    main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, )
+    main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
 
     routing_wages_id = fields.Many2one(comodel_name="lancer.routing.wages", string="工資項目", required=False, ondelete='cascade')
     num = fields.Float(string='次數/面數')

@@ -19,7 +19,7 @@
             <field name="name">lancer.routing.material.tree</field>
             <field name="model">lancer.routing.material</field>
             <field name="arch" type="xml">
-                <tree string="製程組裝-材料設定">
+                <tree string="製程組裝-材料設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
                 </tree>

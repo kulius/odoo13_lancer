@@ -6,7 +6,7 @@
             <field name="name">lancer.handlematerial.process.search</field>
             <field name="model">lancer.handlematerial.process</field>
             <field name="arch" type="xml">
-                <search string="自製手柄加工工序">
+                <search string="自製手柄加工工序" >
                     <field name="name"/>
                     <field name="process_code"/>
                     <field name="active"/>
@@ -20,7 +20,7 @@
             <field name="name">lancer.handlematerial.process.tree</field>
             <field name="model">lancer.handlematerial.process</field>
             <field name="arch" type="xml">
-                <tree string="自製手柄加工工序設定">
+                <tree string="自製手柄加工工序設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="process_code"/>
                     <field name="name"/>

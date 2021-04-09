@@ -19,7 +19,7 @@
             <field name="name">lancer.routing.wages.tree</field>
             <field name="model">lancer.routing.wages</field>
             <field name="arch" type="xml">
-                <tree string="製程工資項目設定">
+                <tree string="製程工資項目設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
                 </tree>

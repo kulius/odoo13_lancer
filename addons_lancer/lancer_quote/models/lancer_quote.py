@@ -56,7 +56,7 @@ class LancerQuoteLine(models.Model):
     _order = "sequence, id"
     _description = '報價單-自製'
 
-    quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, )
+    quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, ondelete='cascade')
     main_id = fields.Many2one(comodel_name='lancer.main', string='主件品名規格')
     main_category_id = fields.Many2one(comodel_name="lancer.main.category", string="主件分類", required=True, )
     sequence = fields.Integer(string='項次', required=True, default=10)
@@ -72,7 +72,7 @@ class LancerQuoteSubcontract(models.Model):
     _order = "name"
     _description = '報價單-外購'
 
-    quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, )
+    quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, ondelete='cascade')
     sequence = fields.Integer(string='項次', required=True, default=10)
     partner_id = fields.Many2one(comodel_name="res.partner", string="廠商", required=False, )
     subcontract_category_id = fields.Many2one(comodel_name="lancer.subcontract.category", string="品項大類",
@@ -96,8 +96,8 @@ class LancerQuotePackage(models.Model):
     _order = "name"
     _description = '報價單-包裝'
 
-    quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, )
-    package_setting_id = fields.Many2one(comodel_name="lancer_package_setting", string="包裝料件", required=True, )
+    quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, ondelete='cascade')
+    package_setting_id = fields.Many2one(comodel_name="lancer.package.setting", string="包裝料件", required=True, )
     name = fields.Char(string='說明')
     quant = fields.Float(string="數量", required=False, )
     amount = fields.Float(string="價格", required=False, )
@@ -110,8 +110,8 @@ class LancerQuotExpense(models.Model):
     _order = "name"
     _description = '報價單-其餘費用'
 
-    quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, )
-    package_expense_id = fields.Many2one(comodel_name="lancer_package_expense", string="其餘費用項目", required=True, )
+    quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, ondelete='cascade')
+    package_expense_id = fields.Many2one(comodel_name="lancer.package.expense", string="其餘費用項目", required=True, )
     name = fields.Char(string='說明')
     quant = fields.Float(string="數量", required=False, )
     amount = fields.Float(string="價格", required=False, )

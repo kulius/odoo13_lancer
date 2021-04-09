@@ -44,6 +44,8 @@
         'views/lancer_cost_map_file.xml',
         'views/lancer_cost_plat_file.xml',
         'views/lancer_cost_handle_file.xml',
+        'views/lancer_version_handle.xml',
+        'views/lancer_version_metal.xml',
         'views/menu.xml',
     ],
     "active": False,

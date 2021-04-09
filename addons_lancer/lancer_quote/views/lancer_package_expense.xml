@@ -19,7 +19,7 @@
             <field name="name">lancer.package.expense.tree</field>
             <field name="model">lancer.package.expense</field>
             <field name="arch" type="xml">
-                <tree string="包裝費用項目設定">
+                <tree string="包裝費用項目設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
                 </tree>

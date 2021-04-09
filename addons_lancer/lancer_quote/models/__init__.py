@@ -34,3 +34,5 @@ from . import lancer_cost_plat_file
 from . import lancer_cost_pro_file
 
 from . import lancer_cost_handle_file
+from . import lancer_version_metal
+from . import lancer_version_handle

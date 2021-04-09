@@ -19,7 +19,7 @@
             <field name="name">lancer.subcontract.treatment.tree</field>
             <field name="model">lancer.subcontract.treatment</field>
             <field name="arch" type="xml">
-                <tree string="表面處理設定">
+                <tree string="表面處理設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
                 </tree>

@@ -19,7 +19,7 @@
             <field name="name">lancer.subcontract.category.tree</field>
             <field name="model">lancer.subcontract.category</field>
             <field name="arch" type="xml">
-                <tree string="品項分類設定">
+                <tree string="品項分類設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
                 </tree>

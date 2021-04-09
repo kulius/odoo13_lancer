@@ -10,5 +10,21 @@
             <field name="padding">2</field>
         </record>
 
+        <record id="seq_lancer_version_handle" model="ir.sequence">
+            <field name="name">lancer version handle</field>
+            <field name="code">lancer.version.handle</field>
+            <field name="prefix">H%(year)s%(month)s%(day)s</field>
+            <field eval="False" name="company_id"/>
+            <field name="padding">2</field>
+        </record>
+
+        <record id="seq_lancer_version_metal" model="ir.sequence">
+            <field name="name">lancer version metal</field>
+            <field name="code">lancer.version.metal</field>
+            <field name="prefix">M%(year)s%(month)s%(day)s</field>
+            <field eval="False" name="company_id"/>
+            <field name="padding">2</field>
+        </record>
+
     </data>
 </odoo>

@@ -20,7 +20,7 @@
             <field name="name">lancer.routing.handle.tree</field>
             <field name="model">lancer.routing.handle</field>
             <field name="arch" type="xml">
-                <tree string="製程手柄尺吋設定">
+                <tree string="製程手柄尺吋設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="handle_code"/>
                     <field name="name"/>
