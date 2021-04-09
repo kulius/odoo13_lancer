@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="lancer_version_metal_view_search" model="ir.ui.view">
+            <field name="name">lancer.version.metal.search</field>
+            <field name="model">lancer.version.metal</field>
+            <field name="arch" type="xml">
+                <search string="金屬加工版本版次">
+                    <field name="name"/>
+                    <field name="active"/>
+                    <separator/>
+                    <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_lancer_version_metal_tree" model="ir.ui.view">
+            <field name="name">lancer.version.metal.tree</field>
+            <field name="model">lancer.version.metal</field>
+            <field name="arch" type="xml">
+                <tree string="金屬加工版本版次設定">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_lancer_version_metal_form" model="ir.ui.view">
+            <field name="name">lancer.version.metal.form</field>
+            <field name="model">lancer.version.metal</field>
+            <field name="arch" type="xml">
+                <form string="金屬加工版本版次設定">
+                    <sheet>
+                        <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <group col="4">
+                            <field name="name"/>
+                            <field name="metal_blade"/>
+                        </group>
+                        <group col="8">
+                            <field name="metal_shape_id"/>
+                            <field name="metal_coating_id"/>
+                            <field name="metal_cutting_id"/>
+                            <field name="metal_outer_id"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="metal_spec_id"/>
+                                <field name="metal_type_id"/>
+                                <field name="metal_long"/>
+                                <field name="metal_cutting_long_id"/>
+
+                            </group>
+                            <group>
+                                <field name="metal_cut"/>
+                                <field name="metal_weight"/>
+                                <field name="metal_material"/>
+                                <field name="metal_price"/>
+                                <field name="metal_count"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="metal_is_std_hour"/>
+                        </group>
+                        <field name="metal_item_processcost_ids">
+                            <tree string="內置委外加工成本" editable="bottom">
+                                <field name="process"/>
+                                <field name="process_num"/>
+                                <field name="std_hour"/>
+                                <field name="process_cost" sum="加工成本合計"/>
+                                <field name="unit_price" />
+                                <field name="out_price" sum="委外單價合計"/>
+                                <field name="is_inout"/>
+                                <field name="calc_role"/>
+                            </tree>
+                        </field>
+                        <group col="4">
+                            <field name="metal_work_labor"/>
+                            <field name="metal_work_make"/>
+                            <field name="metal_work_efficiency"/>
+                            <field name="metal_work_yield"/>
+                        </group>
+                        <group col="6">
+                            <field name="metal_work_plating"/>
+                            <field name="metal_work_dye_blackhead"/>
+                            <field name="metal_work_spray_blackhead"/>
+                            <field name="metal_work_sum1"/>
+                            <field name="metal_work_sum2"/>
+                            <field name="metal_work_sum3"/>
+                        </group>
+                        <field name="active" invisible="1"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_lancer_version_metal_form" model="ir.actions.act_window">
+            <field name="name">金屬加工版本版次設定</field>
+            <field name="res_model">lancer.version.metal</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="lancer_version_metal_view_search"/>
+        </record>
+
+
+    </data>
+</odoo>

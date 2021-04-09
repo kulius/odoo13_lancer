@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="lancer_version_handle_view_search" model="ir.ui.view">
+            <field name="name">lancer.version.handle.search</field>
+            <field name="model">lancer.version.handle</field>
+            <field name="arch" type="xml">
+                <search string="手柄版本版次">
+                    <field name="name"/>
+                    <field name="active"/>
+                    <separator/>
+                    <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_lancer_version_handle_tree" model="ir.ui.view">
+            <field name="name">lancer.version.handle.tree</field>
+            <field name="model">lancer.version.handle</field>
+            <field name="arch" type="xml">
+                <tree string="手柄版本版次設定">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_lancer_version_handle_form" model="ir.ui.view">
+            <field name="name">lancer.version.handle.form</field>
+            <field name="model">lancer.version.handle</field>
+            <field name="arch" type="xml">
+                <form string="手柄版本版次設定">
+                    <sheet>
+                        <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+
+                        <group col="6">
+                            <field name="name"/>
+                            <field name="handle_series_id"/>
+                            <field name="handle_handle_id"/>
+                        </group>
+
+
+                        <field name="handle_materialcost_ids">
+                            <tree string="用料成本" editable="bottom">
+                                <field name="process"/>
+                                <field name="material"/>
+                                <field name="cavity_num"/>
+                                <field name="original_price"/>
+                                <field name="dyeing"/>
+                                <field name="net_weight"/>
+                                <field name="gross_weight"/>
+                                <field name="material_cost" sum="總材料成本"/>
+                                <field name="process_hour"/>
+                                <field name="wage"/>
+                                <field name="process_price" sum="總金額"/>
+                                <field name="inout"/>
+                            </tree>
+                        </field>
+                        <group>
+                            <group name="item_mold" string="材質+模具費">
+                                <field name="handle_moldcost1"/>
+                                <field name="handle_moldcost2"/>
+                                <field name="handle_moldcost3"/>
+                                <field name="handle_moldcost4"/>
+                                <field name="handle_moldcost5"/>
+                                <field name="handle_moldcost6"/>
+                                <field name="handle_mandrel"/>
+                                <field name="handle_elecmandrel"/>
+                                <field name="handle_mold_total" />
+                            </group>
+                            <group name="item_work" string="製造費用">
+                                <field name="handle_work_make"/>
+                                <field name="handle_work_mould"/>
+                                <field name="handle_work_efficiency"/>
+                                <field name="handle_work_yield"/>
+                                <field name="handle_work_sum"/>
+                            </group>
+                        </group>
+                        <field name="active" invisible="1"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_lancer_version_handle_form" model="ir.actions.act_window">
+            <field name="name">手柄版本版次設定</field>
+            <field name="res_model">lancer.version.handle</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="lancer_version_handle_view_search"/>
+        </record>
+
+
+    </data>
+</odoo>
