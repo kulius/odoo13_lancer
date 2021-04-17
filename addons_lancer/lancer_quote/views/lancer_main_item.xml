@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <search string="品項">
                     <field name="name"/>
-                    <field name="active"/>
+                    <!--<field name="active"/>-->
                     <separator/>
                     <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
                 </search>
@@ -21,7 +21,7 @@
             <field name="arch" type="xml">
                 <tree string="品項">
                     <field name="name"/>
-                    <field name="main_id"/>
+                    <!--<field name="main_id"/>-->
                     <field name="main_item_category_id"/>
                 </tree>
             </field>
@@ -38,7 +38,6 @@
                         <field name="active" invisible="1"/>
                         <group col="6">
                             <field name="name"/>
-                            <field name="main_id"/>
                             <field name="main_item_category_id"/>
                             <field name="item_routing"/>
                         </group>
@@ -54,10 +53,10 @@
                                     <field name="metal_blade"/>
                                 </group>
                                 <group col="8">
-                                    <field name="metal_shape_id"/>
-                                    <field name="metal_coating_id"/>
-                                    <field name="metal_cutting_id"/>
-                                    <field name="metal_outer_id"/>
+                                    <field name="metal_shape_id" options="{'no_create': True, 'no_create_edit':True}" />
+                                    <field name="metal_coating_id" options="{'no_create': True, 'no_create_edit':True}" />
+                                    <field name="metal_cutting_id" options="{'no_create': True, 'no_create_edit':True}" />
+                                    <field name="metal_outer_id" options="{'no_create': True, 'no_create_edit':True}" />
                                 </group>
                                 <notebook>
                                     <page string="用料成本" attrs="{'invisible': [('metal_blade', '=', False)]}">
@@ -122,8 +121,8 @@
                             <button name="handle_cost_calc_safe" string="試算結束存儲" type="object" class="btn-primary" />
                         </group>
                         <group col="6">
-                            <field name="handle_series_id"/>
-                            <field name="handle_handle_id"/>
+                            <field name="handle_series_id" options="{'no_create': True, 'no_create_edit':True}" />
+                            <field name="handle_handle_id" options="{'no_create': True, 'no_create_edit':True}" />
                             <field name="handle_version_id"/>
                         </group>
                                 <notebook>

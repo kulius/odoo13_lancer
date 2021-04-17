@@ -64,6 +64,14 @@ class LancerQuoteLine(models.Model):
     work_amount = fields.Float(related='main_id.main_process_cost', string="工", required=False, )
     factory_amount = fields.Float(related='main_id.main_manufacture_cost', string="費", required=False, )
     total_amount = fields.Float(related='main_id.main_total_cost', string="總價", required=False, )
+    quote_attrs_ids = fields.Many2many('lancer.attr.records', string='主件特徵值')
+
+    @api.onchange('main_id')
+    def set_attrs_data(self):
+        if not self.main_id:
+            return
+        if self.main_id:
+            self.quote_attrs_ids = self.main_id.main_attrs_ids
 
 
 class LancerQuoteSubcontract(models.Model):

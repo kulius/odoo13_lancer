@@ -85,6 +85,7 @@
                                         <field name="sequence" />
                                         <field name="main_category_id" />
                                         <field name="main_id" />
+                                        <field name="quote_attrs_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
                                         <field name="material_amount" />
                                         <field name="work_amount" />
                                         <field name="factory_amount" />

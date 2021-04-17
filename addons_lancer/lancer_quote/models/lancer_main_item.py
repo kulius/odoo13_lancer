@@ -52,7 +52,6 @@ class LancerMainItem(models.Model):
 
     active = fields.Boolean(default=True, string='是否啟用')
     name = fields.Char(string='品項品名規格')
-    main_id = fields.Many2one(comodel_name="lancer.main", string="所屬主件", required=True, ondelete='cascade')
     main_item_category_id = fields.Many2one(comodel_name="lancer.main.item.category", string="品項分類", required=True, )
 
     item_routing = fields.Selection(string="加工製程段",

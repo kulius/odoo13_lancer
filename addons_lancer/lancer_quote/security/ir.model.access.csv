@@ -13,6 +13,11 @@ access_lancer_main_user,lancer.main,model_lancer_main,lancer_quote.group_lancer_
 access_lancer_main_manage,lancer.main,model_lancer_main,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_main_item_user,lancer.main.item,model_lancer_main_item,lancer_quote.group_lancer_base_user,1,1,1,1
 access_lancer_main_item_manage,lancer.main.item,model_lancer_main_item,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_main_order_line_user,lancer.main.order.line,model_lancer_main_order_line,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_main_order_line_manage,lancer.main.order.line,model_lancer_main_order_line,lancer_quote.group_lancer_base_manage,1,1,1,1
+
+access_lancer_attr_records_user,lancer.attr.records,model_lancer_attr_records,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_attr_records_manage,lancer.attr.records,model_lancer_attr_records,lancer_quote.group_lancer_base_manage,1,1,1,1
 
 access_lancer_main_item_processcost_user,lancer.main.item.processcost,model_lancer_main_item_processcost,lancer_quote.group_lancer_base_user,1,1,1,1
 access_lancer_main_item_processcost_manage,lancer.main.item.processcost,model_lancer_main_item_processcost,lancer_quote.group_lancer_base_manage,1,1,1,1
