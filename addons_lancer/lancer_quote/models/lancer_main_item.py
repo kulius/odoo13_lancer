@@ -15,19 +15,25 @@ class LancerMainItem(models.Model):
 
     def _get_metal_work_labor(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_metal_work_labor')
+
     def _get_metal_work_make(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_metal_work_make')
+
     def _get_metal_work_efficiency(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_metal_work_efficiency')
+
     def _get_metal_work_yield(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_metal_work_yield')
 
     def _get_handle_work_mould(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_work_mould')
+
     def _get_handle_work_make(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_work_make')
+
     def _get_handle_work_efficiency(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_work_efficiency')
+
     def _get_handle_work_yield(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_work_yield')
 
@@ -36,17 +42,19 @@ class LancerMainItem(models.Model):
         price = self.material_cost + self.process_cost + self.manufacture_cost
         self.update({'item_total_cost': price})
 
-    @api.depends('handle_moldcost1', 'handle_moldcost2', 'handle_moldcost3', 'handle_moldcost4', 'handle_moldcost5', 'handle_moldcost6', 'handle_mandrel', 'handle_elecmandrel')
+    @api.depends('handle_moldcost1', 'handle_moldcost2', 'handle_moldcost3', 'handle_moldcost4', 'handle_moldcost5',
+                 'handle_moldcost6', 'handle_mandrel', 'handle_elecmandrel')
     def _handle_mold_total(self):
         price = self.handle_moldcost1 + self.handle_moldcost2 + self.handle_moldcost3 + self.handle_moldcost4 + self.handle_moldcost5 + self.handle_moldcost6 + self.handle_mandrel + self.handle_elecmandrel
         self.update({'handle_mold_total': price})
 
-    #手柄射出-總成本計算
+    # 手柄射出-總成本計算
     @api.depends('handle_materialcost_ids', 'handle_mold_total')
     def _handle_work_sum(self):
-        sum1 = sum([l.material_cost+l.process_price for l in self.handle_materialcost_ids])
+        sum1 = sum([l.material_cost + l.process_price for l in self.handle_materialcost_ids])
         # sum2 = sum([l.process_price for l in self.handle_processcost_ids])
-        sumcost = (sum1 + self.handle_work_make + self.handle_work_mould) / self.handle_work_efficiency / self.handle_work_yield
+        sumcost = (
+                              sum1 + self.handle_work_make + self.handle_work_mould) / self.handle_work_efficiency / self.handle_work_yield
         # Math.Round(((txt_Matall.Text + txt_Proall.Text + txt_Cost03.Text + txt_Cost05.Text) / txt_Cost02.Text / txt_Cost04.Text), 3, MidpointRounding.AwayFromZero).ToString();
         self.update({'handle_work_sum': sumcost})
 
@@ -96,7 +104,8 @@ class LancerMainItem(models.Model):
     # 手柄射出
     handle_series_id = fields.Many2one(comodel_name="lancer.routing.series", string="系列別", required=False, )
     handle_handle_id = fields.Many2one(comodel_name="lancer.routing.handle", string="手柄尺吋", required=False, )
-    handle_version_id = fields.Many2one(comodel_name="lancer.routing.version", string="版本版次", required=False, )
+    # handle_version_id = fields.Many2one(comodel_name="lancer.routing.version", string="版本版次", required=False, )
+    handle_version_id = fields.Many2one(comodel_name="lancer.version.handle", string="版本版次", required=False, )
 
     handle_materialcost_ids = fields.One2many(comodel_name="lancer.main.item.handlematerial",
                                               inverse_name="main_item_id", string="用料成本", required=False, )
@@ -113,7 +122,7 @@ class LancerMainItem(models.Model):
     handle_elecmandrel = fields.Float(string="電工芯軸", required=False, defalut="0")
     handle_mold_total = fields.Float(string='總模具費用', store=True, readonly=True, compute='_handle_mold_total')
 
-    handle_work_make = fields.Float(string="製造費", required=False, default=_get_handle_work_make )
+    handle_work_make = fields.Float(string="製造費", required=False, default=_get_handle_work_make)
     handle_work_mould = fields.Float(string="模具分攤", required=False, default=_get_handle_work_mould)
     handle_work_efficiency = fields.Float(string="效率", required=False, default=_get_handle_work_efficiency)
     handle_work_yield = fields.Float(string="良率", required=False, default=_get_handle_work_yield)
@@ -126,9 +135,77 @@ class LancerMainItem(models.Model):
     assembly_manage_rate = fields.Float(string="管銷百分比", required=False, )
     assembly_profit_rate = fields.Float(string="利潤百分比", required=False, )
 
+    @api.onchange('handle_version_id')
+    def set_handle_version(self):
+        if not self.handle_version_id:
+            return
+        version_record = self.env['lancer.version.handle'].search([('id', '=', self.handle_version_id.id)])
+        if version_record:
+            self.handle_series_id = version_record.handle_series_id.id
+            self.handle_handle_id = version_record.handle_handle_id.id
+            new_lines = []
+            for line in version_record.handle_materialcost_ids:
+                vals = line.read()[0]
+                vals.update({
+                    'main_item_id': self.id,
+                })
+                # vals.pop('bom_id', False)
+                new_lines.append((0, 0, vals))
+            self.handle_materialcost_ids.unlink()
+            self.handle_materialcost_ids = new_lines
+            self.handle_moldcost1 = version_record.handle_moldcost1
+            self.handle_moldcost2 = version_record.handle_moldcost2
+            self.handle_moldcost3 = version_record.handle_moldcost3
+            self.handle_moldcost4 = version_record.handle_moldcost4
+            self.handle_moldcost5 = version_record.handle_moldcost5
+            self.handle_moldcost6 = version_record.handle_moldcost6
+            self.handle_mandrel = version_record.handle_mandrel
+            self.handle_elecmandrel = version_record.handle_elecmandrel
+            self.handle_mold_total = version_record.handle_mold_total
 
+            # self.handle_materialcost_ids = version_record.handle_materialcost_ids.ids
 
         # 金屬加工-內製委外加工成本
+    def handle_cost_calc_safe(self):
+        if self.handle_version_id:
+            return
+        version = self.env['lancer.version.handle']
+        new_lines = []
+
+        # version.handle_materialcost_ids = new_lines
+        values = {
+            'handle_series_id': self.handle_series_id.id,
+            'handle_handle_id': self.handle_handle_id.id,
+            'handle_moldcost1': self.handle_moldcost1,
+            'handle_moldcost2': self.handle_moldcost2,
+            'handle_moldcost3': self.handle_moldcost3,
+            'handle_moldcost4': self.handle_moldcost4,
+            'handle_moldcost5': self.handle_moldcost5,
+            'handle_moldcost6': self.handle_moldcost6,
+            'handle_mandrel': self.handle_mandrel,
+            'handle_elecmandrel': self.handle_elecmandrel,
+            'handle_mold_total': self.handle_mold_total,
+            # 'handle_materialcost_ids': new_lines,
+        }
+        version_id = version.create(values)
+        # values = (vals.get('partsorder_ids', [])) + [(0, 0, {'sourceorder_id': created_id,
+        #                                                      completedby_id': uid})]
+        for line in self.handle_materialcost_ids:
+            vals = line.read()[0]
+            vals.update({
+                'handle_version_id': version_id.id,
+                'material': vals.get('material')[0],
+                'process': vals.get('process')[0],
+            })
+            vals.pop('main_item_id', False)
+            new_lines.append((0, 0, vals))
+        version_id.handle_materialcost_ids = new_lines
+        self.handle_version_id = version_id.id
+        return version_id
+        # version.handle_series_id = self.handle_series_id.id,
+
+
+
 class LancerMainItemProcesscost(models.Model):
     _name = 'lancer.main.item.processcost'
     _rec_name = 'process'
@@ -152,6 +229,7 @@ class LancerMainItemProcesscost(models.Model):
                                                            ('3', ''),
                                                            ], required=False, )
 
+
 # 手柄射出-用料成本 + 內製委外加工成本
 class LancerMainItemHandleMaterial(models.Model):
     _name = 'lancer.main.item.handlematerial'
@@ -163,7 +241,7 @@ class LancerMainItemHandleMaterial(models.Model):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_process_wage')
 
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
-
+    handle_version_id = fields.Many2one('lancer.version.handle', string='版次', ondelete='cascade')
     process = fields.Many2one('lancer.handlematerial.process', string='加工工序')
     material = fields.Many2one('lancer.handlematerial.material', string='材質')
     cavity_num = fields.Float(string='模穴數')
@@ -178,8 +256,8 @@ class LancerMainItemHandleMaterial(models.Model):
     process_price = fields.Float(string='加工單價')
     inout = fields.Selection(string="內外", selection=[('1', '內製'), ('2', '委外'), ], required=False, default="1")
 
-    master_handle_series_id = fields.Many2one(related='main_item_id.handle_series_id', store=True, string='系列別', readonly=True)
-    master_handle_handle_id = fields.Many2one(related='main_item_id.handle_handle_id', store=True, string='尺吋', readonly=True)
+    # master_handle_series_id = fields.Many2one(related='main_item_id.handle_series_id', store=True, string='系列別', readonly=True)
+    # master_handle_handle_id = fields.Many2one(related='main_item_id.handle_handle_id', store=True, string='尺吋', readonly=True)
 
     # 材質改變
     @api.onchange('material')
@@ -190,36 +268,37 @@ class LancerMainItemHandleMaterial(models.Model):
         self.cavity_num = 0
         self.dyeing = 0
         self.gross_weight = 0
-
-        cost_handle_file = self.env['lancer.cost.handle.file'].search([('handle_series_id', '=', self.master_handle_series_id.id),
-                                                                   ('handle_handle_id', '=', self.master_handle_handle_id.id),
-                                                                   ('process', '=', self.process.id),
-                                                                   ('material', '=', self.material.id),
-                                                                   ], limit=1)
+        master_handle_series_id = self.main_item_id.handle_series_id.id
+        master_handle_handle_id = self.main_item_id.handle_handle_id.id
+        cost_handle_file = self.env['lancer.cost.handle.file'].search(
+            [('handle_series_id', '=', master_handle_series_id),
+             ('handle_handle_id', '=', master_handle_handle_id),
+             ('process', '=', self.process.id),
+             ('material', '=', self.material.id),
+             ], limit=1)
         if cost_handle_file:
             self.original_price = cost_handle_file.original_price
             self.net_weight = cost_handle_file.net_weight
-
 
     # 模穴數改變
     @api.onchange('cavity_num', 'dyeing')
     def onchange_cavity_num(self):
         if self.cavity_num != 0:
             # 毛重=淨重+(20/模穴數)
-            self.gross_weight = self.net_weight + (20/self.cavity_num)
+            self.gross_weight = self.net_weight + (20 / self.cavity_num)
             # 材料成本=(毛重 * (原料成本+染色))/1000
-            self.material_cost = (self.gross_weight * (self.original_price+self.cavity_num)) /1000
+            self.material_cost = (self.gross_weight * (self.original_price + self.cavity_num)) / 1000
 
     # 加工時間
     @api.onchange('process_hour', 'wage')
     def onchange_process_hour(self):
         if self.process_hour != 0 and self.cavity_num != 0:
             # 加工單價 = 工資 / ((28800/加工時間) * 模穴數)* 1.2
-            self.process_price =  self.wage / ((28800/self.process_hour) * self.cavity_num)*1.2
+            self.process_price = self.wage / ((28800 / self.process_hour) * self.cavity_num) * 1.2
     # txt_Pro31.Text = (txt_Pro21.Text / ((28800 / txt_Pro11.Text) * txt_Mat011.Text) *1.2)
 
 
-#手柄射出-內製委外加工成本
+# 手柄射出-內製委外加工成本
 class LancerMainItemHandleProcessCost(models.Model):
     _name = 'lancer.main.item.handleprocesscost'
     _rec_name = 'id'
@@ -243,7 +322,8 @@ class LancerMainItemAssemblyWage(models.Model):
 
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
 
-    routing_wages_id = fields.Many2one(comodel_name="lancer.routing.wages", string="工資項目", required=False, ondelete='cascade')
+    routing_wages_id = fields.Many2one(comodel_name="lancer.routing.wages", string="工資項目", required=False,
+                                       ondelete='cascade')
     num = fields.Float(string='次數/面數')
     price = fields.Float(string='價格')
 
