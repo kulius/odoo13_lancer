@@ -40,18 +40,22 @@ class LancerRoutingSeries(models.Model):
         # Add code here
         origin_name = self.name
         origin_dis_name = self.display_name
-        if values.get('name') != origin_name:
-            res = super(LancerRoutingSeries, self).write(values)
-            attrs_records = self.env['lancer.attr.records']
-            records = attrs_records.search([('name', '=', origin_dis_name), ('type', '=', 'a')])
-            if records:
-                records.write({'name': self.display_name})
-            else:
-                vals = {
-                    'name': self.display_name,
-                    'type': 'a',
-                }
-                self.env['lancer.attr.records'].create(vals)
-            return res
+        # if values.get('name') != origin_name:
+        res = super(LancerRoutingSeries, self).write(values)
+        attrs_records = self.env['lancer.attr.records']
+        records = attrs_records.search([('name', '=', origin_dis_name), ('type', '=', 'a')])
+        if records:
+            records.write({'name': self.display_name})
         else:
-            return super(LancerRoutingSeries, self).write(values)
+            vals = {
+                'name': self.display_name,
+                'type': 'a',
+            }
+            self.env['lancer.attr.records'].create(vals)
+        return res
+        # else:
+        #     return super(LancerRoutingSeries, self).write(values)
+
+    def action_rewrite(self):
+        for record in self.browse(self.env.context['active_ids']):
+            record.write({'name': record.name})

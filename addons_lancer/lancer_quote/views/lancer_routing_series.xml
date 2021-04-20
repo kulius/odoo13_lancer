@@ -56,6 +56,17 @@
             <field name="search_view_id" ref="lancer_routing_series_view_search"/>
         </record>
 
+        <record id="action_routing_series_action_rewrite" model="ir.actions.server">
+            <field name="name">重整特徵值集合</field>
+            <field name="model_id" ref="model_lancer_routing_series"/>
+            <field name="binding_model_id" ref="lancer_quote.model_lancer_routing_series"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.action_rewrite()
+            </field>
+        </record>
+
 
     </data>
 </odoo>

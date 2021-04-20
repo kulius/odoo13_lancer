@@ -241,7 +241,7 @@ class LancerMainItemHandleMaterial(models.Model):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_process_wage')
 
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
-    handle_version_id = fields.Many2one('lancer.version.handle', string='版次', ondelete='cascade')
+    handle_version_id = fields.Many2one('lancer.version.handle', string='版次')
     process = fields.Many2one('lancer.handlematerial.process', string='加工工序')
     material = fields.Many2one('lancer.handlematerial.material', string='材質')
     cavity_num = fields.Float(string='模穴數')

@@ -42,6 +42,8 @@
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="6"/>
         <menuitem id="menu_lancer_other_main_item_category_menu" name="品項分類" action="action_lancer_main_item_category_form"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="7"/>
+        <menuitem id="menu_lancer_attr_records_menu" name="特徵值集合" action="action_lancer_attr_records_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="8"/>
 
         <!-- 金屬加工設定 -->
         <menuitem id="menu_lancer_base_other_setting_menu" name="金屬加工設定"

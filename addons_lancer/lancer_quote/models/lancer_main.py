@@ -107,7 +107,7 @@ class LancerMainOrderLine(models.Model):
                 if series_name:
                     attr_ids.append(series_name.id)
                 handle_name = self.env['lancer.attr.records'].search(
-                    [('name', '=', rec.main_item_id.handle_series_id.display_name), ('type', '=', 'b')])
+                    [('name', '=', rec.main_item_id.handle_handle_id.display_name), ('type', '=', 'b')])
                 if handle_name:
                     attr_ids.append(handle_name.id)
             self.item_attrs_ids = [(6, False, attr_ids)]

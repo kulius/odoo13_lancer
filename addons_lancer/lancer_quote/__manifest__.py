@@ -3,7 +3,7 @@
     "name": "lancer Quote",
     "version": "1.0",
     "summary": "義成工廠股份有限公司 報價系統. ",
-    "depends": ["base"],
+    "depends": ["base","mail"],
     "category": "Sale",
     "description": """義成工廠股份有限公司 報價系統""",
     "data": [
@@ -46,6 +46,7 @@
         'views/lancer_cost_handle_file.xml',
         'views/lancer_version_handle.xml',
         'views/lancer_version_metal.xml',
+        'views/lancer_attr_records.xml',
         'views/menu.xml',
     ],
     "active": False,
