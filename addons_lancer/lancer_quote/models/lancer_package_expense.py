@@ -10,6 +10,6 @@ class LancerPackageExpense(models.Model):
     _order = "sequence, id"
     _description = 'Lancer Package Setting Item'
 
-    name = fields.Char(string='包裝費用名稱')
+    name = fields.Char(string='包裝費用名稱', translate=True)
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

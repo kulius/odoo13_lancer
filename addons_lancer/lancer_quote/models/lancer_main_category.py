@@ -9,7 +9,7 @@ class LancerMainCategory(models.Model):
     _rec_name = 'name'
     _description = 'Lancer Main Parts Category Item'
 
-    name = fields.Char(string='主件分類名稱')
+    name = fields.Char(string='主件分類名稱', translate=True)
     main_categ_code = fields.Char(string='主件分類代碼')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

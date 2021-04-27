@@ -8,7 +8,7 @@ class LancerMetalType(models.Model):
     _rec_name = 'name'
     _description = 'Lance Metal Type By Main Item Use'
 
-    name = fields.Char(string='鋼材規格說明')
+    name = fields.Char(string='鋼材規格說明', translate=True)
     metal_type_code = fields.Char(string='鋼材規格代號')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

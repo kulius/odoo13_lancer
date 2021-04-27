@@ -9,7 +9,7 @@ class LanceMetalSpec(models.Model):
     _rec_name = 'name'
     _description = 'Lancer Metal Spec for Main Item Use'
 
-    name = fields.Char(string='鋼材種類名稱')
+    name = fields.Char(string='鋼材種類名稱', translate=True)
     metal_spec_code = fields.Char(string='鋼材種類代碼')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

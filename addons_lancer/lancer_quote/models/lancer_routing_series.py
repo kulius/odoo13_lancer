@@ -9,7 +9,7 @@ class LancerRoutingSeries(models.Model):
     _rec_name = 'name'
     _description = 'Lancer Routing Series Item'
 
-    name = fields.Char(string='系列別名稱')
+    name = fields.Char(string='系列別名稱', translate=True)
     series_code = fields.Char(string='系列別代號')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
@@ -30,25 +30,23 @@ class LancerRoutingSeries(models.Model):
         # Add code here
         res = super(LancerRoutingSeries, self).create(values)
         vals = {
-            'name': res.display_name,
+            'name': res.name,
+            'code': res.series_code,
             'type': 'a',
         }
         self.env['lancer.attr.records'].create(vals)
         return res
 
     def write(self, values):
-        # Add code here
-        origin_name = self.name
-        origin_dis_name = self.display_name
-        # if values.get('name') != origin_name:
         res = super(LancerRoutingSeries, self).write(values)
         attrs_records = self.env['lancer.attr.records']
-        records = attrs_records.search([('name', '=', origin_dis_name), ('type', '=', 'a')])
+        records = attrs_records.search([('name', '=', self.name), ('type', '=', 'a')])
         if records:
-            records.write({'name': self.display_name})
+            records.write({'name': self.name, 'code': self.series_code})
         else:
             vals = {
-                'name': self.display_name,
+                'name': self.name,
+                'code': self.series_code,
                 'type': 'a',
             }
             self.env['lancer.attr.records'].create(vals)

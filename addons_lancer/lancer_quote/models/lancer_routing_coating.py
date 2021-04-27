@@ -9,7 +9,7 @@ class LancerRoutingCoating(models.Model):
     _rec_name = 'name'
     _description = 'Lancer Routing Coating Item'
 
-    name = fields.Char(string='鍍層名稱')
+    name = fields.Char(string='鍍層名稱', translate=True)
     coating_code = fields.Char(string='鍍層代碼')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
@@ -30,32 +30,28 @@ class LancerRoutingCoating(models.Model):
         # Add code here
         res = super(LancerRoutingCoating, self).create(values)
         vals = {
-            'name': res.display_name,
+            'name': res.name,
+            'code': res.coating_code,
             'type': 'd',
         }
         self.env['lancer.attr.records'].create(vals)
         return res
 
     def write(self, values):
-        # Add code here
-        origin_name = self.name
-        origin_dis_name = self.display_name
-        # if values.get('name') != origin_name:
         res = super(LancerRoutingCoating, self).write(values)
         attrs_records = self.env['lancer.attr.records']
-        records = attrs_records.search([('name', '=', origin_dis_name), ('type', '=', 'd')])
+        records = attrs_records.search([('name', '=', self.name), ('type', '=', 'd')])
         if records:
-            records.write({'name': self.display_name})
+            records.write({'name': self.name, 'code': self.coating_code})
         else:
             vals = {
-                'name': self.display_name,
+                'name': self.name,
+                'code': self.coating_code,
                 'type': 'd',
             }
             self.env['lancer.attr.records'].create(vals)
         return res
-        # else:
-        #
-        #     return super(LancerRoutingCoating, self).write(values)
+
 
     def action_rewrite(self):
         for record in self.browse(self.env.context['active_ids']):

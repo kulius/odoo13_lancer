@@ -44,7 +44,7 @@ class LancerMain(models.Model):
                 attrs_ids.append(x.id)
         self.update({'main_attrs_ids': [(6, False, attrs_ids)]})
 
-    name = fields.Char(string='主件品名規格')
+    name = fields.Char(string='主件品名規格', translate=True)
     main_category_id = fields.Many2one(comodel_name="lancer.main.category", string="主件分類")
     active = fields.Boolean(default=True, string='是否啟用')
     main_material_cost = fields.Float(string='料', store=True, readonly=True, compute='_amount_all')
@@ -79,19 +79,19 @@ class LancerMainOrderLine(models.Model):
             attr_ids = []
             for rec in self:
                 shape_name = self.env['lancer.attr.records'].search(
-                    [('name', '=', rec.main_item_id.metal_shape_id.display_name), ('type', '=', 'c')])
+                    [('name', '=', rec.main_item_id.metal_shape_id.name), ('type', '=', 'c')])
                 if shape_name:
                     attr_ids.append(shape_name.id)
                 coating_name = self.env['lancer.attr.records'].search(
-                    [('name', '=', rec.main_item_id.metal_coating_id.display_name), ('type', '=', 'd')])
+                    [('name', '=', rec.main_item_id.metal_coating_id.name), ('type', '=', 'd')])
                 if coating_name:
                     attr_ids.append(coating_name.id)
                 cutting_name = self.env['lancer.attr.records'].search(
-                    [('name', '=', rec.main_item_id.metal_cutting_id.display_name), ('type', '=', 'e')])
+                    [('name', '=', rec.main_item_id.metal_cutting_id.name), ('type', '=', 'e')])
                 if cutting_name:
                     attr_ids.append(cutting_name.id)
                 outer_name = self.env['lancer.attr.records'].search(
-                    [('name', '=', rec.main_item_id.metal_outer_id.display_name), ('type', '=', 'f')])
+                    [('name', '=', rec.main_item_id.metal_outer_id.name), ('type', '=', 'f')])
                 if outer_name:
                     attr_ids.append(outer_name.id)
             self.item_attrs_ids = [(6, False, attr_ids)]
@@ -103,11 +103,11 @@ class LancerMainOrderLine(models.Model):
             attr_ids = []
             for rec in self:
                 series_name = self.env['lancer.attr.records'].search(
-                    [('name', '=', rec.main_item_id.handle_series_id.display_name), ('type', '=', 'a')])
+                    [('name', '=', rec.main_item_id.handle_series_id.name), ('type', '=', 'a')])
                 if series_name:
                     attr_ids.append(series_name.id)
                 handle_name = self.env['lancer.attr.records'].search(
-                    [('name', '=', rec.main_item_id.handle_handle_id.display_name), ('type', '=', 'b')])
+                    [('name', '=', rec.main_item_id.handle_handle_id.name), ('type', '=', 'b')])
                 if handle_name:
                     attr_ids.append(handle_name.id)
             self.item_attrs_ids = [(6, False, attr_ids)]

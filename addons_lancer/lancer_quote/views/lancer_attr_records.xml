@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <search string="特徵值集合">
                     <field name="name"/>
+                    <field name="code"/>
                     <field name="type"/>
                 </search>
             </field>
@@ -17,9 +18,11 @@
             <field name="name">lancer.attr.records.tree</field>
             <field name="model">lancer.attr.records</field>
             <field name="arch" type="xml">
-                <tree string="特徵值集合設定">
+                <tree string="特徵值集合設定" editable="top">
                     <field name="type"/>
+                    <field name="code"/>
                     <field name="name"/>
+                    <field name="ename"/>
                 </tree>
             </field>
         </record>
@@ -33,6 +36,7 @@
                         <group>
                             <group>
                                 <field name="type"/>
+                                <field name="code"/>
                                 <field name="name"/>
                             </group>
                         </group>

@@ -9,7 +9,7 @@ class LancerRoutingShape(models.Model):
     _rec_name = 'name'
     _description = 'Lancer Routing Shape Item'
 
-    name = fields.Char(string='形狀名稱')
+    name = fields.Char(string='形狀名稱', translate=True)
     shape_code = fields.Char(string='形狀代碼')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
@@ -30,7 +30,8 @@ class LancerRoutingShape(models.Model):
         # Add code here
         res = super(LancerRoutingShape, self).create(values)
         vals = {
-            'name': res.display_name,
+            'name': res.name,
+            'code': res.shape_code,
             'type': 'c',
         }
         self.env['lancer.attr.records'].create(vals)
@@ -43,12 +44,13 @@ class LancerRoutingShape(models.Model):
         # if values.get('name') != origin_name:
         res = super(LancerRoutingShape, self).write(values)
         attrs_records = self.env['lancer.attr.records']
-        records = attrs_records.search([('name', '=', origin_dis_name), ('type', '=', 'c')])
+        records = attrs_records.search([('name', '=', self.name), ('type', '=', 'c')])
         if records:
-            records.write({'name': self.display_name})
+            records.write({'name': self.name, 'code': self.shape_code})
         else:
             vals = {
-                'name': self.display_name,
+                'name': self.name,
+                'code': self.shape_code,
                 'type': 'c',
             }
             self.env['lancer.attr.records'].create(vals)

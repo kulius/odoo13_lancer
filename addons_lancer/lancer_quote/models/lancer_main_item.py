@@ -59,7 +59,7 @@ class LancerMainItem(models.Model):
         self.update({'handle_work_sum': sumcost})
 
     active = fields.Boolean(default=True, string='是否啟用')
-    name = fields.Char(string='品項品名規格')
+    name = fields.Char(string='品項品名規格', translate=True)
     main_item_category_id = fields.Many2one(comodel_name="lancer.main.item.category", string="品項分類", required=True, )
 
     item_routing = fields.Selection(string="加工製程段",
@@ -75,6 +75,7 @@ class LancerMainItem(models.Model):
     metal_coating_id = fields.Many2one(comodel_name="lancer.routing.coating", string="鍍層", required=False, )
     metal_cutting_id = fields.Many2one(comodel_name="lancer.routing.cutting", string="刃口", required=False, )
     metal_outer_id = fields.Many2one(comodel_name="lancer.routing.outer", string="外徑", required=False, )
+    metal_version_id = fields.Many2one(comodel_name="lancer.version.metal", string="版本版次", required=False, )
 
     metal_spec_id = fields.Many2one('lancer.metal.spec', string="鋼材種類", required=False, )
     metal_type_id = fields.Many2one('lancer.metal.type', string="鋼材規格", required=False, )

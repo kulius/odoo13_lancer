@@ -9,7 +9,7 @@ class LancerRoutingOuter(models.Model):
     _rec_name = 'name'
     _description = 'Lancer Routing Outer Item'
 
-    name = fields.Char(string='鋼刄外徑名稱')
+    name = fields.Char(string='鋼刄外徑名稱', translate=True)
     outer_code = fields.Char(string='鋼刄外徑代碼')
 
     outer_size = fields.Float(string='鋼刄外徑')
@@ -35,31 +35,27 @@ class LancerRoutingOuter(models.Model):
         # Add code here
         res = super(LancerRoutingOuter, self).create(values)
         vals = {
-            'name': res.display_name,
+            'name': res.name,
+            'code': res.outer_code,
             'type': 'f',
         }
         self.env['lancer.attr.records'].create(vals)
         return res
 
     def write(self, values):
-        # Add code here
-        origin_name = self.name
-        origin_dis_name = self.display_name
-        # if values.get('name') != origin_name:
         res = super(LancerRoutingOuter, self).write(values)
         attrs_records = self.env['lancer.attr.records']
-        records = attrs_records.search([('name', '=', origin_dis_name), ('type', '=', 'f')])
+        records = attrs_records.search([('name', '=', self.name), ('type', '=', 'f')])
         if records:
-            records.write({'name': self.display_name})
+            records.write({'name': self.name, 'code': self.outer_code})
         else:
             vals = {
-                'name': self.display_name,
+                'name': self.name,
+                'code': self.outer_code,
                 'type': 'f',
             }
             self.env['lancer.attr.records'].create(vals)
         return res
-        # else:
-        #     return super(LancerRoutingOuter, self).write(values)
 
     def action_rewrite(self):
         for record in self.browse(self.env.context['active_ids']):

@@ -49,14 +49,16 @@
                         </group>
                         <notebook attrs="{'invisible': ['|', ('item_routing', '!=', 'metal'), ('item_routing', '=', False)]}">
                             <page string="金屬加工">
-                                <group>
-                                    <field name="metal_blade"/>
-                                </group>
                                 <group col="8">
                                     <field name="metal_shape_id" options="{'no_create': True, 'no_create_edit':True}" />
                                     <field name="metal_coating_id" options="{'no_create': True, 'no_create_edit':True}" />
                                     <field name="metal_cutting_id" options="{'no_create': True, 'no_create_edit':True}" />
                                     <field name="metal_outer_id" options="{'no_create': True, 'no_create_edit':True}" />
+                                </group>
+                                <group col="6">
+                                    <field name="metal_blade"/>
+                                    <field name="metal_version_id"/>
+                                    <button name="metal_cost_calc_safe" string="另存 金屬加工 版次" type="object" class="btn-primary" />
                                 </group>
                                 <notebook>
                                     <page string="用料成本" attrs="{'invisible': [('metal_blade', '=', False)]}">
@@ -117,8 +119,7 @@
                   <notebook attrs="{'invisible': ['|', ('item_routing', '!=', 'handle'), ('item_routing', '=', False)]}">
                     <page string="手柄射出">
                         <group>
-                            <button name="handle_cost_calc" string="成本試算" type="object" class="btn-primary" />
-                            <button name="handle_cost_calc_safe" string="試算結束存儲" type="object" class="btn-primary" />
+                            <button name="handle_cost_calc_safe" string="另存 手柄射出 版次" type="object" class="btn-primary" />
                         </group>
                         <group col="6">
                             <field name="handle_series_id" options="{'no_create': True, 'no_create_edit':True}" />

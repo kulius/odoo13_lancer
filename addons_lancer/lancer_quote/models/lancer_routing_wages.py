@@ -9,6 +9,6 @@ class LancerRoutingWages(models.Model):
     _rec_name = 'name'
     _description = 'Lancer Routing Wages Item'
 
-    name = fields.Char(string='組裝-工資項目名稱')
+    name = fields.Char(string='組裝-工資項目名稱', translate=True)
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

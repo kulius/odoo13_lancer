@@ -10,7 +10,7 @@ class LancerProduct(models.Model):
     _order = "product_code, id"
     _description = 'Lancer Product Item'
 
-    name = fields.Char(string='產品名稱')
+    name = fields.Char(string='產品名稱', translate=True)
     product_code = fields.Char(string='產品品號')
     active = fields.Boolean(default=True, string='是否啟用')
-    product_desc = fields.Text(string='產品描述')
+    product_desc = fields.Text(string='產品描述', translate=True)

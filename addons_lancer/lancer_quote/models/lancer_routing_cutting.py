@@ -9,7 +9,7 @@ class LancerRoutingCutting(models.Model):
     _rec_name = 'name'
     _description = 'Lancer Routing Cutting Item'
 
-    name = fields.Char(string='刃口名稱')
+    name = fields.Char(string='刃口名稱', translate=True)
     cutting_code = fields.Char(string='刃口代碼')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
@@ -31,6 +31,7 @@ class LancerRoutingCutting(models.Model):
         res = super(LancerRoutingCutting, self).create(values)
         vals = {
             'name': res.display_name,
+            'code': res.cutting_code,
             'type': 'e',
         }
         self.env['lancer.attr.records'].create(vals)
@@ -38,17 +39,15 @@ class LancerRoutingCutting(models.Model):
 
     def write(self, values):
         # Add code here
-        origin_name = self.name
-        origin_dis_name = self.display_name
-        # if values.get('name') != origin_name:
         res = super(LancerRoutingCutting, self).write(values)
         attrs_records = self.env['lancer.attr.records']
-        records = attrs_records.search([('name', '=', origin_dis_name), ('type', '=', 'e')])
+        records = attrs_records.search([('name', '=', self.name), ('type', '=', 'e')])
         if records:
-            records.write({'name': self.display_name})
+            records.write({'name': self.name, 'code': self.cutting_code})
         else:
             vals = {
-                'name': self.display_name,
+                'name': self.name,
+                'code': self.cutting_code,
                 'type': 'e',
             }
             self.env['lancer.attr.records'].create(vals)
