@@ -20,6 +20,7 @@
             <field name="model">lancer.quote</field>
             <field name="arch" type="xml">
                 <tree string="報價單">
+<!--                    <field name='quote_image' optional="show" widget="image"/>-->
                     <field name="name"/>
                     <field name="parnter_id"/>
                     <field name="product_id"/>
@@ -76,6 +77,15 @@
                                     <field name="certificate_amount"/>
                                 </group>
                             </page>
+                            <page string="Picking">
+                                <group col="6">
+                                    <field name="packing_inbox"/>
+                                    <field name="packing_outbox"/>
+                                    <field name="packing_net_weight"/>
+                                    <field name="packing_gross_weight"/>
+                                    <field name="packing_bulk"/>
+                                </group>
+                            </page>
                         </notebook>
 
                         <notebook>
@@ -86,10 +96,16 @@
                                         <field name="main_category_id" />
                                         <field name="main_id" />
                                         <field name="quote_attrs_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="packing_inbox"/>
+                                        <field name="packing_outbox"/>
+                                        <field name="packing_net_weight"/>
+                                        <field name="packing_gross_weight"/>
+                                        <field name="packing_bulk"/>
                                         <field name="material_amount" />
                                         <field name="work_amount" />
                                         <field name="factory_amount" />
                                         <field name="total_amount" />
+
                                     </tree>
                                 </field>
                             </page>
@@ -134,6 +150,9 @@
                                 </field>
                             </page>
                         </notebook>
+                        <group>
+                            <field name="quote_memo"/>
+                        </group>
 
                     </sheet>
                 </form>

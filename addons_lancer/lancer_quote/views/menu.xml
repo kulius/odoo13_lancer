@@ -68,19 +68,22 @@
                   parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="7"/>
         <menuitem id="menu_lancer_metal_cutting_long_menu" name="下料長度(mm)設定" action="action_lancer_metal_cutting_long_form"
                   parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="8"/>
+        <menuitem id="menu_lancer_metal_exposed_long_menu" name="外露長度(mm)設定" action="action_lancer_metal_exposed_long_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="9"/>
+
 
         <menuitem id="menu_lancer_cost_map_file_menu" name="特徵值關係表設定" action="action_lancer_cost_map_file_form"
-          parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="9"/>
+          parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
 
 
         <menuitem id="menu_lancer_lancer_cost_wire_file_menu" name="材料單價設定" action="action_lancer_cost_wire_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="21"/>
         <menuitem id="menu_lancer_cost_cal_file_menu" name="單重長度表設定" action="action_lancer_cost_cal_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="11"/>
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="31"/>
         <menuitem id="menu_lancer_cost_plat_file_menu" name="電鍍單價表設定" action="action_lancer_cost_plat_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="12"/>
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="41"/>
         <menuitem id="menu_lancer_cost_pro_file_menu" name="內製/委外 加工成本" action="action_lancer_cost_pro_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="13"/>
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="51"/>
 
 
 

@@ -12,5 +12,6 @@ class LancerProduct(models.Model):
 
     name = fields.Char(string='產品名稱', translate=True)
     product_code = fields.Char(string='產品品號')
+    product_image = fields.Binary(string="產品圖片", attachment=True)
     active = fields.Boolean(default=True, string='是否啟用')
     product_desc = fields.Text(string='產品描述', translate=True)

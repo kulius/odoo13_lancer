@@ -36,6 +36,7 @@
         'views/lancer_metal_type.xml',
         'views/lancer_metal_spec.xml',
         'views/lancer_metal_cutting_long.xml',
+        'views/lancer_metal_exposed_long.xml',
         'views/lancer_handlematerial_process.xml',
         'views/lancer_handlematerial_material.xml',
         'views/lancer_cost_wire_file.xml',

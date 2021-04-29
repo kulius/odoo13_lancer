@@ -68,7 +68,7 @@
                                                 <field name="metal_type_id"/>
                                                 <field name="metal_long"/>
                                                 <field name="metal_cutting_long_id"/>
-
+                                                <field name="metal_exposed_long_id"/>
                                             </group>
                                             <group>
                                                 <field name="metal_cut"/>

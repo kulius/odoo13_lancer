@@ -33,6 +33,10 @@ access_lancer_main_item_assemblymaterial_user,lancer.main.item.assemblymaterial,
 access_lancer_main_item_assemblymaterial_manage,lancer.main.item.assemblymaterial,model_lancer_main_item_assemblymaterial,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_metal_cutting_long_user,lancer.metal.cutting.long,model_lancer_metal_cutting_long,lancer_quote.group_lancer_base_user,1,1,1,1
 access_lancer_metal_cutting_long_manage,lancer.metal.cutting.long,model_lancer_metal_cutting_long,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_metal_exposed_long_user,lancer.metal.exposed.long,model_lancer_metal_exposed_long,lancer_quote.group_lancer_base_user,1,1,1,1
+access_lancer_metal_exposed_long_manage,lancer.metal.exposed.long,model_lancer_metal_exposed_long,lancer_quote.group_lancer_base_manage,1,1,1,1
+
+
 access_lancer_metal_type_user,lancer.metal.type,model_lancer_metal_type,lancer_quote.group_lancer_base_user,1,1,1,1
 access_lancer_metal_type_manage,lancer.metal.type,model_lancer_metal_type,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_metal_spec_user,lancer.metal.spec,model_lancer_metal_spec,lancer_quote.group_lancer_base_user,1,1,1,1

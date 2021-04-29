@@ -81,6 +81,8 @@ class LancerMainItem(models.Model):
     metal_type_id = fields.Many2one('lancer.metal.type', string="鋼材規格", required=False, )
     metal_long = fields.Float(string="物料長(mm)", required=False, )
     metal_cutting_long_id = fields.Many2one('lancer.metal.cutting.long', string="下料長度(mm)", required=False, )
+    metal_exposed_long_id = fields.Many2one('lancer.metal.exposed.long', string="外露長度(mm)", required=False, )
+
     metal_cut = fields.Float(string="切料節數", required=False, )
     metal_weight = fields.Float(string="鋼刃單隻重量", required=False, )
     metal_material = fields.Float(string="材料(元/KG)", required=False, )

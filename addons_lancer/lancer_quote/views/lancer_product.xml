@@ -21,6 +21,7 @@
             <field name="model">lancer.product</field>
             <field name="arch" type="xml">
                 <tree string="產品">
+                    <field name='product_image' optional="show" widget="image" options='{"size": [80, 80]}'/>
                     <field name="name"/>
                     <field name="product_code"/>
                     <field name="product_desc"/>
@@ -42,6 +43,7 @@
                                 <field name="name"/>
                                 <field name="product_code"/>
                                 <field name="product_desc"/>
+                                <field name="product_image" widget="image"/>
                             </group>
                         </group>
 

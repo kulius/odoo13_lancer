@@ -37,6 +37,14 @@ class LancerQuote(models.Model):
     test_amount = fields.Float(string="測試費用", required=False, )
     certificate_amount = fields.Float(string="證書費用", required=False, )
 
+    packing_inbox = fields.Integer(string='內盒', required=False)
+    packing_outbox = fields.Integer(string='外箱', required=False)
+    packing_net_weight = fields.Float(string='淨重', required=False)
+    packing_gross_weight = fields.Float(string='毛重', required=False)
+    packing_bulk = fields.Float(string='材積', required=False)
+    quote_memo = fields.Text(string='報價說明', required=False)
+    quote_image = fields.Binary(string="報價單圖片", related="product_id.product_image", readonly=True)
+
     quote_lines = fields.One2many(comodel_name="lancer.quote.line", inverse_name="quote_id", string="自製明細")
     subcontract_ids = fields.One2many(comodel_name="lancer.quote.subcontract", inverse_name="quote_id", string="外購明細")
     package_ids = fields.One2many(comodel_name="lancer.quote.package", inverse_name="quote_id", string="包裝明細")
@@ -65,6 +73,11 @@ class LancerQuoteLine(models.Model):
     factory_amount = fields.Float(related='main_id.main_manufacture_cost', string="費", required=False, )
     total_amount = fields.Float(related='main_id.main_total_cost', string="總價", required=False, )
     quote_attrs_ids = fields.Many2many('lancer.attr.records', string='主件特徵值')
+    packing_inbox = fields.Integer(string='內盒', required=False)
+    packing_outbox = fields.Integer(string='外箱', required=False)
+    packing_net_weight = fields.Float(string='淨重', required=False)
+    packing_gross_weight = fields.Float(string='毛重', required=False)
+    packing_bulk = fields.Float(string='材積', required=False)
 
     @api.onchange('main_id')
     def set_attrs_data(self):
