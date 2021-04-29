@@ -49,6 +49,7 @@
         'views/lancer_version_metal.xml',
         'views/lancer_attr_records.xml',
         'views/menu.xml',
+        "report/report_py3o.xml",
     ],
     "active": False,
     "installable": True,

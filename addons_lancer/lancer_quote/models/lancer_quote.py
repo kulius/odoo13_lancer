@@ -6,17 +6,27 @@ from odoo import api, fields, models, _
 
 class LancerQuote(models.Model):
     _name = 'lancer.quote'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'name'
     _order = "name"
     _description = '報價單'
+
+    state = fields.Selection([
+        ('draft', '草稿'),
+        ('sent', '己送出'),
+        ('done', '完成'),
+        ('cancel', '取消')
+    ], string='Status', index=True, copy=False, default='draft', tracking=True)
 
     name = fields.Char(string='報價單編碼', required=True, copy=False, readonly=True, index=True,
                        default=lambda self: _('New'))
     version = fields.Char(string='版次')
     active = fields.Boolean(default=True, string='是否啟用')
     user_id = fields.Many2one('res.users', string='報價者', default=lambda self: self.env.user)
-    parnter_id = fields.Many2one(comodel_name="res.partner", string="客戶", required=True, )
+    partner_id = fields.Many2one(comodel_name="res.partner", string="客戶", required=True, )
+    contact_id = fields.Many2one('res.partner', '連絡人', domain="[('parent_id','=',partner_id)]" )
     product_id = fields.Many2one(comodel_name="lancer.product", string="產品名稱", required=True, )
+    quote_date = fields.Date(string="報價日期", required=True, )
 
     main_count = fields.Integer(string="自製組件數", required=False, )
     subcontract_count = fields.Integer(string="外購品項數", required=False, )

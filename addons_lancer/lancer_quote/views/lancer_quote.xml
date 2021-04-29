@@ -7,7 +7,9 @@
             <field name="model">lancer.quote</field>
             <field name="arch" type="xml">
                 <search string="報價單">
+                    <field name="quote_date" />
                     <field name="name"/>
+                    <field name="partner_id"/>
                     <field name="active"/>
                     <separator/>
                     <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
@@ -20,9 +22,11 @@
             <field name="model">lancer.quote</field>
             <field name="arch" type="xml">
                 <tree string="報價單">
+                    <field name="state"/>
 <!--                    <field name='quote_image' optional="show" widget="image"/>-->
+                    <field name="quote_date" />
                     <field name="name"/>
-                    <field name="parnter_id"/>
+                    <field name="partner_id"/>
                     <field name="product_id"/>
                 </tree>
             </field>
@@ -33,6 +37,9 @@
             <field name="model">lancer.quote</field>
             <field name="arch" type="xml">
                 <form string="報價單">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
                                 attrs="{'invisible': [('active', '=', True)]}"/>
@@ -40,10 +47,10 @@
                         <group col="6">
                             <field name="name"/>
                             <field name="version"/>
-                            <field name="user_id"/>
-                            <field name="parnter_id"/>
+                            <field name="partner_id"/>
+                            <field name="contact_id"/>
                             <field name="product_id"/>
-                            <field name="create_date" />
+                            <field name="quote_date" />
                         </group>
                         <notebook>
                             <page string="報價內容">
@@ -152,9 +159,15 @@
                         </notebook>
                         <group>
                             <field name="quote_memo"/>
+                            <field name="user_id"/>
                         </group>
 
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
