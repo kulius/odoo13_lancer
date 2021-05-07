@@ -14,13 +14,13 @@ class LancerHandleMaterialMaterial(models.Model):
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
 
-    def name_get(self):
-        res = []
-        for rec in self:
-            name = rec.name
-            if rec.material_code:
-                name = '[' + rec.material_code + '] ' + name
-            else:
-                name = name
-            res.append((rec.id, name))
-        return res
+    # def name_get(self):
+    #     res = []
+    #     for rec in self:
+    #         name = rec.name
+    #         if rec.material_code:
+    #             name = '[' + rec.material_code + '] ' + name
+    #         else:
+    #             name = name
+    #         res.append((rec.id, name))
+    #     return res

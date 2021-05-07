@@ -20,7 +20,7 @@
             <field name="name">lancer.main.category.tree</field>
             <field name="model">lancer.main.category</field>
             <field name="arch" type="xml">
-                <tree string="主件分類設定">
+                <tree string="主件分類設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="main_categ_code"/>
                     <field name="name"/>

@@ -47,12 +47,23 @@
                         <group col="6">
                             <field name="name"/>
                             <field name="version"/>
+                            <field name="quote_date" />
                             <field name="partner_id"/>
                             <field name="contact_id"/>
-                            <field name="product_id"/>
-                            <field name="quote_date" />
                         </group>
                         <notebook>
+                            <page string="產品選擇">
+                                <group col="6">
+                                    <field name="product_series_id"/>
+                                    <field name="product_category_id"/>
+                                    <field name="product_id" />
+                                    <field name="handle_material_id"/>
+                                    <field name="metal_spec_id"/>
+                                    <field name="routing_shape_id" />
+                                    <field name="routing_coating_id"/>
+                                    <field name="product_package"/>
+                                </group>
+                            </page>
                             <page string="報價內容">
                                 <group col="6">
                                     <field name="main_count"/>
@@ -99,19 +110,21 @@
                             <page string="自製">
                                 <field name="quote_lines" widget="one2many">
                                     <tree string="自製明細"  editable="bottom" >
-                                        <field name="sequence" />
-                                        <field name="main_category_id" />
-                                        <field name="main_id" />
-                                        <field name="quote_attrs_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="main_id" string="　　ITEM主件　　"/>
+                                        <field name="routing_cutting_id" string="　刃口　"/>
+                                        <field name="routing_outer_id" string="　外徑　"/>
+                                        <field name="exposed_long_id" string="　長度　"/>
+<!--                                        <field name="material_amount" />-->
+<!--                                        <field name="work_amount" />-->
+<!--                                        <field name="factory_amount" />-->
+                                        <field name="total_amount" />
+                                        <field name="total_amount_usd" />
                                         <field name="packing_inbox"/>
                                         <field name="packing_outbox"/>
                                         <field name="packing_net_weight"/>
                                         <field name="packing_gross_weight"/>
                                         <field name="packing_bulk"/>
-                                        <field name="material_amount" />
-                                        <field name="work_amount" />
-                                        <field name="factory_amount" />
-                                        <field name="total_amount" />
 
                                     </tree>
                                 </field>

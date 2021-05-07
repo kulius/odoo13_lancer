@@ -32,7 +32,7 @@
             <field name="name">lancer.metal.type.form</field>
             <field name="model">lancer.metal.type</field>
             <field name="arch" type="xml">
-                <form string="鋼材規格設定">
+                <form string="鋼材規格設定" editable="top">
                     <sheet>
                         <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
                                 attrs="{'invisible': [('active', '=', True)]}"/>
