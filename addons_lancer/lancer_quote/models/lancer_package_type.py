@@ -4,15 +4,14 @@
 from odoo import api, fields, models
 
 
-class LancerPackageSetting(models.Model):
-    _name = 'lancer.package.setting'
+class LancerPackageType(models.Model):
+    _name = 'lancer.package.type'
     _rec_name = 'name'
-    _order = "sequence, id"
-    _description = 'Lancer Package Setting Item'
+    _order = "sequence,code, id"
+    _description = 'Lancer Package type Item'
 
-    code = fields.Char(string='代號', translate=True)
-    name = fields.Char(string='包裝材料名稱', translate=True)
-    package_type_id = fields.Many2one(comodel_name="lancer.package.type", string="包裝大分類", required=False, )
+    code = fields.Char(string='代號')
+    name = fields.Char(string='包裝大分類名稱', translate=True)
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
 

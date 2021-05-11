@@ -8,6 +8,8 @@
             <field name="arch" type="xml">
                 <search string="主件">
                     <field name="name"/>
+                    <field name="product_series_id"/>
+                    <field name="product_category_id"/>
                     <field name="active"/>
                     <separator/>
                     <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
@@ -20,7 +22,11 @@
             <field name="model">lancer.main</field>
             <field name="arch" type="xml">
                 <tree string="主件">
+                    <field name="product_series_id"/>
+                    <field name="product_category_id"/>
                     <field name="name"/>
+                    <field name="main_attrs_metal_ids" widget="many2many_tags"/>
+                    <field name="main_attrs_handle_ids" widget="many2many_tags"/>
                     <field name="main_category_id"/>
                 </tree>
             </field>
@@ -38,8 +44,13 @@
                             <group>
                                 <field name="active" invisible="1"/>
                                 <field name="name"/>
+                                <field name="product_series_id"/>
+                                <field name="product_category_id"/>
+                            </group>
+                            <group>
                                 <field name="main_category_id"/>
-                                <field name="main_attrs_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                                <field name="main_attrs_metal_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                                <field name="main_attrs_handle_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
                             </group>
                         </group>
                         <group col="8">

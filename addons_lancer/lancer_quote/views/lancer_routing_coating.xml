@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <search string="製程鍍層">
                     <field name="name"/>
+                    <field name="ename"/>
                     <field name="coating_code"/>
                     <field name="active"/>
                     <separator/>
@@ -24,6 +25,7 @@
                     <field name="sequence" widget="handle"/>
                     <field name="coating_code"/>
                     <field name="name"/>
+                    <field name="ename"/>
                 </tree>
             </field>
         </record>
@@ -41,6 +43,7 @@
                                 <field name="active" invisible="1"/>
                                 <field name="coating_code"/>
                                 <field name="name"/>
+                                <field name="ename"/>
                             </group>
                         </group>
 

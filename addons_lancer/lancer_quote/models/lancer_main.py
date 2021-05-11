@@ -35,17 +35,27 @@ class LancerMain(models.Model):
                 'main_process_cost': main_process_cost,
                 'main_manufacture_cost': main_manufacture_cost,
             })
-
+    #將品項明細中的特徵值集合呈現
     @api.depends('order_line.main_item_id')
     def _compute_attrs_record(self):
-        attrs_ids = []
+        # self.main_attrs_metal_ids = [(5,)]
+        # self.main_attrs_handle_ids = [(5,)]
         for rec in self.order_line:
-            for x in rec.item_attrs_ids:
-                attrs_ids.append(x.id)
-        self.update({'main_attrs_ids': [(6, False, attrs_ids)]})
+            attrs_ids = []
+            if rec.main_item_id.item_routing == 'metal':
+                for x in rec.item_attrs_ids:
+                        attrs_ids.append(x.id)
+                self.update({'main_attrs_metal_ids': [(6, 0, attrs_ids)]})
+            else:
+                for x in rec.item_attrs_ids:
+                    attrs_ids.append(x.id)
+                self.update({'main_attrs_handle_ids': [(6, 0, attrs_ids)]})
 
     name = fields.Char(string='主件品名規格', translate=True)
     main_category_id = fields.Many2one(comodel_name="lancer.main.category", string="主件分類")
+    product_series_id = fields.Many2one(comodel_name="lancer.product.series", string="產品系列", required=False, )
+    product_category_id = fields.Many2one(comodel_name="lancer.product.category", string="產品分類", required=False, )
+
     active = fields.Boolean(default=True, string='是否啟用')
     main_material_cost = fields.Float(string='料', store=True, readonly=True, compute='_amount_all')
     main_process_cost = fields.Float(string='工', store=True, readonly=True, compute='_amount_all')
@@ -53,7 +63,8 @@ class LancerMain(models.Model):
     main_total_cost = fields.Float(string='總價', store=True, readonly=True, compute='_main_amount_all')
     # main_item_ids = fields.One2many(comodel_name='lancer.main.item', inverse_name='main_id', string='品項')
     order_line = fields.One2many('lancer.main.order.line', 'order_id')
-    main_attrs_ids = fields.Many2many('lancer.attr.records', string='特徵值集合', compute='_compute_attrs_record')
+    main_attrs_metal_ids = fields.Many2many('lancer.attr.records', string='鋼刃特徵值集合', compute='_compute_attrs_record')
+    main_attrs_handle_ids = fields.Many2many('lancer.attr.records', string='手柄特徵值集合', compute='_compute_attrs_record')
 
 
 class LancerMainOrderLine(models.Model):

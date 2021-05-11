@@ -10,6 +10,7 @@ class LancerRoutingCoating(models.Model):
     _description = 'Lancer Routing Coating Item'
 
     name = fields.Char(string='鍍層名稱', translate=True)
+    ename = fields.Char(string='COATING')
     coating_code = fields.Char(string='鍍層代碼')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

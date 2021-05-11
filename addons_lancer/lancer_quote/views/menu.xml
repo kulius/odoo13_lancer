@@ -144,6 +144,9 @@
                   id="menu_lancer_package_setting" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="1"/>
         <menuitem action="action_lancer_package_expense_form" name="包裝費用項目"
                   id="menu_lancer_package_expense" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="2"/>
+        <menuitem action="action_lancer_package_type_form" name="包裝分類"
+                  id="menu_lancer_package_type" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="3"/>
+
 
 
 

@@ -15,6 +15,7 @@
         'views/lancer_incoterms.xml',
         'views/lancer_package_setting.xml',
         'views/lancer_package_expense.xml',
+        'views/lancer_package_type.xml',
         'views/lancer_subcontract_category.xml',
         'views/lancer_subcontract_material.xml',
         'views/lancer_subcontract_treatment.xml',

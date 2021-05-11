@@ -76,6 +76,42 @@ class LancerQuote(models.Model):
         result = super(LancerQuote, self).create(vals)
         return result
 
+    @api.onchange('product_series_id')
+    def onchange_product_series_id(self):
+        if not self.product_series_id:
+            return
+        main_record = self.env['lancer.main'].search([('product_series_id', '=', self.product_series_id.id)])
+        # if not self.product_category_id:
+        #
+        # else:
+        # main_record = self.env['lancer.main'].search([('product_series_id', '=', self.product_series_id.id),
+        #                                                   ('product_category_id', '=', self.product_category_id.id)])
+        if main_record:
+            self.write({'quote_lines': [(5, 0, 0)]})
+            new_lines = []
+            for line in main_record:
+                vals = {
+                    'main_id': line.id,
+                }
+                new_lines.append((0, 0, vals))
+            self.quote_lines = new_lines
+
+
+    @api.onchange('product_category_id')
+    def onchange_product_category_id(self):
+        if not self.product_category_id:
+            return
+        main_record = self.env['lancer.main'].search([('product_series_id', '=', self.product_series_id.id),
+                                                          ('product_category_id', '=', self.product_category_id.id)])
+        if main_record:
+            self.write({'quote_lines': [(5, 0, 0)]})
+            new_lines = []
+            for line in main_record:
+                vals = {
+                    'main_id': line.id,
+                }
+                new_lines.append((0, 0, vals))
+            self.quote_lines = new_lines
 
 class LancerQuoteLine(models.Model):
     _name = 'lancer.quote.line'
@@ -83,12 +119,12 @@ class LancerQuoteLine(models.Model):
     _description = '報價單-自製'
 
     quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, ondelete='cascade')
-    main_id = fields.Many2one(comodel_name='lancer.main', string='主件品名規格')
+    main_id = fields.Many2one(comodel_name='lancer.main', string='主件品名')
     routing_cutting_id = fields.Many2one(comodel_name='lancer.routing.cutting', string='刃口')
     routing_outer_id = fields.Many2one(comodel_name="lancer.routing.outer", string="外徑", required=False, )
     exposed_long_id = fields.Many2one('lancer.metal.exposed.long', string="長度", required=False, )
 
-    main_category_id = fields.Many2one(comodel_name="lancer.main.category", string="主件分類", required=True, )
+    main_category_id = fields.Many2one(comodel_name="lancer.main.category", string="主件分類", required=False, )
     sequence = fields.Integer(string='項次', required=True, default=10)
     material_amount = fields.Float(related='main_id.main_material_cost', string="料", required=False, )
     work_amount = fields.Float(related='main_id.main_process_cost', string="工", required=False, )
@@ -102,12 +138,13 @@ class LancerQuoteLine(models.Model):
     packing_gross_weight = fields.Float(string='毛重', required=False)
     packing_bulk = fields.Float(string='材積', required=False)
 
-    @api.onchange('main_id')
-    def set_attrs_data(self):
-        if not self.main_id:
-            return
-        if self.main_id:
-            self.quote_attrs_ids = self.main_id.main_attrs_ids
+    # @api.onchange('main_id')
+    # def set_attrs_data(self):
+    #     if not self.main_id:
+    #         return
+    #     if self.main_id:
+    #         self.quote_attrs_ids = self.main_id.main_attrs_ids
+
 
 
 class LancerQuoteSubcontract(models.Model):
@@ -141,12 +178,24 @@ class LancerQuotePackage(models.Model):
     _description = '報價單-包裝'
 
     quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, ondelete='cascade')
+    package_type_id = fields.Many2one(comodel_name="lancer.package.type", string="包裝分類", required=False, )
     package_setting_id = fields.Many2one(comodel_name="lancer.package.setting", string="包裝料件", required=True, )
     name = fields.Char(string='說明')
     quant = fields.Float(string="數量", required=False, )
     amount = fields.Float(string="價格", required=False, )
     mould_amount = fields.Float(string="模具/版費", required=False, )
 
+    @api.onchange('package_type_id')
+    def onchange_package_type_id(self):
+        if not self.package_type_id:
+            return
+        package_setting = self.env['lancer.package.setting'].search([('package_type_id', '=', self.package_type_id.id)])
+        list = []
+        result = {}
+        for line in package_setting:
+            list.append(line.id)
+        result['domain'] = {'package_setting_id': [('id', 'in', list)]}
+        return result
 
 class LancerQuotExpense(models.Model):
     _name = 'lancer.quote.expense'

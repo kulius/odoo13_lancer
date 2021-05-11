@@ -114,7 +114,8 @@
                                         <field name="main_id" string="　　ITEM主件　　"/>
                                         <field name="routing_cutting_id" string="　刃口　"/>
                                         <field name="routing_outer_id" string="　外徑　"/>
-                                        <field name="exposed_long_id" string="　長度　"/>
+                                        <field name="exposed_long_id" string="外露長度"/>
+<!--                                        <field name="quote_attrs_ids" string="特徵值"/>-->
 <!--                                        <field name="material_amount" />-->
 <!--                                        <field name="work_amount" />-->
 <!--                                        <field name="factory_amount" />-->
@@ -152,6 +153,7 @@
                             <page string="包裝">
                                 <field name="package_ids">
                                     <tree string="包裝明細" editable="bottom">
+                                        <field name="package_type_id" />
                                         <field name="package_setting_id" />
                                         <field name="quant" />
                                         <field name="amount" />

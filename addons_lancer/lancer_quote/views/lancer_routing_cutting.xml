@@ -7,8 +7,9 @@
             <field name="model">lancer.routing.cutting</field>
             <field name="arch" type="xml">
                 <search string="製程刃口">
-                    <field name="name"/>
                     <field name="cutting_code"/>
+                    <field name="name"/>
+                    <field name="ename"/>
                     <field name="active"/>
                     <separator/>
                     <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
@@ -24,6 +25,7 @@
                     <field name="sequence" widget="handle"/>
                     <field name="cutting_code"/>
                     <field name="name"/>
+                    <field name="ename"/>
                 </tree>
             </field>
         </record>
@@ -41,6 +43,7 @@
                                 <field name="active" invisible="1"/>
                                 <field name="cutting_code"/>
                                 <field name="name"/>
+                                <field name="ename"/>
                             </group>
                         </group>
 
