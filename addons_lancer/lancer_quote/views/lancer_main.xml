@@ -72,6 +72,7 @@
                                         <field name="process_cost"/>
                                         <field name="manufacture_cost"/>
                                         <field name="item_total_cost"/>
+                                        <field name="handle_attrs_record"/>
                                     </tree>
                                 </field>
 

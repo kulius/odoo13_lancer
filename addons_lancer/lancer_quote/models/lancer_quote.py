@@ -24,11 +24,13 @@ class LancerQuote(models.Model):
     active = fields.Boolean(default=True, string='是否啟用')
     user_id = fields.Many2one('res.users', string='報價者', default=lambda self: self.env.user)
     partner_id = fields.Many2one(comodel_name="res.partner", string="客戶", required=True, )
-    contact_id = fields.Many2one('res.partner', '連絡人', domain="[('parent_id','=',partner_id)]" )
+    contact_id = fields.Many2one('res.partner', '連絡人', domain="[('parent_id','=',partner_id)]")
     product_series_id = fields.Many2one(comodel_name="lancer.product.series", string="產品系列", required=False, )
     product_category_id = fields.Many2one(comodel_name="lancer.product.category", string="產品分類", required=False, )
     product_id = fields.Many2one(comodel_name="lancer.product", string="產品名稱", required=True, )
-    handle_material_id = fields.Many2one(comodel_name="lancer.handlematerial.material", string="手柄材質", required=False, )
+
+    # handle_material_id = fields.Many2one(comodel_name="lancer.handlematerial.material", string="手柄材質", required=False, )
+    handle_material_id = fields.Many2one(comodel_name="lancer.handle.attrs.record", string="手柄材質", required=False, )
     metal_spec_id = fields.Many2one(comodel_name="lancer.metal.spec", string="鋼刃材質", required=False, )
     routing_shape_id = fields.Many2one(comodel_name="lancer.routing.shape", string="鋼刃形狀", required=False, )
     routing_coating_id = fields.Many2one(comodel_name="lancer.routing.coating", string="鋼刃鍍層", required=False, )
@@ -96,13 +98,12 @@ class LancerQuote(models.Model):
                 new_lines.append((0, 0, vals))
             self.quote_lines = new_lines
 
-
     @api.onchange('product_category_id')
     def onchange_product_category_id(self):
         if not self.product_category_id:
             return
         main_record = self.env['lancer.main'].search([('product_series_id', '=', self.product_series_id.id),
-                                                          ('product_category_id', '=', self.product_category_id.id)])
+                                                      ('product_category_id', '=', self.product_category_id.id)])
         if main_record:
             self.write({'quote_lines': [(5, 0, 0)]})
             new_lines = []
@@ -112,6 +113,24 @@ class LancerQuote(models.Model):
                 }
                 new_lines.append((0, 0, vals))
             self.quote_lines = new_lines
+
+    @api.onchange('handle_material_id')
+    def onchange_handle_material_id(self):
+        if not self.handle_material_id:
+            return
+        main_item_record = self.env['lancer.main.order.line'].search(
+            [('handle_attrs_record', '=', self.handle_material_id.id),
+             ])
+        if main_item_record:
+            self.write({'quote_lines': [(5, 0, 0)]})
+            new_lines = []
+            for line in main_item_record:
+                vals = {
+                    'main_id': line.order_id.id,
+                }
+                new_lines.append((0, 0, vals))
+            self.quote_lines = new_lines
+
 
 class LancerQuoteLine(models.Model):
     _name = 'lancer.quote.line'
@@ -144,7 +163,6 @@ class LancerQuoteLine(models.Model):
     #         return
     #     if self.main_id:
     #         self.quote_attrs_ids = self.main_id.main_attrs_ids
-
 
 
 class LancerQuoteSubcontract(models.Model):
@@ -196,6 +214,7 @@ class LancerQuotePackage(models.Model):
             list.append(line.id)
         result['domain'] = {'package_setting_id': [('id', 'in', list)]}
         return result
+
 
 class LancerQuotExpense(models.Model):
     _name = 'lancer.quote.expense'

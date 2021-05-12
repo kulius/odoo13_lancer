@@ -125,6 +125,7 @@
                             <field name="handle_series_id" options="{'no_create': True, 'no_create_edit':True}" />
                             <field name="handle_handle_id" options="{'no_create': True, 'no_create_edit':True}" />
                             <field name="handle_version_id"/>
+                            <field name="handle_attrs_id" options="{'no_create': True, 'no_create_edit':True}"/>
                         </group>
                                 <notebook>
                                     <page string="用料成本 內製/委外加工成本">

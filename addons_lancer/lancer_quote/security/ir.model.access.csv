@@ -117,3 +117,5 @@ access_lancer_version_handle_user,lancer.version.handle,model_lancer_version_han
 access_lancer_version_handle_manage,lancer.version.handle,model_lancer_version_handle,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_version_metal_user,lancer.version.metal,model_lancer_version_metal,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_version_metal_manage,lancer.version.metal,model_lancer_version_metal,lancer_quote.group_lancer_base_manage,1,1,1,1
+
+access_lancer_handle_attrs_record,lancer.handle.attrs.record,model_lancer_handle_attrs_record,lancer_quote.group_lancer_base_user,1,1,1,1

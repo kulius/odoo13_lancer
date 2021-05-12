@@ -54,9 +54,50 @@ class LancerMainItem(models.Model):
         sum1 = sum([l.material_cost + l.process_price for l in self.handle_materialcost_ids])
         # sum2 = sum([l.process_price for l in self.handle_processcost_ids])
         sumcost = (
-                              sum1 + self.handle_work_make + self.handle_work_mould) / self.handle_work_efficiency / self.handle_work_yield
+                          sum1 + self.handle_work_make + self.handle_work_mould) / self.handle_work_efficiency / self.handle_work_yield
         # Math.Round(((txt_Matall.Text + txt_Proall.Text + txt_Cost03.Text + txt_Cost05.Text) / txt_Cost02.Text / txt_Cost04.Text), 3, MidpointRounding.AwayFromZero).ToString();
         self.update({'handle_work_sum': sumcost})
+
+    # 將品項明細中的特徵值集合呈現
+    # @api.depends('handle_materialcost_ids.main_item_id')
+    # def _compute_attrs_record(self):
+    #     # self.main_attrs_metal_ids = [(5,)]
+    #     # self.main_attrs_handle_ids = [(5,)]
+    #     if self.item_routing == 'handle':
+    #         attrs_ids = []
+    #         for rec in self.handle_materialcost_ids:
+    #             if rec.material:
+    #                 attrs_ids.append(rec.material.id)
+    #         self.update({'handle_attrs_ids': [(6, 0, attrs_ids)]})
+    #     else:
+    #         self.update({'handle_attrs_ids': None})
+    @api.depends('handle_materialcost_ids.main_item_id')
+    def _compute_attrs_record(self):
+        # self.main_attrs_metal_ids = [(5,)]
+        # self.main_attrs_handle_ids = [(5,)]
+        handle_attrs = self.env['lancer.handle.attrs.record']
+        if self.item_routing == 'handle':
+            attrs_record = []
+            for rec in self.handle_materialcost_ids:
+                if rec.material:
+                    attrs_record.append(rec.material.name)
+                    # attrs_name += '+'.join(rec.material.name)
+            attrs_name = '+'.join(str(d) for d in attrs_record)
+            handle_record = handle_attrs.search([('handle_material_id', '=', self._origin.id)])
+            if handle_record:
+                handle_record.write({
+                    'name': attrs_name,
+                    'handle_material_id': self._origin.id,
+                })
+            else:
+                handle_record.create({
+                    'name': attrs_name,
+                    'handle_material_id': self._origin.id,
+                })
+            self.update({'handle_attrs_id': handle_record.id})
+            # self.update({'handle_attrs_ids': [(6, 0, attrs_ids)]})
+        else:
+            self.update({'handle_attrs_id': None})
 
     active = fields.Boolean(default=True, string='是否啟用')
     name = fields.Char(string='品項品名規格', translate=True)
@@ -109,6 +150,9 @@ class LancerMainItem(models.Model):
     handle_handle_id = fields.Many2one(comodel_name="lancer.routing.handle", string="手柄尺吋", required=False, )
     # handle_version_id = fields.Many2one(comodel_name="lancer.routing.version", string="版本版次", required=False, )
     handle_version_id = fields.Many2one(comodel_name="lancer.version.handle", string="版本版次", required=False, )
+    # handle_attrs_ids = fields.Many2many('lancer.handlematerial.material', string='手柄材質特徵集合',
+    #                                     compute='_compute_attrs_record')
+    handle_attrs_id = fields.Many2one('lancer.handle.attrs.record', string='材質集合', compute='_compute_attrs_record')
 
     handle_materialcost_ids = fields.One2many(comodel_name="lancer.main.item.handlematerial",
                                               inverse_name="main_item_id", string="用料成本", required=False, )
@@ -169,6 +213,7 @@ class LancerMainItem(models.Model):
             # self.handle_materialcost_ids = version_record.handle_materialcost_ids.ids
 
         # 金屬加工-內製委外加工成本
+
     def handle_cost_calc_safe(self):
         if self.handle_version_id:
             return
@@ -206,7 +251,6 @@ class LancerMainItem(models.Model):
         self.handle_version_id = version_id.id
         return version_id
         # version.handle_series_id = self.handle_series_id.id,
-
 
 
 class LancerMainItemProcesscost(models.Model):
@@ -342,3 +386,12 @@ class LancerMainItemAssemblyMaterial(models.Model):
 
     routing_material_id = fields.Many2one(comodel_name="lancer.routing.material", string="材料", required=False, )
     price = fields.Float(string='價格')
+
+
+class LancerHandleAttrsRecord(models.Model):
+    _name = 'lancer.handle.attrs.record'
+    _rec_name = 'name'
+    _description = '用來保存品項材質的集合後續應用'
+
+    name = fields.Char()
+    handle_material_id = fields.Many2one('lancer.main.item')
