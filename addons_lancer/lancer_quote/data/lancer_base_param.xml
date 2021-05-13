@@ -39,5 +39,22 @@
             <field name="key">lancer_handle_work_yield</field>
             <field name="value">0.95</field>
         </record>
+
+        <record id="config_quote_exchange_rate" model="ir.config_parameter">
+            <field name="key">lancer_quote_exchange_rate</field>
+            <field name="value">28</field>
+        </record>
+        <record id="config_quote_manage_rate" model="ir.config_parameter">
+            <field name="key">lancer_quote_manage_rate</field>
+            <field name="value">0.15</field>
+        </record>
+        <record id="config_quote_profit_rate" model="ir.config_parameter">
+            <field name="key">lancer_quote_profit_rate</field>
+            <field name="value">0.3</field>
+        </record>
+        <record id="config_quote_charge_rate" model="ir.config_parameter">
+            <field name="key">lancer_quote_charge_rate</field>
+            <field name="value">0.95</field>
+        </record>
     </data>
 </odoo>

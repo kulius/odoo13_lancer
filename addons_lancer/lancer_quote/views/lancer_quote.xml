@@ -90,9 +90,13 @@
                                 <group col="6">
                                     <field name="certification_amount"/>
                                     <field name="customs_rate"/>
-                                    <field name="exchange_rate"/>
                                     <field name="test_amount"/>
                                     <field name="certificate_amount"/>
+                                    <field name="exchange_rate"/>
+                                    <field name="manage_rate"/>
+                                    <field name="profit_rate"/>
+                                    <field name="charge_rate"/>
+
                                 </group>
                             </page>
                             <page string="Picking">
@@ -116,9 +120,9 @@
                                         <field name="routing_outer_id" string="　外徑　"/>
                                         <field name="exposed_long_id" string="外露長度"/>
 <!--                                        <field name="quote_attrs_ids" string="特徵值"/>-->
-<!--                                        <field name="material_amount" />-->
-<!--                                        <field name="work_amount" />-->
-<!--                                        <field name="factory_amount" />-->
+                                        <field name="metal_cost" />
+                                        <field name="handle_cost" />
+                                        <field name="assembly_cost" />
                                         <field name="total_amount" />
                                         <field name="total_amount_usd" />
                                         <field name="packing_inbox"/>

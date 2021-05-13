@@ -53,12 +53,6 @@
                                 <field name="main_attrs_handle_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
                             </group>
                         </group>
-                        <group col="8">
-                            <field name="main_material_cost"/>
-                            <field name="main_process_cost"/>
-                            <field name="main_manufacture_cost"/>
-                            <field name="main_total_cost"/>
-                        </group>
                         <notebook>
                             <page string="品項列表">
                                 <field name="order_line">
