@@ -142,6 +142,7 @@ class LancerQuote(models.Model):
                     line.assembly_cost = main_item.item_total_cost
                 if main_item.handle_attrs_record.id == self.handle_material_id.id:
                     line.handle_cost = main_item.item_total_cost
+
             # if not line.handle_cost:
             #     line.unlink()
 
@@ -155,6 +156,7 @@ class LancerQuote(models.Model):
                 list1.append(main_item.main_item_id.metal_spec_id.id)
                 list2.append(main_item.main_item_id.metal_shape_id.id)
                 list3.append(main_item.main_item_id.metal_coating_id.id)
+                line.routing_cutting_id = main_item.main_item_id.metal_cutting_id.id
         result['domain'] = {'metal_spec_id': [('id', 'in', list1)], 'routing_shape_id': [('id', 'in', list2)], 'routing_coating_id': [('id', 'in', list3)]}
         return result
 
@@ -191,6 +193,13 @@ class LancerQuoteLine(models.Model):
     packing_gross_weight = fields.Float(string='毛重', required=False)
     packing_bulk = fields.Float(string='材積', required=False)
 
+    @api.onchange('routing_cutting_id')
+    def _onchange_cutting_id(self):
+        if self.routing_cutting_id is None:
+            return
+        if self.routing_cutting_id:
+            self.main_id.main_item_id.metal_cutting_id.id
+
     @api.onchange('main_id', 'handle_cost')
     def set_attrs_data(self):
         list1 = []
@@ -208,7 +217,7 @@ class LancerQuoteLine(models.Model):
     def get_item_total_cost(self):
         for line in self.main_id.order_line:
             if line.main_item_id.metal_cutting_id.id == self.routing_cutting_id.id and line.main_item_id.metal_outer_id.id == self.routing_outer_id.id  and line.main_item_id.metal_exposed_long_id.id == self.exposed_long_id.id :
-                self.metal_cost = line.item_total_cost
+                return self.metal_cost = line.item_total_cost
 
 
         # if not self.main_id:
