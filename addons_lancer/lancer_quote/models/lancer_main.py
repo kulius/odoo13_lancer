@@ -40,13 +40,10 @@ class LancerMain(models.Model):
                     attrs_ids.append(x.id)
             self.update({'main_attrs_ids': [(6, 0, attrs_ids)]})
 
-
-
     name = fields.Char(string='主件品名規格')
     main_category_id = fields.Many2one(comodel_name="lancer.main.category", string="主件分類")
     product_series_id = fields.Many2one(comodel_name="lancer.routing.series", string="產品系列", required=False, )
     product_category_id = fields.Many2one(comodel_name="lancer.product.category", string="產品分類", required=False, )
-
     active = fields.Boolean(default=True, string='是否啟用')
     main_material_cost = fields.Float(string='料', store=True, readonly=True, compute='_amount_all')
     main_process_cost = fields.Float(string='工', store=True, readonly=True, compute='_amount_all')
@@ -55,6 +52,7 @@ class LancerMain(models.Model):
     # main_item_ids = fields.One2many(comodel_name='lancer.main.item', inverse_name='main_id', string='品項')
     order_line = fields.One2many('lancer.main.order.line', 'order_id')
     main_attrs_ids = fields.Many2many('lancer.attr.records', string='特徵值集合', compute='_compute_attrs_record')
+
 
 
 class LancerMainOrderLine(models.Model):

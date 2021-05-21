@@ -116,13 +116,13 @@
                                     <tree string="自製明細"  editable="bottom" >
                                         <field name="sequence" widget="handle"/>
                                         <field name="main_id" string="　　ITEM主件　　"/>
-                                        <field name="routing_cutting_id" string="　刃口　"/>
-                                        <field name="routing_outer_id" string="　外徑　"/>
-                                        <field name="exposed_long_id" string="外露長度"/>
-<!--                                        <field name="quote_attrs_ids" string="特徵值"/>-->
-                                        <field name="metal_cost" optional="show"/>
-                                        <field name="handle_cost" optional="show"/>
-                                        <field name="assembly_cost" optional="show"/>
+                                        <field name="routing_cutting_id" string="　刃口　" domain="[('id', 'in', cutting_ids)]"/>
+                                        <field name="routing_outer_id" string="　外徑　" domain="[('id', 'in', outer_ids)]"/>
+                                        <field name="exposed_long_id" string="外露長度" domain="[('id', 'in', exposed_long_ids)]"/>
+                                        <field name="metal_cost" optional="hide"/>
+                                        <field name="handle_cost" optional="hide"/>
+                                        <field name="assembly_cost" optional="hide"/>
+                                        <field name="total_cost" optional="show"/>
                                         <field name="total_amount" />
                                         <field name="total_amount_usd" optional="hide"/>
                                         <field name="packing_inbox"/>
@@ -130,6 +130,9 @@
                                         <field name="packing_net_weight"/>
                                         <field name="packing_gross_weight"/>
                                         <field name="packing_bulk"/>
+                                        <field name="cutting_ids" optional="hide"/>
+                                        <field name="outer_ids" optional="hide"/>
+                                        <field name="exposed_long_ids" optional="hide"/>
 
                                     </tree>
                                 </field>

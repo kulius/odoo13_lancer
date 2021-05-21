@@ -140,6 +140,11 @@ class LancerQuote(models.Model):
             for main_item in line.main_id.order_line:
                 if main_item.main_item_id.item_routing == 'assembly':
                     line.assembly_cost = main_item.item_total_cost
+                if main_item.main_item_id.item_routing == 'metal':
+                    line.routing_cutting_id = main_item.main_item_id.metal_cutting_id.id
+                    line.routing_outer_id = main_item.main_item_id.metal_outer_id.id
+                    line.exposed_long_id = main_item.main_item_id.metal_exposed_long_id.id
+                    line.metal_cost = main_item.item_total_cost
                 if main_item.handle_attrs_record.id == self.handle_material_id.id:
                     line.handle_cost = main_item.item_total_cost
 
@@ -154,7 +159,6 @@ class LancerQuote(models.Model):
                 list1.append(main_item.main_item_id.metal_spec_id.id)
                 list2.append(main_item.main_item_id.metal_shape_id.id)
                 list3.append(main_item.main_item_id.metal_coating_id.id)
-                line.routing_cutting_id = main_item.main_item_id.metal_cutting_id.id
         result['domain'] = {'metal_spec_id': [('id', 'in', list1)], 'routing_shape_id': [('id', 'in', list2)], 'routing_coating_id': [('id', 'in', list3)]}
         return result
 
@@ -181,28 +185,47 @@ class LancerQuoteLine(models.Model):
     metal_cost = fields.Float(string="鋼刃成本", required=False, )
     handle_cost = fields.Float(string="手柄成本", required=False, )
     assembly_cost = fields.Float(string="組立成本", required=False, )
+    total_cost = fields.Float(string="總成本", required=False, compute='_compute_total_cost', store=True)
 
-    total_amount = fields.Float(string="台幣", required=False, )
-    total_amount_usd = fields.Float(string="美金", required=False, )
+    total_amount = fields.Float(string="台幣", required=False)
+    total_amount_usd = fields.Float(string="美金", required=False)
     quote_attrs_ids = fields.Many2many('lancer.attr.records', string='主件特徵值')
     packing_inbox = fields.Integer(string='內盒', required=False)
     packing_outbox = fields.Integer(string='外箱', required=False)
     packing_net_weight = fields.Float(string='淨重', required=False)
     packing_gross_weight = fields.Float(string='毛重', required=False)
     packing_bulk = fields.Float(string='材積', required=False)
+    cutting_ids = fields.Many2many('lancer.routing.cutting', string='刃口', compute='_compute_attrs_ids', store=True)
+    outer_ids = fields.Many2many("lancer.routing.outer", string="外徑", compute='_compute_attrs_ids', store=True)
+    exposed_long_ids = fields.Many2many('lancer.metal.exposed.long', string="長度", compute='_compute_attrs_ids', store=True)
 
-    @api.onchange('main_id', 'handle_cost')
-    def set_attrs_data(self):
-        list1 = []
-        list2 = []
-        list3 = []
-        result = {}
+    #依主件，決定下拉值內容
+    @api.depends('main_id')
+    def _compute_attrs_ids(self):
+        attrs_ids1 = []
+        attrs_ids2 = []
+        attrs_ids3 = []
         for line in self.main_id.order_line:
-            list1.append(line.main_item_id.metal_cutting_id.id)
-            list2.append(line.main_item_id.metal_outer_id.id)
-            list3.append(line.main_item_id.metal_exposed_long_id.id)
-        result['domain'] = {'routing_cutting_id': [('id', 'in', list1)], 'routing_outer_id': [('id', 'in', list2)], 'exposed_long_id': [('id', 'in', list3)]}
-        return result
+            if line.main_item_id.metal_cutting_id.id:
+                attrs_ids1.append(line.main_item_id.metal_cutting_id.id)
+            if line.main_item_id.metal_outer_id.id:
+                attrs_ids2.append(line.main_item_id.metal_outer_id.id)
+            if line.main_item_id.metal_exposed_long_id.id:
+                attrs_ids3.append(line.main_item_id.metal_exposed_long_id.id)
+        self.update({'cutting_ids': [(6, 0, attrs_ids1)]})
+        self.update({'outer_ids': [(6, 0, attrs_ids2)]})
+        self.update({'exposed_long_ids': [(6, 0, attrs_ids3)]})
+
+    @api.depends('metal_cost', 'handle_cost', 'assembly_cost')
+    def _compute_total_cost(self):
+        for record in self:
+            # 總成本=手柄成本+金屬成本+組立成本
+            record.total_cost = record.metal_cost + record.handle_cost + record.assembly_cost
+            if record.total_cost > 0:
+                # 台幣報價=總成本/1-管銷/1-利潤
+                record.total_amount = record.total_cost / (1- record.quote_id.manage_rate) / (1-record.quote_id.profit_rate)
+                #美金報價=台幣報價/手續費/匯率
+                record.total_amount_usd = record.total_amount / record.quote_id.charge_rate / record.quote_id.exchange_rate
 
     @api.onchange('routing_cutting_id', 'routing_outer_id', 'exposed_long_id')
     def get_item_total_cost(self):
@@ -210,12 +233,18 @@ class LancerQuoteLine(models.Model):
             if line.main_item_id.metal_cutting_id.id == self.routing_cutting_id.id and line.main_item_id.metal_outer_id.id == self.routing_outer_id.id  and line.main_item_id.metal_exposed_long_id.id == self.exposed_long_id.id :
                 self.metal_cost = line.item_total_cost
 
-
-        # if not self.main_id:
-        #     return
-        # if self.main_id:
-        #     self.quote_attrs_ids = self.main_id.main_attrs_ids
-
+    # @api.onchange('main_id', 'handle_cost')
+    # def set_attrs_data(self):
+    #     list1 = []
+    #     list2 = []
+    #     list3 = []
+    #     result = {}
+    #     for line in self.main_id.order_line:
+    #         list1.append(line.main_item_id.metal_cutting_id.id)
+    #         list2.append(line.main_item_id.metal_outer_id.id)
+    #         list3.append(line.main_item_id.metal_exposed_long_id.id)
+    #     result['domain'] = {'routing_cutting_id': [('id', 'in', list1)], 'routing_outer_id': [('id', 'in', list2)], 'exposed_long_id': [('id', 'in', list3)]}
+    #     return result
 
 class LancerQuoteSubcontract(models.Model):
     _name = 'lancer.quote.subcontract'
