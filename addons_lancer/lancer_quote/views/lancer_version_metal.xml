@@ -8,6 +8,10 @@
             <field name="arch" type="xml">
                 <search string="金屬加工版本版次">
                     <field name="name"/>
+                    <field name="metal_shape_id"/>
+                    <field name="metal_coating_id"/>
+                    <field name="metal_cutting_id"/>
+                    <field name="metal_outer_id"/>
                     <field name="active"/>
                     <separator/>
                     <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
@@ -22,6 +26,10 @@
                 <tree string="金屬加工版本版次設定">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
+                    <field name="metal_shape_id"/>
+                    <field name="metal_coating_id"/>
+                    <field name="metal_cutting_id"/>
+                    <field name="metal_outer_id"/>
                 </tree>
             </field>
         </record>

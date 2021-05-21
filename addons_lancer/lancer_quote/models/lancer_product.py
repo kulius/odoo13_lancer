@@ -13,7 +13,7 @@ class LancerProduct(models.Model):
     name = fields.Char(string='產品名稱', translate=True)
     product_code = fields.Char(string='產品品號')
     product_image = fields.Binary(string="產品圖片", attachment=True)
-    product_series_id = fields.Many2one(comodel_name="lancer.product.series", string="產品系列", required=False, )
+    product_series_id = fields.Many2one(comodel_name="lancer.routing.series", string="產品系列", required=False, )
     product_category_id = fields.Many2one(comodel_name="lancer.product.category", string="產品分類", required=False, )
     active = fields.Boolean(default=True, string='是否啟用')
     product_desc = fields.Text(string='產品描述', translate=True)

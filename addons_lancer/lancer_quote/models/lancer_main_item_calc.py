@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-# Author: Jason Wu (jaronemo@msn.com)
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
-import json
-from lxml import etree
+
 
 # 品項 計算金屬加工
 class LancerMainItemCalcMetal(models.Model):
@@ -191,11 +189,173 @@ class LancerMainItemCalcMetal(models.Model):
         self.manufacture_cost = self.metal_work_make
 
 
+#------------------------------------------------------------------------------------
+    #取得 手柄版本 並覆蓋 目前所有資料
+    @api.onchange('handle_version_id')
+    def set_handle_version(self):
+        if not self.handle_version_id:
+            return
+        version_record = self.env['lancer.version.handle'].search([('id', '=', self.handle_version_id.id)])
+        if version_record:
+            self.handle_series_id = version_record.handle_series_id.id
+            self.handle_handle_id = version_record.handle_handle_id.id
+            new_lines = []
+            for line in version_record.handle_materialcost_ids:
+                vals = line.read()[0]
+                vals.update({
+                    'main_item_id': self.id,
+                })
+                # vals.pop('bom_id', False)
+                new_lines.append((0, 0, vals))
+            self.handle_materialcost_ids.unlink()
+            self.handle_materialcost_ids = new_lines
+            self.handle_moldcost1 = version_record.handle_moldcost1
+            self.handle_moldcost2 = version_record.handle_moldcost2
+            self.handle_moldcost3 = version_record.handle_moldcost3
+            self.handle_moldcost4 = version_record.handle_moldcost4
+            self.handle_moldcost5 = version_record.handle_moldcost5
+            self.handle_moldcost6 = version_record.handle_moldcost6
+            self.handle_mandrel = version_record.handle_mandrel
+            self.handle_elecmandrel = version_record.handle_elecmandrel
+            self.handle_mold_total = version_record.handle_mold_total
 
+            # self.handle_materialcost_ids = version_record.handle_materialcost_ids.ids
+    # 新增手柄版次
+    def handle_cost_calc_safe(self):
+        if self.handle_version_id:
+            raise ValidationError(_("請先清除 版本版次內容 才能新增版次"))
+            return
+        version = self.env['lancer.version.handle']
+        new_lines = []
 
+        # version.handle_materialcost_ids = new_lines
+        values = {
+            'handle_series_id': self.handle_series_id.id,
+            'handle_handle_id': self.handle_handle_id.id,
+            'handle_moldcost1': self.handle_moldcost1,
+            'handle_moldcost2': self.handle_moldcost2,
+            'handle_moldcost3': self.handle_moldcost3,
+            'handle_moldcost4': self.handle_moldcost4,
+            'handle_moldcost5': self.handle_moldcost5,
+            'handle_moldcost6': self.handle_moldcost6,
+            'handle_mandrel': self.handle_mandrel,
+            'handle_elecmandrel': self.handle_elecmandrel,
+            'handle_mold_total': self.handle_mold_total,
+            # 'handle_materialcost_ids': new_lines,
+        }
+        version_id = version.create(values)
+        # values = (vals.get('partsorder_ids', [])) + [(0, 0, {'sourceorder_id': created_id,
+        #                                                      completedby_id': uid})]
+        for line in self.handle_materialcost_ids:
+            vals = line.read()[0]
+            vals.update({
+                'handle_version_id': version_id.id,
+                'material': vals.get('material')[0],
+                'process': vals.get('process')[0],
+            })
+            vals.pop('main_item_id', False)
+            new_lines.append((0, 0, vals))
+        version_id.handle_materialcost_ids = new_lines
+        self.handle_version_id = version_id.id
+        return version_id
+        # version.handle_series_id = self.handle_series_id.id,
 
+    # 新增金屬版次
+    def metal_cost_calc_safe(self):
+        if self.metal_version_id:
+            raise ValidationError(_("請先清除 版本版次內容 才能新增版次"))
+            return
+        version = self.env['lancer.version.metal']
+        new_lines = []
+        values = {
+            'metal_blade': self.metal_blade,
+            'metal_shape_id': self.metal_shape_id.id,
+            'metal_coating_id': self.metal_coating_id.id,
+            'metal_cutting_id': self.metal_cutting_id.id,
+            'metal_spec_id': self.metal_spec_id.id,
+            'metal_type_id': self.metal_type_id.id,
+            'metal_long': self.metal_long,
+            'metal_cutting_long_id': self.metal_cutting_long_id.id,
+            'metal_exposed_long_id': self.metal_exposed_long_id.id,
+            'metal_outer_id': self.metal_outer_id.id,
 
+            'metal_cut': self.metal_cut,
+            'metal_weight': self.metal_weight,
+            'metal_material': self.metal_material,
+            'metal_price': self.metal_price,
+            'metal_count': self.metal_count,
+            'metal_is_std_hour': self.metal_is_std_hour,
 
+            'metal_work_labor': self.metal_work_labor,
+            'metal_work_make': self.metal_work_make,
+            'metal_work_efficiency': self.metal_work_efficiency,
+            'metal_work_yield': self.metal_work_yield,
+            'metal_work_plating': self.metal_work_plating,
+            'metal_work_dye_blackhead': self.metal_work_dye_blackhead,
+            'metal_work_spray_blackhead': self.metal_work_spray_blackhead,
+            'metal_work_sum1': self.metal_work_sum1,
+            'metal_work_sum2': self.metal_work_sum2,
+            'metal_work_sum3': self.metal_work_sum3,
+
+        }
+        version_id = version.create(values)
+        for line in self.metal_item_processcost_ids:
+            vals = line.read()[0]
+            vals.update({
+                'metal_version_id': version_id.id,
+            })
+            vals.pop('main_item_id', False)
+            new_lines.append((0, 0, vals))
+        version_id.metal_item_processcost_ids = new_lines
+        self.metal_version_id = version_id.id
+        return version_id
+
+    #取得 金屬版本 並覆蓋 目前所有資料
+    @api.onchange('metal_version_id')
+    def set_metal_version(self):
+        if not self.metal_version_id:
+            return
+        version = self.env['lancer.version.metal'].search([('id', '=', self.metal_version_id.id)])
+        if not version:
+            return
+        self.metal_blade = version.metal_blade
+        self.metal_shape_id = version.metal_shape_id.id
+        self.metal_coating_id = version.metal_coating_id.id
+        self.metal_cutting_id = version.metal_cutting_id.id
+        self.metal_spec_id = version.metal_spec_id.id
+        self.metal_type_id = version.metal_type_id.id
+        self.metal_long = version.metal_long
+        self.metal_cutting_long_id = version.metal_cutting_long_id.id
+        self.metal_exposed_long_id = version.metal_exposed_long_id.id
+        self.metal_outer_id = version.metal_outer_id.id
+
+        self.metal_cut = version.metal_cut
+        self.metal_weight = version.metal_weight
+        self.metal_material = version.metal_material
+        self.metal_price = version.metal_price
+        self.metal_count = version.metal_count
+        self.metal_is_std_hour = version.metal_is_std_hour
+
+        self.metal_work_labor = version.metal_work_labor
+        self.metal_work_make = version.metal_work_make
+        self.metal_work_efficiency = version.metal_work_efficiency
+        self.metal_work_yield = version.metal_work_yield
+        self.metal_work_plating = version.metal_work_plating
+        self.metal_work_dye_blackhead = version.metal_work_dye_blackhead
+        self.metal_work_spray_blackhead = version.metal_work_spray_blackhead
+        self.metal_work_sum1 = version.metal_work_sum1
+        self.metal_work_sum2 = version.metal_work_sum2
+        self.metal_work_sum3 = version.metal_work_sum3
+
+        new_lines = []
+        for line in version.metal_item_processcost_ids:
+            vals = line.read()[0]
+            vals.update({
+                'main_item_id': self.id,
+            })
+            new_lines.append((0, 0, vals))
+        self.metal_item_processcost_ids.unlink()
+        self.metal_item_processcost_ids = new_lines
 
 
 

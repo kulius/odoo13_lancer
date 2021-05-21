@@ -8,6 +8,8 @@
             <field name="arch" type="xml">
                 <search string="手柄版本版次">
                     <field name="name"/>
+                    <field name="handle_series_id"/>
+                    <field name="handle_handle_id"/>
                     <field name="active"/>
                     <separator/>
                     <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
@@ -22,6 +24,8 @@
                 <tree string="手柄版本版次設定">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
+                    <field name="handle_series_id"/>
+                    <field name="handle_handle_id"/>
                 </tree>
             </field>
         </record>

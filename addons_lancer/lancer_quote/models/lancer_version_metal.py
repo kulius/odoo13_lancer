@@ -31,6 +31,8 @@ class LancerVersionMetal(models.Model):
     metal_type_id = fields.Many2one('lancer.metal.type', string="鋼材規格", required=False, )
     metal_long = fields.Float(string="物料長(mm)", required=False, )
     metal_cutting_long_id = fields.Many2one('lancer.metal.cutting.long', string="下料長度(mm)", required=False, )
+    metal_exposed_long_id = fields.Many2one('lancer.metal.exposed.long', string="外露長度(mm)", required=False, )
+
     metal_cut = fields.Float(string="切料節數", required=False, )
     metal_weight = fields.Float(string="鋼刃單隻重量", required=False, )
     metal_material = fields.Float(string="材料(元/KG)", required=False, )
@@ -38,8 +40,8 @@ class LancerVersionMetal(models.Model):
     metal_count = fields.Float(string="支數(支/KG)", required=False, )
 
     metal_is_std_hour = fields.Boolean(string="依標工計算", )
-    metal_item_processcost_ids = fields.One2many(comodel_name="lancer.main.item.processcost",
-                                                 inverse_name="main_item_id", string="內製/委外加工成本", required=False, )
+    metal_item_processcost_ids = fields.One2many(comodel_name="lancer.version.processcost",
+                                                 inverse_name="metal_version_id", string="內製/委外加工成本", required=False, )
 
     metal_work_labor = fields.Float(string="人工成本", required=False, default=_get_metal_work_labor)
     metal_work_make = fields.Float(string="製造費", required=False, default=_get_metal_work_make)
@@ -62,3 +64,26 @@ class LancerVersionMetal(models.Model):
 
         result = super(LancerVersionMetal, self).create(vals)
         return result
+
+class LancerVersionProcesscost(models.Model):
+    _name = 'lancer.version.processcost'
+    _rec_name = 'process'
+    _order = "process, id"
+    _description = 'Lancer metal version process cost'
+
+    metal_version_id = fields.Many2one('lancer.version.metal', string='版次', ondelete='cascade')
+    main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", ondelete='cascade')
+    process = fields.Integer(string='工序')
+    process_num = fields.Char(string='工序編號')
+    process_name = fields.Char(string='工序名稱')
+    wage_rate = fields.Float(string='工資率')
+    std_hour = fields.Float(string='標準工時')
+    process_cost = fields.Float(string='加工成本')
+    unit_price = fields.Float(string='公斤/吋單價')
+    out_price = fields.Float(string='委外單價')
+    is_inout = fields.Boolean(string="內製否", )
+    is_std = fields.Boolean(string="標工否", )
+    calc_role = fields.Selection(string="計算方式", selection=[('1', '加工單價(PCS)＝加工單價(KG) / 支數'),
+                                                           ('2', '加工單價(PCS)＝下料長 / 25.4 * 加工單價(寸)'),
+                                                           ('3', ''),
+                                                           ], required=False, )

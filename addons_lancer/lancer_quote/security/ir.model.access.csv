@@ -94,9 +94,6 @@ access_lancer_product_line_user,lancer.product.line,model_lancer_product_line,la
 access_lancer_product_line_manage,lancer.product.line,model_lancer_product_line,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_product_category_user,lancer.product.category,model_lancer_product_category,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_product_category_manage,lancer.product.category,model_lancer_product_category,lancer_quote.group_lancer_base_manage,1,1,1,1
-access_lancer_product_series_user,lancer.product.series,model_lancer_product_series,lancer_quote.group_lancer_base_user,1,0,0,0
-access_lancer_product_series_manage,lancer.product.series,model_lancer_product_series,lancer_quote.group_lancer_base_manage,1,1,1,1
-
 
 
 access_lancer_cost_wire_file_user,lancer.lancer.cost.wire.file,model_lancer_cost_wire_file,lancer_quote.group_lancer_base_user,1,0,0,0
@@ -115,7 +112,11 @@ access_lancer_cost_handle_file_manage,lancer.lancer.cost.handle.file,model_lance
 
 access_lancer_version_handle_user,lancer.version.handle,model_lancer_version_handle,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_version_handle_manage,lancer.version.handle,model_lancer_version_handle,lancer_quote.group_lancer_base_manage,1,1,1,1
+
 access_lancer_version_metal_user,lancer.version.metal,model_lancer_version_metal,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_version_metal_manage,lancer.version.metal,model_lancer_version_metal,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_version_processcost_user,lancer.version.processcost,model_lancer_version_processcost,lancer_quote.group_lancer_base_user,1,0,0,0
+access_lancer_version_processcost_manage,lancer.version.processcost,model_lancer_version_processcost,lancer_quote.group_lancer_base_manage,1,1,1,1
+
 
 access_lancer_handle_attrs_record,lancer.handle.attrs.record,model_lancer_handle_attrs_record,lancer_quote.group_lancer_base_user,1,1,1,1

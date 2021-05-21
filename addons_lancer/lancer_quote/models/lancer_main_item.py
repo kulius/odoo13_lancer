@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-# Author: Jason Wu (jaronemo@msn.com)
 
-from odoo import api, fields, models
+
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
-import json
-from lxml import etree
+
 
 
 class LancerMainItem(models.Model):
@@ -57,6 +56,8 @@ class LancerMainItem(models.Model):
                           sum1 + self.handle_work_make + self.handle_work_mould) / self.handle_work_efficiency / self.handle_work_yield
         # Math.Round(((txt_Matall.Text + txt_Proall.Text + txt_Cost03.Text + txt_Cost05.Text) / txt_Cost02.Text / txt_Cost04.Text), 3, MidpointRounding.AwayFromZero).ToString();
         self.update({'handle_work_sum': sumcost})
+        if sum1 > 0:
+            self.update({'manufacture_cost': sumcost})
 
     # 將品項明細中的特徵值集合呈現
     # @api.depends('handle_materialcost_ids.main_item_id')
@@ -83,24 +84,17 @@ class LancerMainItem(models.Model):
                     attrs_record.append(rec.material.name)
                     # attrs_name += '+'.join(rec.material.name)
             attrs_name = '+'.join(str(d) for d in attrs_record)
-            handle_record = handle_attrs.search([('handle_material_id', '=', self._origin.id)])
-            if handle_record:
-                handle_record.write({
-                    'name': attrs_name,
-                    'handle_material_id': self._origin.id,
-                })
-            else:
+            handle_record = handle_attrs.search([('name', '=', attrs_name)],limit=1)
+            if not handle_record:
                 handle_record.create({
                     'name': attrs_name,
-                    'handle_material_id': self._origin.id,
                 })
             self.update({'handle_attrs_id': handle_record.id})
-            # self.update({'handle_attrs_ids': [(6, 0, attrs_ids)]})
         else:
             self.update({'handle_attrs_id': None})
 
     active = fields.Boolean(default=True, string='是否啟用')
-    name = fields.Char(string='品項品名規格', translate=True)
+    name = fields.Char(string='品項品名規格')
     main_item_category_id = fields.Many2one(comodel_name="lancer.main.item.category", string="品項分類", required=True, )
 
     item_routing = fields.Selection(string="加工製程段",
@@ -182,77 +176,6 @@ class LancerMainItem(models.Model):
     assembly_manage_rate = fields.Float(string="管銷百分比", required=False, )
     assembly_profit_rate = fields.Float(string="利潤百分比", required=False, )
 
-    @api.onchange('handle_version_id')
-    def set_handle_version(self):
-        if not self.handle_version_id:
-            return
-        version_record = self.env['lancer.version.handle'].search([('id', '=', self.handle_version_id.id)])
-        if version_record:
-            self.handle_series_id = version_record.handle_series_id.id
-            self.handle_handle_id = version_record.handle_handle_id.id
-            new_lines = []
-            for line in version_record.handle_materialcost_ids:
-                vals = line.read()[0]
-                vals.update({
-                    'main_item_id': self.id,
-                })
-                # vals.pop('bom_id', False)
-                new_lines.append((0, 0, vals))
-            self.handle_materialcost_ids.unlink()
-            self.handle_materialcost_ids = new_lines
-            self.handle_moldcost1 = version_record.handle_moldcost1
-            self.handle_moldcost2 = version_record.handle_moldcost2
-            self.handle_moldcost3 = version_record.handle_moldcost3
-            self.handle_moldcost4 = version_record.handle_moldcost4
-            self.handle_moldcost5 = version_record.handle_moldcost5
-            self.handle_moldcost6 = version_record.handle_moldcost6
-            self.handle_mandrel = version_record.handle_mandrel
-            self.handle_elecmandrel = version_record.handle_elecmandrel
-            self.handle_mold_total = version_record.handle_mold_total
-
-            # self.handle_materialcost_ids = version_record.handle_materialcost_ids.ids
-
-        # 金屬加工-內製委外加工成本
-
-    def handle_cost_calc_safe(self):
-        if self.handle_version_id:
-            return
-        version = self.env['lancer.version.handle']
-        new_lines = []
-
-        # version.handle_materialcost_ids = new_lines
-        values = {
-            'handle_series_id': self.handle_series_id.id,
-            'handle_handle_id': self.handle_handle_id.id,
-            'handle_moldcost1': self.handle_moldcost1,
-            'handle_moldcost2': self.handle_moldcost2,
-            'handle_moldcost3': self.handle_moldcost3,
-            'handle_moldcost4': self.handle_moldcost4,
-            'handle_moldcost5': self.handle_moldcost5,
-            'handle_moldcost6': self.handle_moldcost6,
-            'handle_mandrel': self.handle_mandrel,
-            'handle_elecmandrel': self.handle_elecmandrel,
-            'handle_mold_total': self.handle_mold_total,
-            # 'handle_materialcost_ids': new_lines,
-        }
-        version_id = version.create(values)
-        # values = (vals.get('partsorder_ids', [])) + [(0, 0, {'sourceorder_id': created_id,
-        #                                                      completedby_id': uid})]
-        for line in self.handle_materialcost_ids:
-            vals = line.read()[0]
-            vals.update({
-                'handle_version_id': version_id.id,
-                'material': vals.get('material')[0],
-                'process': vals.get('process')[0],
-            })
-            vals.pop('main_item_id', False)
-            new_lines.append((0, 0, vals))
-        version_id.handle_materialcost_ids = new_lines
-        self.handle_version_id = version_id.id
-        return version_id
-        # version.handle_series_id = self.handle_series_id.id,
-
-
 class LancerMainItemProcesscost(models.Model):
     _name = 'lancer.main.item.processcost'
     _rec_name = 'process'
@@ -260,7 +183,7 @@ class LancerMainItemProcesscost(models.Model):
     _description = 'Lancer main Item process cost'
 
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
-
+    metal_version_id = fields.Many2one('lancer.version.metal', string='版次')
     process = fields.Integer(string='工序')
     process_num = fields.Char(string='工序編號')
     process_name = fields.Char(string='工序名稱')
@@ -394,4 +317,4 @@ class LancerHandleAttrsRecord(models.Model):
     _description = '用來保存品項材質的集合後續應用'
 
     name = fields.Char()
-    handle_material_id = fields.Many2one('lancer.main.item')
+    # handle_material_id = fields.Many2one('lancer.main.item')

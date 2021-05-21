@@ -44,7 +44,7 @@
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="7"/>
         <menuitem id="menu_lancer_attr_records_menu" name="特徵值集合" action="action_lancer_attr_records_form"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="8"/>
-        <menuitem id="menu_lancer_product_series_menu" name="產品系列" action="action_lancer_product_series_form"
+        <menuitem id="menu_lancer_product_series_menu" name="產品系列" action="action_lancer_routing_series_form"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="9"/>
         <menuitem id="menu_lancer_product_category_menu" name="產品類別" action="action_lancer_product_category_form"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="10"/>

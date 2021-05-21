@@ -12,18 +12,11 @@ class LancerMain(models.Model):
 
     @api.depends('main_material_cost', 'main_process_cost', 'main_manufacture_cost')
     def _main_amount_all(self):
-        """
-            Compute the amounts by the Material_Cost、Process_Cost、Manufacture_Cost.
-        """
         price = self.main_material_cost + self.main_process_cost + self.main_manufacture_cost
         self.update({'main_total_cost': price})
 
     @api.depends('order_line.material_cost')
     def _amount_all(self):
-        """
-        Compute the total material amounts.
-        """
-
         for order in self:
             main_material_cost = main_process_cost = main_manufacture_cost = 0.0
             for line in order.order_line:
@@ -35,30 +28,23 @@ class LancerMain(models.Model):
                 'main_process_cost': main_process_cost,
                 'main_manufacture_cost': main_manufacture_cost,
             })
+
     #將品項明細中的特徵值集合呈現
-    @api.depends('order_line.main_item_id')
+    @api.depends('order_line')
     def _compute_attrs_record(self):
-        # self.main_attrs_metal_ids = [(5,)]
-        # self.main_attrs_handle_ids = [(5,)]
-        self.update({'main_attrs_handle_ids': None})
-        self.update({'main_attrs_metal_ids': None})
+        self.update({'main_attrs_ids': None})
         if self.order_line:
+            attrs_ids = []
             for rec in self.order_line:
-                attrs_ids = []
-                if rec.main_item_id.item_routing == 'metal':
-                    for x in rec.item_attrs_ids:
-                        attrs_ids.append(x.id)
-                    self.update({'main_attrs_metal_ids': [(6, 0, attrs_ids)]})
-                elif rec.main_item_id.item_routing == 'handle':
-                    for x in rec.item_attrs_ids:
-                        attrs_ids.append(x.id)
-                    self.update({'main_attrs_handle_ids': [(6, 0, attrs_ids)]})
+                for x in rec.item_attrs_ids:
+                    attrs_ids.append(x.id)
+            self.update({'main_attrs_ids': [(6, 0, attrs_ids)]})
 
 
 
-    name = fields.Char(string='主件品名規格', translate=True)
+    name = fields.Char(string='主件品名規格')
     main_category_id = fields.Many2one(comodel_name="lancer.main.category", string="主件分類")
-    product_series_id = fields.Many2one(comodel_name="lancer.product.series", string="產品系列", required=False, )
+    product_series_id = fields.Many2one(comodel_name="lancer.routing.series", string="產品系列", required=False, )
     product_category_id = fields.Many2one(comodel_name="lancer.product.category", string="產品分類", required=False, )
 
     active = fields.Boolean(default=True, string='是否啟用')
@@ -68,8 +54,7 @@ class LancerMain(models.Model):
     main_total_cost = fields.Float(string='總價', store=True, readonly=True, compute='_main_amount_all')
     # main_item_ids = fields.One2many(comodel_name='lancer.main.item', inverse_name='main_id', string='品項')
     order_line = fields.One2many('lancer.main.order.line', 'order_id')
-    main_attrs_metal_ids = fields.Many2many('lancer.attr.records', string='鋼刃特徵值集合', compute='_compute_attrs_record')
-    main_attrs_handle_ids = fields.Many2many('lancer.attr.records', string='手柄特徵值集合', compute='_compute_attrs_record')
+    main_attrs_ids = fields.Many2many('lancer.attr.records', string='特徵值集合', compute='_compute_attrs_record')
 
 
 class LancerMainOrderLine(models.Model):
@@ -87,6 +72,7 @@ class LancerMainOrderLine(models.Model):
     item_total_cost = fields.Float(string='總價', related='main_item_id.item_total_cost', store=True)
     item_attrs_ids = fields.Many2many('lancer.attr.records', string='特徵值集合')
     handle_attrs_record = fields.Many2one('lancer.handle.attrs.record', string='手抦材質')
+
 
     @api.onchange('main_item_id')
     def set_attrs_data(self):
@@ -112,14 +98,8 @@ class LancerMainOrderLine(models.Model):
                 if outer_name:
                     attr_ids.append(outer_name.id)
             self.item_attrs_ids = [(6, False, attr_ids)]
-            handle_attrs = self.env['lancer.handle.attrs.record']
-            handle_record = handle_attrs.search([('handle_material_id', '=', self.main_item_id.id)])
-            if handle_record:
-                self.update({'handle_attrs_record': handle_record.id})
+            self.handle_attrs_record = self.main_item_id.handle_attrs_id.id
             return {'domain':{'item_attrs_ids':[('type','in', ['c', 'd', 'e', 'f'])]}}
-            # self.update({
-            #     'item_attrs_ids': [(6, False, attr_ids)]
-            # })
         else:
             attr_ids = []
             for rec in self:
@@ -132,11 +112,5 @@ class LancerMainOrderLine(models.Model):
                 if handle_name:
                     attr_ids.append(handle_name.id)
             self.item_attrs_ids = [(6, False, attr_ids)]
-            handle_attrs = self.env['lancer.handle.attrs.record']
-            handle_record = handle_attrs.search([('handle_material_id', '=', self.main_item_id.id)])
-            if handle_record:
-                self.update({'handle_attrs_record': handle_record.id})
+            self.handle_attrs_record = self.main_item_id.handle_attrs_id.id
             return {'domain': {'item_attrs_ids': [('type', 'in', ['a', 'b',])]}}
-            # self.update({
-            #     'item_attrs_ids': [(6, False, attr_ids)]
-            # })

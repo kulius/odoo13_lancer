@@ -58,7 +58,7 @@
                                 <group col="6">
                                     <field name="metal_blade"/>
                                     <field name="metal_version_id"/>
-                                    <button name="metal_cost_calc_safe" string="另存 金屬加工 版次" type="object" class="btn-primary" />
+                                    <button name="metal_cost_calc_safe" string="新增 金屬加工 版次" type="object" class="btn-primary" />
                                 </group>
                                 <notebook>
                                     <page string="用料成本" attrs="{'invisible': [('metal_blade', '=', False)]}">
@@ -119,7 +119,7 @@
                   <notebook attrs="{'invisible': ['|', ('item_routing', '!=', 'handle'), ('item_routing', '=', False)]}">
                     <page string="手柄射出">
                         <group>
-                            <button name="handle_cost_calc_safe" string="另存 手柄射出 版次" type="object" class="btn-primary" />
+                            <button name="handle_cost_calc_safe" string="新增 手柄射出 版次" type="object" class="btn-primary" />
                         </group>
                         <group col="6">
                             <field name="handle_series_id" options="{'no_create': True, 'no_create_edit':True}" />
