@@ -120,11 +120,11 @@
                                         <field name="routing_outer_id" string="　外徑　"/>
                                         <field name="exposed_long_id" string="外露長度"/>
 <!--                                        <field name="quote_attrs_ids" string="特徵值"/>-->
-                                        <field name="metal_cost" />
-                                        <field name="handle_cost" />
-                                        <field name="assembly_cost" />
+                                        <field name="metal_cost" optional="show"/>
+                                        <field name="handle_cost" optional="show"/>
+                                        <field name="assembly_cost" optional="show"/>
                                         <field name="total_amount" />
-                                        <field name="total_amount_usd" />
+                                        <field name="total_amount_usd" optional="hide"/>
                                         <field name="packing_inbox"/>
                                         <field name="packing_outbox"/>
                                         <field name="packing_net_weight"/>

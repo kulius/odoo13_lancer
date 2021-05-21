@@ -34,9 +34,9 @@ class LancerQuote(models.Model):
     user_id = fields.Many2one('res.users', string='報價者', default=lambda self: self.env.user)
     partner_id = fields.Many2one(comodel_name="res.partner", string="客戶", required=True, )
     contact_id = fields.Many2one('res.partner', '連絡人', domain="[('parent_id','=',partner_id)]")
-    product_series_id = fields.Many2one(comodel_name="lancer.product.series", string="產品系列", required=False, )
+    product_series_id = fields.Many2one(comodel_name="lancer.routing.series", string="產品系列", required=False, )
     product_category_id = fields.Many2one(comodel_name="lancer.product.category", string="產品分類", required=False, )
-    product_id = fields.Many2one(comodel_name="lancer.product", string="產品名稱", required=True, )
+    product_id = fields.Many2one(comodel_name="lancer.product", string="產品名稱" )
 
     # handle_material_id = fields.Many2one(comodel_name="lancer.handlematerial.material", string="手柄材質", required=False, )
     handle_material_id = fields.Many2one(comodel_name="lancer.handle.attrs.record", string="手柄材質", required=False, )
@@ -45,7 +45,7 @@ class LancerQuote(models.Model):
     routing_coating_id = fields.Many2one(comodel_name="lancer.routing.coating", string="鋼刃鍍層", required=False, )
     product_package = fields.Selection(string="包裝", selection=[('BULK', 'BULK'), ('加吊牌', '加吊牌'), ], required=False, )
 
-    quote_date = fields.Date(string="報價日期", required=True, )
+    quote_date = fields.Date(string="報價日期", required=True, default=fields.Date.context_today)
 
     main_count = fields.Integer(string="自製組件數", required=False, )
     subcontract_count = fields.Integer(string="外購品項數", required=False, )
@@ -120,6 +120,7 @@ class LancerQuote(models.Model):
                 }
                 new_lines.append((0, 0, vals))
             self.quote_lines = new_lines
+
         #依報價明細，決定手柄下拉內容
         list = []
         result = {}
@@ -134,7 +135,6 @@ class LancerQuote(models.Model):
     def onchange_handle_material_id(self):
         if not self.handle_material_id:
             return
-
         #尋找手抦成本
         for line in self.quote_lines:
             for main_item in line.main_id.order_line:
@@ -143,8 +143,6 @@ class LancerQuote(models.Model):
                 if main_item.handle_attrs_record.id == self.handle_material_id.id:
                     line.handle_cost = main_item.item_total_cost
 
-            # if not line.handle_cost:
-            #     line.unlink()
 
         #依報價明細，決定	鋼刃材質下拉內容
         list1 = []
@@ -193,13 +191,6 @@ class LancerQuoteLine(models.Model):
     packing_gross_weight = fields.Float(string='毛重', required=False)
     packing_bulk = fields.Float(string='材積', required=False)
 
-    @api.onchange('routing_cutting_id')
-    def _onchange_cutting_id(self):
-        if self.routing_cutting_id is None:
-            return
-        if self.routing_cutting_id:
-            self.main_id.main_item_id.metal_cutting_id.id
-
     @api.onchange('main_id', 'handle_cost')
     def set_attrs_data(self):
         list1 = []
@@ -217,7 +208,7 @@ class LancerQuoteLine(models.Model):
     def get_item_total_cost(self):
         for line in self.main_id.order_line:
             if line.main_item_id.metal_cutting_id.id == self.routing_cutting_id.id and line.main_item_id.metal_outer_id.id == self.routing_outer_id.id  and line.main_item_id.metal_exposed_long_id.id == self.exposed_long_id.id :
-                return self.metal_cost = line.item_total_cost
+                self.metal_cost = line.item_total_cost
 
 
         # if not self.main_id:
