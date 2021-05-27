@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerRoutingCutting(models.Model):
     _name = 'lancer.routing.cutting'
     _rec_name = 'name'
-    _description = 'Lancer Routing Cutting Item'
+    _description = '金屬加工-刃口'
 
     name = fields.Char(string='刃口名稱', translate=True)
     ename = fields.Char(string='Tip Style')

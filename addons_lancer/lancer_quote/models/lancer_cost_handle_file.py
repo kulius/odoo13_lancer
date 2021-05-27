@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 class LancerCostHandleFile(models.Model):
     _name = 'lancer.cost.handle.file'
-    _description = 'lancer cost handle file 手柄用料'
+    _description = '手柄射出-加工工序 手柄用料'
 
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

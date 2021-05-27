@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 class LancerCostMapFile(models.Model):
     _name = 'lancer.cost.map.file'
-    _description = 'Lancer Cost Map File 特徵值關係表'
+    _description = '金屬加工-特徵值關係表'
 
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

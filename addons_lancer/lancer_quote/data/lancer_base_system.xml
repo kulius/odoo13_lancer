@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- 定义组类 -->
+        <!-- 定义根组类My Apps -->
+        <record id="module_category_lancer" model="ir.module.category" >
+            <field name="name">義成報價單權限設定</field>
+            <field name="sequence" eval="0"/>
+        </record>
+        <!-- 報價單 -->
+        <record id="module_category_lancer_quote" model="ir.module.category" >
+            <field name="name">報價單</field>
+            <field name="parent_id" ref="module_category_lancer"/>
+        </record>
+        <record id="group_lancer_quote" model="res.groups">
+           <field name="name">報價單一般</field>
+           <field name="category_id" ref="module_category_lancer_quote"/>
+           <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <!-- 付款條件 -->
+        <record id="module_category_lancer_payment_term" model="ir.module.category" >
+            <field name="name">付款條件</field>
+            <field name="parent_id" ref="module_category_lancer"/>
+        </record>
+        <record id="group_lancer_payment_term" model="res.groups">
+           <field name="name">報價單一般</field>
+           <field name="category_id" ref="module_category_lancer_payment_term"/>
+           <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <!-- 貿易條件 -->
+        <record id="module_category_lancer_incoterms" model="ir.module.category" >
+            <field name="name">貿易條件</field>
+            <field name="parent_id" ref="module_category_lancer"/>
+        </record>
+        <record id="group_lancer_incoterms" model="res.groups">
+           <field name="name">報價單一般</field>
+           <field name="category_id" ref="module_category_lancer_incoterms"/>
+           <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+
+
         <record id="lancer_base_security_root" model="ir.module.category">
             <field name="name">義成基礎設定</field>
             <field name="sequence" eval="1"/>
+            <field name="parent_id" ref="module_category_lancer"/>
         </record>
        <record id="group_lancer_base_user" model="res.groups">
            <field name="name">義成基礎設定一般人員</field>

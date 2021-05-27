@@ -8,7 +8,7 @@ class LancerProductSeries(models.Model):
     _name = 'lancer.product.series'
     _rec_name = 'name'
     _order = "sequence,id"
-    _description = 'Lancer Product 產品系列'
+    _description = '產品系列'
 
     name = fields.Char(string='產品系列', translate=True)
     active = fields.Boolean(default=True, string='是否啟用')

@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerRoutingSeries(models.Model):
     _name = 'lancer.routing.series'
     _rec_name = 'name'
-    _description = 'Lancer Routing Series Item'
+    _description = '主件-系列別'
 
     name = fields.Char(string='系列別名稱', translate=True)
     series_code = fields.Char(string='系列別代號')

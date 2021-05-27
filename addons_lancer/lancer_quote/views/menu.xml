@@ -147,7 +147,21 @@
         <menuitem action="action_lancer_package_type_form" name="包裝分類"
                   id="menu_lancer_package_type" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="3"/>
 
+        <!-- 權限設定 -->
+        <menuitem id="menu_lancer_quote_usergroup_main_menu" name="權限設定"
+                  parent="lancer_quote.lancer_quote" sequence="7"/>
+        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="使用者權限"
+                  parent="lancer_quote.menu_lancer_quote_usergroup_main_menu" sequence="1"/>
 
+        <record id="action_res_groups_lancer" model="ir.actions.act_window">
+            <field name="name">權限群組設定</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.groups</field>
+            <field name="context">{'search_default_no_share': 1}</field>
+            <field name="domain">[('name', 'ilike', '義成')]</field>
+            <field name="help">權限群組設定</field>
+        </record>
+        <menuitem action="action_res_groups_lancer" id="lancer_menu_action_res_groups" parent="lancer_quote.menu_lancer_quote_usergroup_main_menu" sequence="2"/>
 
 
 

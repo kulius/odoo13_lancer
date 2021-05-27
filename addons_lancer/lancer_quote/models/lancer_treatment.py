@@ -8,7 +8,7 @@ class LancerSubcontractTreatment(models.Model):
     _name = 'lancer.subcontract.treatment'
     _rec_name = 'name'
     _order = "sequence, id"
-    _description = 'Lancer Subcontract Product Category'
+    _description = '外購-表面處理'
 
     name = fields.Char(string='表面處理名稱')
     active = fields.Boolean(default=True, string='是否啟用')

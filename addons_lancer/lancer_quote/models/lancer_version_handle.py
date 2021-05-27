@@ -7,7 +7,7 @@ from odoo import api, fields, models, _
 class LancerVersionHandle(models.Model):
     _name = 'lancer.version.handle'
     _rec_name = 'name'
-    _description = '手柄射出 版次'
+    _description = '手柄射出版次-主檔'
 
     def _get_handle_work_mould(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_work_mould')
@@ -83,7 +83,7 @@ class LancerVersionHandleMaterial(models.Model):
     _name = 'lancer.version.handlematerial'
     _rec_name = 'process'
     _order = "process, id"
-    _description = 'Lancer Version handlematerial'
+    _description = '手柄射出版次-工序'
 
     def _get_handle_process_wage(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_process_wage')

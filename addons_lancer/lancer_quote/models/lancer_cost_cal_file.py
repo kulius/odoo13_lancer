@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 class LancerCostCalFile(models.Model):
     _name = 'lancer.cost.cal.file'
-    _description = 'Lancer Cost Calc File 單重長度表'
+    _description = '金屬加工-單重長度表'
 
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

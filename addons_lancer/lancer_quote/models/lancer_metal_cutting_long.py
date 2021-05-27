@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerMetalCuttingLong(models.Model):
     _name = 'lancer.metal.cutting.long'
     _rec_name = 'name'
-    _description = 'Lancer Metal Cutting Long For Main Item Use'
+    _description = '金屬加工-鋼刄外徑'
 
     metal_outer_id = fields.Many2one(comodel_name="lancer.routing.outer", string="鋼刄外徑", required=True, )
     name = fields.Integer(string='下料長度(mm)')

@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerRoutingMaterial(models.Model):
     _name = 'lancer.routing.material'
     _rec_name = 'name'
-    _description = 'Lancer Routing Material Item'
+    _description = '組裝-材料名稱'
 
     name = fields.Char(string='組裝-材料名稱', translate=True)
     active = fields.Boolean(default=True, string='是否啟用')

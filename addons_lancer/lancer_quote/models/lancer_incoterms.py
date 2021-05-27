@@ -6,7 +6,7 @@ from odoo import fields, models
 
 class LancerIncoterms(models.Model):
     _name = 'lancer.incoterms'
-    _description = 'Incoterms'
+    _description = '報價單設定-貿易條件'
 
     name = fields.Char(string='貿易條件', required=True, translate=True)
     code = fields.Char(string='條件簡碼', size=3, required=True)

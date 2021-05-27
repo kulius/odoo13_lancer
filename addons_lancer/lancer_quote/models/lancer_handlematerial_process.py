@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerHandleMaterialProcess(models.Model):
     _name = 'lancer.handlematerial.process'
     _rec_name = 'name'
-    _description = 'Lancer Main Item Handle Material use process'
+    _description = '手柄射出-手柄工序說明'
 
     name = fields.Char(string='手柄工序說明')
     process_code = fields.Char(string='手柄工序代號')

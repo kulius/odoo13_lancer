@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerRoutingOuter(models.Model):
     _name = 'lancer.routing.outer'
     _rec_name = 'name'
-    _description = 'Lancer Routing Outer Item'
+    _description = '金屬加工-鋼刄外徑'
 
     name = fields.Char(string='鋼刄外徑名稱', translate=True)
     outer_code = fields.Char(string='鋼刄外徑代碼')

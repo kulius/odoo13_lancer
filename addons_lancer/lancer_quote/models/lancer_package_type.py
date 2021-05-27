@@ -8,7 +8,7 @@ class LancerPackageType(models.Model):
     _name = 'lancer.package.type'
     _rec_name = 'name'
     _order = "sequence,code, id"
-    _description = 'Lancer Package type Item'
+    _description = '報價單-包裝大分類'
 
     code = fields.Char(string='代號')
     name = fields.Char(string='包裝大分類名稱', translate=True)

@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LanceMetalSpec(models.Model):
     _name = 'lancer.metal.spec'
     _rec_name = 'name'
-    _description = 'Lancer Metal Spec for Main Item Use'
+    _description = '金屬加工-鋼材種類'
 
     name = fields.Char(string='鋼材種類名稱', translate=True)
     metal_spec_code = fields.Char(string='鋼材種類代碼')

@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 class LancerCostPlatFile(models.Model):
     _name = 'lancer.cost.plat.file'
-    _description = 'Lancer Cost Plat File 電鍍單價表'
+    _description = '金屬加工-電鍍單價表'
 
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

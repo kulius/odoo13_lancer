@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerRoutingHandle(models.Model):
     _name = 'lancer.routing.handle'
     _rec_name = 'name'
-    _description = 'Lancer Routing Handle Item'
+    _description = '手柄射出-手柄尺吋'
 
     name = fields.Char(string='手柄尺吋名稱', translate=True)
     handle_code = fields.Char(string='手柄尺吋代號')

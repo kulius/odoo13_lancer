@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerHandleMaterialMaterial(models.Model):
     _name = 'lancer.handlematerial.material'
     _rec_name = 'name'
-    _description = 'Lancer Main Item Handle Material use Material'
+    _description = '手柄射出-手柄材質'
 
     name = fields.Char(string='手柄材質說明')
     material_code = fields.Char(string='手柄材質代號')

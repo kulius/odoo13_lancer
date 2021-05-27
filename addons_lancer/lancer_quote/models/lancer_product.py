@@ -8,7 +8,7 @@ class LancerProduct(models.Model):
     _name = 'lancer.product'
     _rec_name = 'name'
     _order = "product_code, id"
-    _description = 'Lancer Product Item'
+    _description = '產品'
 
     name = fields.Char(string='產品名稱', translate=True)
     product_code = fields.Char(string='產品品號')

@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerMainItemCategory(models.Model):
     _name = 'lancer.main.item.category'
     _rec_name = 'name'
-    _description = 'Lancer Main Item Category'
+    _description = '品項分類'
 
     name = fields.Char(string='品項分類名稱', translate=True)
     item_categ_code = fields.Char(string='品項分類代碼')

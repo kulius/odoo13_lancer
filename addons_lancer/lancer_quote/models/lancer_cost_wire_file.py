@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 class LancerCostWireFile(models.Model):
     _name = 'lancer.cost.wire.file'
-    _description = 'Lancer Cost Wire File'
+    _description = '金屬加工-盤元規格、單價'
 
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

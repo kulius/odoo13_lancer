@@ -8,7 +8,7 @@ class LancerPackageSetting(models.Model):
     _name = 'lancer.package.setting'
     _rec_name = 'name'
     _order = "sequence, id"
-    _description = 'Lancer Package Setting Item'
+    _description = '報價單-包裝材料'
 
     code = fields.Char(string='代號', translate=True)
     name = fields.Char(string='包裝材料名稱', translate=True)

@@ -7,7 +7,7 @@ from odoo import api, fields, models, _
 class LancerVersionMetal(models.Model):
     _name = 'lancer.version.metal'
     _rec_name = 'name'
-    _description = '金屬加工版次'
+    _description = '金屬加工版次-主檔'
 
     def _get_metal_work_labor(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_metal_work_labor')
@@ -69,7 +69,7 @@ class LancerVersionProcesscost(models.Model):
     _name = 'lancer.version.processcost'
     _rec_name = 'process'
     _order = "process, id"
-    _description = 'Lancer metal version process cost'
+    _description = '金屬加工版次-主檔 工序'
 
     metal_version_id = fields.Many2one('lancer.version.metal', string='版次', ondelete='cascade')
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", ondelete='cascade')

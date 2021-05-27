@@ -8,7 +8,7 @@ class LancerMain(models.Model):
     _name = 'lancer.main'
     _rec_name = 'name'
     _order = "name, id"
-    _description = 'Lancer main'
+    _description = '主件'
 
     @api.depends('main_material_cost', 'main_process_cost', 'main_manufacture_cost')
     def _main_amount_all(self):
@@ -58,7 +58,7 @@ class LancerMain(models.Model):
 class LancerMainOrderLine(models.Model):
     _name = 'lancer.main.order.line'
     _order = 'id'
-    _description = '主件品項明細資料表'
+    _description = '主件-品項明細'
 
     order_id = fields.Many2one('lancer.main', string='主件參考', index=True, required=True, readonly=True,
                                ondelete="cascade", copy=False)

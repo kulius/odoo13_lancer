@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerMetalExposedLong(models.Model):
     _name = 'lancer.metal.exposed.long'
     _rec_name = 'name'
-    _description = '外露長度'
+    _description = '金屬加工-外露長度'
 
     name = fields.Integer(string='外露長度長度(mm)')
     depth = fields.Integer(string='組立深度(mm)')

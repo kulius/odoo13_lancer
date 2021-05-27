@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerRoutingShape(models.Model):
     _name = 'lancer.routing.shape'
     _rec_name = 'name'
-    _description = 'Lancer Routing Shape Item'
+    _description = '金屬加工-形狀'
 
     name = fields.Char(string='形狀名稱', translate=True)
     shape_code = fields.Char(string='形狀代碼')

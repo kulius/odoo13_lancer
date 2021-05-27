@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 class LancerCostProFile(models.Model):
     _name = 'lancer.cost.pro.file'
-    _description = 'lancer_cost_pro_file 人工成本'
+    _description = '金屬加工-人工成本'
 
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

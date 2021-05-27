@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class LancerRoutingCoating(models.Model):
     _name = 'lancer.routing.coating'
     _rec_name = 'name'
-    _description = 'Lancer Routing Coating Item'
+    _description = '金屬加工-鍍層'
 
     name = fields.Char(string='鍍層名稱', translate=True)
     ename = fields.Char(string='COATING')

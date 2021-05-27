@@ -10,7 +10,7 @@ class LancerMainItem(models.Model):
     _name = 'lancer.main.item'
     _rec_name = 'name'
     _order = "name, id"
-    _description = 'Lancer main Item'
+    _description = '品項'
 
     def _get_metal_work_labor(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_metal_work_labor')
