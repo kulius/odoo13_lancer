@@ -1,33 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- 定义组类 -->
-        <!-- 定义根组类My Apps -->
-        <record id="module_category_lancer" model="ir.module.category" >
-            <field name="name">義成報價單權限設定</field>
+        <record id="module_category_lancer_1" model="ir.module.category" >
+            <field name="name">1.報價單-選單設定</field>
             <field name="sequence" eval="0"/>
         </record>
-        <record id="group_lancer_quote" model="res.groups">
-            <field name="name">義成-1.0報價單</field>
-            <field name="category_id" ref="module_category_lancer"/>
+        <record id="group_lancer_11" model="res.groups">
+            <field name="name">1.1-報價單</field>
+            <field name="category_id" ref="module_category_lancer_1"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
-        <record id="group_lancer_payment_term" model="res.groups">
-            <field name="name">義成-1.1付款條件</field>
-            <field name="category_id" ref="module_category_lancer"/>
+        <record id="group_lancer_12" model="res.groups">
+            <field name="name">1.2-付款條件</field>
+            <field name="category_id" ref="module_category_lancer_1"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
-       <!-- 貿易條件 -->
-        <record id="group_lancer_incoterms" model="res.groups">
-            <field name="name">義成-1.2貿易條件</field>
-            <field name="category_id" ref="module_category_lancer"/>
+        <record id="group_lancer_13" model="res.groups">
+            <field name="name">1.3-貿易條件</field>
+            <field name="category_id" ref="module_category_lancer_1"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="module_category_lancer_2" model="ir.module.category" >
+            <field name="name">2.基本資料設定</field>
+            <field name="sequence" eval="0"/>
+        </record>
+        <record id="group_lancer_21" model="res.groups">
+            <field name="name">2. 1-產品</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_22" model="res.groups">
+            <field name="name">2. 2-主件</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_23" model="res.groups">
+            <field name="name">2. 3-品項</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_24" model="res.groups">
+            <field name="name">2. 4-客戶</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_25" model="res.groups">
+            <field name="name">2. 5-員工</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_26" model="res.groups">
+            <field name="name">2. 6-主件分類</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_27" model="res.groups">
+            <field name="name">2. 7-品項分類</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_28" model="res.groups">
+            <field name="name">2. 8-特徵值集合</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_29" model="res.groups">
+            <field name="name">2. 9-產品系列</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_210" model="res.groups">
+            <field name="name">2.10-產品類別</field>
+            <field name="category_id" ref="module_category_lancer_2"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="module_category_lancer_3" model="ir.module.category" >
+            <field name="name">3.金屬加工設定</field>
+            <field name="sequence" eval="0"/>
+        </record>
+        <record id="group_lancer_31" model="res.groups">
+            <field name="name">3. 1-金屬加工版本設定</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_32" model="res.groups">
+            <field name="name">3. 2-形狀</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_33" model="res.groups">
+            <field name="name">3. 3-鍍層</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_34" model="res.groups">
+            <field name="name">3. 4-刃口</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_35" model="res.groups">
+            <field name="name">3. 5-外徑</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_36" model="res.groups">
+            <field name="name">3. 6-鋼材規格設定</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_37" model="res.groups">
+            <field name="name">3. 7-鋼材種類設定</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_38" model="res.groups">
+            <field name="name">3. 8-下料長度設定</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_39" model="res.groups">
+            <field name="name">3. 9-外露長度設定</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_310" model="res.groups">
+            <field name="name">3.10-特徵值關係表設定</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_311" model="res.groups">
+            <field name="name">3.11-材料單價設定</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_312" model="res.groups">
+            <field name="name">3.12-單重長度表設定</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_313" model="res.groups">
+            <field name="name">3.13-電鍍單價表設定</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_314" model="res.groups">
+            <field name="name">3.14-內製/委外 加工成本</field>
+            <field name="category_id" ref="module_category_lancer_3"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="module_category_lancer_4" model="ir.module.category" >
+            <field name="name">4.手柄射出設定</field>
+            <field name="sequence" eval="0"/>
+        </record>
+        <record id="group_lancer_41" model="res.groups">
+            <field name="name">4. 1-手柄射出版本設定</field>
+            <field name="category_id" ref="module_category_lancer_4"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_42" model="res.groups">
+            <field name="name">4. 2-系列別</field>
+            <field name="category_id" ref="module_category_lancer_4"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_43" model="res.groups">
+            <field name="name">4. 3-手柄尺吋</field>
+            <field name="category_id" ref="module_category_lancer_4"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_44" model="res.groups">
+            <field name="name">4. 4-自製手柄加工工序設定</field>
+            <field name="category_id" ref="module_category_lancer_4"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_45" model="res.groups">
+            <field name="name">4. 5-自製手柄材質設定</field>
+            <field name="category_id" ref="module_category_lancer_4"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_46" model="res.groups">
+            <field name="name">4. 6-手柄用料</field>
+            <field name="category_id" ref="module_category_lancer_4"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="module_category_lancer_5" model="ir.module.category" >
+            <field name="name">5.組裝設定</field>
+            <field name="sequence" eval="0"/>
+        </record>
+        <record id="group_lancer_51" model="res.groups">
+            <field name="name">5. 1-組裝-工資項目</field>
+            <field name="category_id" ref="module_category_lancer_5"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_52" model="res.groups">
+            <field name="name">5. 2-組裝-材料</field>
+            <field name="category_id" ref="module_category_lancer_5"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="module_category_lancer_6" model="ir.module.category" >
+            <field name="name">6.外購基本資料設定</field>
+            <field name="sequence" eval="0"/>
+        </record>
+        <record id="group_lancer_61" model="res.groups">
+            <field name="name">6. 1-供應商</field>
+            <field name="category_id" ref="module_category_lancer_6"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_62" model="res.groups">
+            <field name="name">6. 2-品項分類</field>
+            <field name="category_id" ref="module_category_lancer_6"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_63" model="res.groups">
+            <field name="name">6. 3-材質</field>
+            <field name="category_id" ref="module_category_lancer_6"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_64" model="res.groups">
+            <field name="name">6. 4-表面處理</field>
+            <field name="category_id" ref="module_category_lancer_6"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="module_category_lancer_7" model="ir.module.category" >
+            <field name="name">7.包裝基本資料設定</field>
+            <field name="sequence" eval="0"/>
+        </record>
+        <record id="group_lancer_71" model="res.groups">
+            <field name="name">7. 1-包裝材料項目</field>
+            <field name="category_id" ref="module_category_lancer_7"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_72" model="res.groups">
+            <field name="name">7. 2-包裝費用項目</field>
+            <field name="category_id" ref="module_category_lancer_7"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_73" model="res.groups">
+            <field name="name">7. 3-包裝分類</field>
+            <field name="category_id" ref="module_category_lancer_7"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="module_category_lancer_8" model="ir.module.category" >
+            <field name="name">8.權限設定</field>
+            <field name="sequence" eval="0"/>
+        </record>
+        <record id="group_lancer_81" model="res.groups">
+            <field name="name">8. 1-使用者權限</field>
+            <field name="category_id" ref="module_category_lancer_8"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_lancer_82" model="res.groups">
+            <field name="name">8. 2-資料維護群組設定</field>
+            <field name="category_id" ref="module_category_lancer_8"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+
+
+
+
+        <record id="module_category_lancer_data" model="ir.module.category" >
+            <field name="name">義成資料權限設定</field>
+            <field name="sequence" eval="0"/>
         </record>
 
         <record id="lancer_base_security_root" model="ir.module.category">
             <field name="name">義成資料維護權限</field>
             <field name="sequence" eval="1"/>
-            <field name="parent_id" ref="module_category_lancer"/>
+            <field name="parent_id" ref="module_category_lancer_data"/>
         </record>
        <record id="group_lancer_base_user" model="res.groups">
            <field name="name">義成-資料檢視</field>

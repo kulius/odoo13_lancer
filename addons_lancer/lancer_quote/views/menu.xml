@@ -6,166 +6,175 @@
                   sequence="0"/>
 
         <!-- 報價單 -->
-        <menuitem id="menu_lancer_quote_menu" name="報價單"
+        <menuitem id="menu_lancer_quote_menu" name="1.報價單"
                   parent="lancer_quote.lancer_quote" sequence="0"
-                  groups="lancer_quote.group_lancer_quote,lancer_quote.group_lancer_payment_term,lancer_quote.group_lancer_incoterms"/>
+                  groups="group_lancer_11,group_lancer_12,group_lancer_13"/>
         <!--報價單 -->
-        <menuitem id="menu_lancer_quote__menu" name="報價單" action="action_lancer_quote_form"
+        <menuitem id="menu_lancer_quote__menu" name="1.1.報價單" action="action_lancer_quote_form"
                   parent="lancer_quote.menu_lancer_quote_menu" sequence="1"
-                  groups="lancer_quote.group_lancer_quote"/>
+                  groups="group_lancer_11"/>
 
-        <menuitem id="menu_lancer_payment_term" name="付款條件" action="action_lancer_payment_term_form"
+        <menuitem id="menu_lancer_payment_term" name="1.2.付款條件" action="action_lancer_payment_term_form"
                   parent="lancer_quote.menu_lancer_quote_menu" sequence="2"
-                  groups="lancer_quote.group_lancer_payment_term"/>
+                  groups="group_lancer_12"/>
 
-        <menuitem id="menu_action_lancer_incoterm_open" name="貿易條件" action="action_lancer_incoterms_tree"
+        <menuitem id="menu_action_lancer_incoterm_open" name="1.3.貿易條件" action="action_lancer_incoterms_tree"
                   parent="lancer_quote.menu_lancer_quote_menu" sequence="3"
-                  groups="lancer_quote.group_lancer_incoterms"/>
+                  groups="group_lancer_13"/>
 
 
         <!-- 基本資料 -->
-        <menuitem id="menu_lancer_base_main_menu" name="基本資料設定"
-                  parent="lancer_quote.lancer_quote" sequence="1"/>
-        <!--客戶基本資料維護 -->
-        <menuitem id="menu_lancer_partner_main_menu" name="客戶" action="base.action_partner_customer_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="4"/>
-        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="員工"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="5"/>
-
+        <menuitem id="menu_lancer_base_main_menu" name="2.基本資料設定"
+                  parent="lancer_quote.lancer_quote" sequence="1"
+                  groups="group_lancer_21,group_lancer_22,group_lancer_23,group_lancer_24,group_lancer_25,group_lancer_26,group_lancer_27,group_lancer_28,group_lancer_29,group_lancer_210"/>
         <!--產品基本資料維護 -->
-        <menuitem id="menu_lancer_product_main_menu" name="產品" action="action_lancer_product_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="1"/>
+        <menuitem id="menu_lancer_product_main_menu" name="2.1.產品" action="action_lancer_product_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="1" groups="group_lancer_21"/>
 
-        <menuitem id="menu_lancer_main_main_menu" name="主件" action="action_lancer_main_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="2"/>
+        <menuitem id="menu_lancer_main_main_menu" name="2.2.主件" action="action_lancer_main_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="2" groups="group_lancer_22"/>
 
-        <menuitem id="menu_lancer_main_item_main_menu" name="品項" action="action_lancer_main_item_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="3"/>
+        <menuitem id="menu_lancer_main_item_main_menu" name="2.3.品項" action="action_lancer_main_item_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="3" groups="group_lancer_23"/>
+        <!--客戶基本資料維護 -->
+        <menuitem id="menu_lancer_partner_main_menu" name="2.4.客戶" action="base.action_partner_customer_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="4" groups="group_lancer_24"/>
+        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="2.5.員工"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="5" groups="group_lancer_25"/>
 
-        <menuitem id="menu_lancer_other_main_category_menu" name="主件分類" action="action_lancer_main_category_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="6"/>
-        <menuitem id="menu_lancer_other_main_item_category_menu" name="品項分類" action="action_lancer_main_item_category_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="7"/>
-        <menuitem id="menu_lancer_attr_records_menu" name="特徵值集合" action="action_lancer_attr_records_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="8"/>
-        <menuitem id="menu_lancer_product_series_menu" name="產品系列" action="action_lancer_routing_series_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="9"/>
-        <menuitem id="menu_lancer_product_category_menu" name="產品類別" action="action_lancer_product_category_form"
-                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="10"/>
+
+
+        <menuitem id="menu_lancer_other_main_category_menu" name="2.6.主件分類" action="action_lancer_main_category_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="6" groups="group_lancer_26"/>
+        <menuitem id="menu_lancer_other_main_item_category_menu" name="2.7.品項分類" action="action_lancer_main_item_category_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="7" groups="group_lancer_27"/>
+        <menuitem id="menu_lancer_attr_records_menu" name="2.8.特徵值集合" action="action_lancer_attr_records_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="8" groups="group_lancer_28"/>
+        <menuitem id="menu_lancer_product_series_menu" name="2.9.產品系列" action="action_lancer_routing_series_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="9" groups="group_lancer_29"/>
+        <menuitem id="menu_lancer_product_category_menu" name="2.10.產品類別" action="action_lancer_product_category_form"
+                  parent="lancer_quote.menu_lancer_base_main_menu" sequence="10" groups="group_lancer_210"/>
 
 
         <!-- 金屬加工設定 -->
-        <menuitem id="menu_lancer_base_other_setting_menu" name="金屬加工設定"
-                  parent="lancer_quote.lancer_quote" sequence="2"/>
+        <menuitem id="menu_lancer_base_other_setting_menu" name="3.金屬加工設定"
+                  parent="lancer_quote.lancer_quote" sequence="2"
+                  groups="group_lancer_31,group_lancer_32,group_lancer_33,group_lancer_34,group_lancer_35,group_lancer_36,group_lancer_37,group_lancer_38,group_lancer_39,group_lancer_310,group_lancer_311,group_lancer_312,group_lancer_313,group_lancer_314"/>
 
-        <menuitem action="action_lancer_version_metal_form" name="金屬加工版本設定"
-                  id="menu_lancer_metal_version" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="1"/>
-
-
-        <menuitem action="action_lancer_routing_shape_form" name="形狀"
-                  id="menu_lancer_routing_shape" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="2"/>
-        <menuitem action="action_lancer_routing_coating_form" name="鍍層"
-                  id="menu_lancer_routing_coating" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="3"/>
-        <menuitem action="action_lancer_routing_cutting_form" name="刃口"
-                  id="menu_lancer_routing_cutting" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="4"/>
-        <menuitem action="action_lancer_routing_outer_form" name="外徑"
-                  id="menu_lancer_routing_outer" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="5"/>
-
-        <menuitem id="menu_lancer_metal_type_menu" name="鋼材規格設定" action="action_lancer_metal_type_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="6"/>
-        <menuitem id="menu_lancer_metal_spec_menu" name="鋼材種類設定" action="action_lancer_metal_spec_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="7"/>
-        <menuitem id="menu_lancer_metal_cutting_long_menu" name="下料長度(mm)設定" action="action_lancer_metal_cutting_long_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="8"/>
-        <menuitem id="menu_lancer_metal_exposed_long_menu" name="外露長度(mm)設定" action="action_lancer_metal_exposed_long_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="9"/>
+        <menuitem action="action_lancer_version_metal_form" name="3.1.金屬加工版本設定"
+                  id="menu_lancer_metal_version" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="1" groups="group_lancer_31"/>
 
 
-        <menuitem id="menu_lancer_cost_map_file_menu" name="特徵值關係表設定" action="action_lancer_cost_map_file_form"
-          parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"/>
+        <menuitem action="action_lancer_routing_shape_form" name="3.2.形狀"
+                  id="menu_lancer_routing_shape" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="2" groups="group_lancer_32"/>
+        <menuitem action="action_lancer_routing_coating_form" name="3.3.鍍層"
+                  id="menu_lancer_routing_coating" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="3" groups="group_lancer_33"/>
+        <menuitem action="action_lancer_routing_cutting_form" name="3.4.刃口"
+                  id="menu_lancer_routing_cutting" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="4" groups="group_lancer_34"/>
+        <menuitem action="action_lancer_routing_outer_form" name="3.5.外徑"
+                  id="menu_lancer_routing_outer" parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="5" groups="group_lancer_35"/>
+
+        <menuitem id="menu_lancer_metal_type_menu" name="3.6.鋼材規格設定" action="action_lancer_metal_type_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="6" groups="group_lancer_36"/>
+        <menuitem id="menu_lancer_metal_spec_menu" name="3.7.鋼材種類設定" action="action_lancer_metal_spec_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="7" groups="group_lancer_37"/>
+        <menuitem id="menu_lancer_metal_cutting_long_menu" name="3.8.下料長度(mm)設定" action="action_lancer_metal_cutting_long_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="8" groups="group_lancer_38"/>
+        <menuitem id="menu_lancer_metal_exposed_long_menu" name="3.9.外露長度(mm)設定" action="action_lancer_metal_exposed_long_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="9" groups="group_lancer_39"/>
 
 
-        <menuitem id="menu_lancer_lancer_cost_wire_file_menu" name="材料單價設定" action="action_lancer_cost_wire_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="21"/>
-        <menuitem id="menu_lancer_cost_cal_file_menu" name="單重長度表設定" action="action_lancer_cost_cal_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="31"/>
-        <menuitem id="menu_lancer_cost_plat_file_menu" name="電鍍單價表設定" action="action_lancer_cost_plat_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="41"/>
-        <menuitem id="menu_lancer_cost_pro_file_menu" name="內製/委外 加工成本" action="action_lancer_cost_pro_file_form"
-                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="51"/>
+        <menuitem id="menu_lancer_cost_map_file_menu" name="3.10.特徵值關係表設定" action="action_lancer_cost_map_file_form"
+          parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="10"  groups="group_lancer_310"/>
+
+
+        <menuitem id="menu_lancer_lancer_cost_wire_file_menu" name="3.11.材料單價設定" action="action_lancer_cost_wire_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="21"  groups="group_lancer_311"/>
+        <menuitem id="menu_lancer_cost_cal_file_menu" name="3.12.單重長度表設定" action="action_lancer_cost_cal_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="31" groups="group_lancer_312"/>
+        <menuitem id="menu_lancer_cost_plat_file_menu" name="3.13.電鍍單價表設定" action="action_lancer_cost_plat_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="41" groups="group_lancer_313"/>
+        <menuitem id="menu_lancer_cost_pro_file_menu" name="3.14.內製/委外 加工成本" action="action_lancer_cost_pro_file_form"
+                  parent="lancer_quote.menu_lancer_base_other_setting_menu" sequence="51" groups="group_lancer_314"/>
 
 
 
 
         <!-- 手柄射出設定 -->
-        <menuitem id="menu_lancer_quote_main_menu" name="手柄射出設定"
-                  parent="lancer_quote.lancer_quote" sequence="3"/>
+        <menuitem id="menu_lancer_quote_main_menu" name="4.手柄射出設定"
+                  parent="lancer_quote.lancer_quote" sequence="3"
+                  groups="group_lancer_41,group_lancer_42,group_lancer_43,group_lancer_44,group_lancer_45,group_lancer_46"/>
 
-        <menuitem action="action_lancer_version_handle_form" name="手柄射出版本設定"
-                  id="menu_lancer_routing_version" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="1"/>
+        <menuitem action="action_lancer_version_handle_form" name="4.1.手柄射出版本設定"
+                  id="menu_lancer_routing_version" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="1" groups="group_lancer_41"/>
 
 
-        <menuitem action="action_lancer_routing_series_form" name="系列別"
-                  id="menu_lancer_routing_series" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="2"/>
-        <menuitem action="action_lancer_routing_handle_form" name="手柄尺吋"
-                  id="menu_lancer_routing_handle" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="3"/>
+        <menuitem action="action_lancer_routing_series_form" name="4.2.系列別"
+                  id="menu_lancer_routing_series" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="2" groups="group_lancer_42"/>
+        <menuitem action="action_lancer_routing_handle_form" name="4.3.手柄尺吋"
+                  id="menu_lancer_routing_handle" parent="lancer_quote.menu_lancer_quote_main_menu" sequence="3" groups="group_lancer_43"/>
 
-        <menuitem id="menu_lancer_handlematerial_process_menu" name="自製手柄加工工序設定" action="action_lancer_handlematerial_process_form"
-                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="4"/>
-        <menuitem id="menu_lancer_handlematerial_material_menu" name="自製手柄材質設定" action="action_lancer_handlematerial_material_form"
-                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="5"/>
-        <menuitem id="menu_lancer_cost_handle_file_menu" name="手柄用料" action="action_lancer_cost_handle_file_form"
-                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="6"/>
+        <menuitem id="menu_lancer_handlematerial_process_menu" name="4.4.自製手柄加工工序設定" action="action_lancer_handlematerial_process_form"
+                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="4" groups="group_lancer_44"/>
+        <menuitem id="menu_lancer_handlematerial_material_menu" name="4.5.自製手柄材質設定" action="action_lancer_handlematerial_material_form"
+                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="5" groups="group_lancer_45"/>
+        <menuitem id="menu_lancer_cost_handle_file_menu" name="4.6.手柄用料" action="action_lancer_cost_handle_file_form"
+                  parent="lancer_quote.menu_lancer_quote_main_menu" sequence="6" groups="group_lancer_46"/>
 
         <!-- 組裝設定 -->
-        <menuitem id="menu_lancer_routing_menu" name="組裝設定"
-                  parent="lancer_quote.lancer_quote" sequence="4"/>
+        <menuitem id="menu_lancer_routing_menu" name="5.組裝設定"
+                  parent="lancer_quote.lancer_quote" sequence="4"
+                  groups="group_lancer_51,group_lancer_52"/>
 
-        <menuitem action="action_lancer_routing_wages_form" name="組裝-工資項目"
-                  id="menu_lancer_routing_wages" parent="lancer_quote.menu_lancer_routing_menu" sequence="8"/>
-        <menuitem action="action_lancer_routing_material_form" name="組裝-材料"
-                  id="menu_lancer_routing_material" parent="lancer_quote.menu_lancer_routing_menu" sequence="9"/>
+        <menuitem action="action_lancer_routing_wages_form" name="5.1.組裝-工資項目"
+                  id="menu_lancer_routing_wages" parent="lancer_quote.menu_lancer_routing_menu" sequence="8"  groups="group_lancer_51"/>
+        <menuitem action="action_lancer_routing_material_form" name="5.2.組裝-材料"
+                  id="menu_lancer_routing_material" parent="lancer_quote.menu_lancer_routing_menu" sequence="9" groups="group_lancer_52"/>
 
 
 
         <!-- 外購基本資料維護 -->
-        <menuitem id="menu_lancer_quote_subcontract_main_menu" name="外購基本資料設定"
-                  parent="lancer_quote.lancer_quote" sequence="5" groups="lancer_quote.group_lancer_base_user"/>
-        <menuitem id="menu_lancer_partner_supplier_main_menu" name="供應商" action="base.action_partner_supplier_form"
-                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="1" groups="lancer_quote.group_lancer_base_user"/>
-        <menuitem id="menu_lancer_subcontract_category_main_menu" name="品項分類" action="lancer_quote.action_lancer_subcontract_category_form"
-                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="lancer_quote.group_lancer_base_user"/>
-        <menuitem id="menu_lancer_subcontract_material_main_menu" name="材質" action="lancer_quote.action_lancer_subcontract_material_form"
-                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="lancer_quote.group_lancer_base_user"/>
-        <menuitem id="menu_lancer_subcontract_treatment_main_menu" name="表面處理" action="lancer_quote.action_lancer_subcontract_treatment_form"
-                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="lancer_quote.group_lancer_base_user"/>
+        <menuitem id="menu_lancer_quote_subcontract_main_menu" name="6.外購基本資料設定"
+                  parent="lancer_quote.lancer_quote" sequence="5"
+                  groups="group_lancer_61,group_lancer_62,group_lancer_63,group_lancer_64,group_lancer_65"/>
+        <menuitem id="menu_lancer_partner_supplier_main_menu" name="6.1.供應商" action="base.action_partner_supplier_form"
+                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="1" groups="group_lancer_61"/>
+        <menuitem id="menu_lancer_subcontract_category_main_menu" name="6.2.品項分類" action="lancer_quote.action_lancer_subcontract_category_form"
+                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="group_lancer_62"/>
+        <menuitem id="menu_lancer_subcontract_material_main_menu" name="6.3.材質" action="lancer_quote.action_lancer_subcontract_material_form"
+                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="group_lancer_63"/>
+        <menuitem id="menu_lancer_subcontract_treatment_main_menu" name="6.4.表面處理" action="lancer_quote.action_lancer_subcontract_treatment_form"
+                  parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="group_lancer_64"/>
 
 
         <!-- 包裝基本資料維護 -->
-        <menuitem id="menu_lancer_quote_package_main_menu" name="包裝基本資料設定"
-                  parent="lancer_quote.lancer_quote" sequence="6"/>
-        <menuitem action="action_lancer_package_setting_form" name="包裝材料項目"
+        <menuitem id="menu_lancer_quote_package_main_menu" name="7.包裝基本資料設定"
+                  parent="lancer_quote.lancer_quote" sequence="6"
+                  groups="group_lancer_71,group_lancer_72,group_lancer_73"/>
+        <menuitem action="action_lancer_package_setting_form" name="7.1.包裝材料項目" groups="group_lancer_71"
                   id="menu_lancer_package_setting" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="1"/>
-        <menuitem action="action_lancer_package_expense_form" name="包裝費用項目"
+        <menuitem action="action_lancer_package_expense_form" name="7.2.包裝費用項目" groups="group_lancer_72"
                   id="menu_lancer_package_expense" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="2"/>
-        <menuitem action="action_lancer_package_type_form" name="包裝分類"
+        <menuitem action="action_lancer_package_type_form" name="7.3.包裝分類" groups="group_lancer_73"
                   id="menu_lancer_package_type" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="3"/>
 
         <!-- 權限設定 -->
-        <menuitem id="menu_lancer_quote_usergroup_main_menu" name="權限設定"
-                  parent="lancer_quote.lancer_quote" sequence="7"/>
-        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="使用者權限"
-                  parent="lancer_quote.menu_lancer_quote_usergroup_main_menu" sequence="1"/>
+        <menuitem id="menu_lancer_quote_usergroup_main_menu" name="8.權限設定"
+                  parent="lancer_quote.lancer_quote" sequence="7"
+                  groups="group_lancer_81,group_lancer_82"/>
+        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="8.1.使用者權限"
+                  parent="lancer_quote.menu_lancer_quote_usergroup_main_menu" sequence="1" groups="group_lancer_81"/>
 
         <record id="action_res_groups_lancer" model="ir.actions.act_window">
-            <field name="name">權限群組設定</field>
+            <field name="name">資料維護群組設定</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.groups</field>
             <field name="context">{'search_default_no_share': 1}</field>
             <field name="domain">[('name', 'ilike', '義成')]</field>
-            <field name="help">權限群組設定</field>
+            <field name="help">資料維護群組設定</field>
         </record>
-        <menuitem action="action_res_groups_lancer" id="lancer_menu_action_res_groups" parent="lancer_quote.menu_lancer_quote_usergroup_main_menu" sequence="2"/>
+        <menuitem action="action_res_groups_lancer" id="lancer_menu_action_res_groups" parent="lancer_quote.menu_lancer_quote_usergroup_main_menu"
+                  name="8.2.資料維護群組設定" sequence="2" groups="group_lancer_82"/>
 
 
 
