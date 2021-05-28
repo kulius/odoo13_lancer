@@ -136,7 +136,7 @@
         <!-- 外購基本資料維護 -->
         <menuitem id="menu_lancer_quote_subcontract_main_menu" name="6.外購基本資料設定"
                   parent="lancer_quote.lancer_quote" sequence="5"
-                  groups="group_lancer_61,group_lancer_62,group_lancer_63,group_lancer_64,group_lancer_65"/>
+                  groups="group_lancer_61,group_lancer_62,group_lancer_63,group_lancer_64"/>
         <menuitem id="menu_lancer_partner_supplier_main_menu" name="6.1.供應商" action="base.action_partner_supplier_form"
                   parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="1" groups="group_lancer_61"/>
         <menuitem id="menu_lancer_subcontract_category_main_menu" name="6.2.品項分類" action="lancer_quote.action_lancer_subcontract_category_form"
@@ -165,16 +165,16 @@
         <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="8.1.使用者權限"
                   parent="lancer_quote.menu_lancer_quote_usergroup_main_menu" sequence="1" groups="group_lancer_81"/>
 
-        <record id="action_res_groups_lancer" model="ir.actions.act_window">
-            <field name="name">資料維護群組設定</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">res.groups</field>
-            <field name="context">{'search_default_no_share': 1}</field>
-            <field name="domain">[('name', 'ilike', '義成')]</field>
-            <field name="help">資料維護群組設定</field>
-        </record>
-        <menuitem action="action_res_groups_lancer" id="lancer_menu_action_res_groups" parent="lancer_quote.menu_lancer_quote_usergroup_main_menu"
-                  name="8.2.資料維護群組設定" sequence="2" groups="group_lancer_82"/>
+<!--        <record id="action_res_groups_lancer" model="ir.actions.act_window">-->
+<!--            <field name="name">資料維護群組設定</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">res.groups</field>-->
+<!--            <field name="context">{'search_default_no_share': 1}</field>-->
+<!--            <field name="domain">[('name', 'ilike', '義成')]</field>-->
+<!--            <field name="help">資料維護群組設定</field>-->
+<!--        </record>-->
+<!--        <menuitem action="action_res_groups_lancer" id="lancer_menu_action_res_groups" parent="lancer_quote.menu_lancer_quote_usergroup_main_menu"-->
+<!--                  name="8.2.資料維護群組設定" sequence="2" groups="group_lancer_82"/>-->
 
 
 
