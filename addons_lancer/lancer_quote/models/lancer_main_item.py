@@ -180,7 +180,7 @@ class LancerMainItemProcesscost(models.Model):
     _name = 'lancer.main.item.processcost'
     _rec_name = 'process'
     _order = "process, id"
-    _description = 'Lancer main Item process cost'
+    _description = '品項-金屬加工-內製委外加工成本'
 
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
     metal_version_id = fields.Many2one('lancer.version.metal', string='版次')
@@ -205,7 +205,7 @@ class LancerMainItemHandleMaterial(models.Model):
     _name = 'lancer.main.item.handlematerial'
     _rec_name = 'process'
     _order = "process, id"
-    _description = 'Lancer main Item handlematerial'
+    _description = '品項-手柄射出-加工工序'
 
     def _get_handle_process_wage(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_process_wage')
@@ -273,7 +273,7 @@ class LancerMainItemHandleProcessCost(models.Model):
     _name = 'lancer.main.item.handleprocesscost'
     _rec_name = 'id'
     _order = "id"
-    _description = 'Lancer main Item handleprocesscost'
+    _description = '品項-手柄射出-內製委外加工成本'
 
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
 
@@ -288,7 +288,7 @@ class LancerMainItemAssemblyWage(models.Model):
     _name = 'lancer.main.item.assemblywage'
     _rec_name = 'id'
     _order = "id"
-    _description = 'Lancer main Item assemblywage'
+    _description = '品項-組裝工資'
 
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
 
@@ -303,7 +303,7 @@ class LancerMainItemAssemblyMaterial(models.Model):
     _name = 'lancer.main.item.assemblymaterial'
     _rec_name = 'id'
     _order = "id"
-    _description = 'Lancer main Item assemblymaterial'
+    _description = '品項-組裝材料'
 
     main_item_id = fields.Many2one(comodel_name="lancer.main.item", string="品項", required=True, ondelete='cascade')
 
@@ -314,7 +314,7 @@ class LancerMainItemAssemblyMaterial(models.Model):
 class LancerHandleAttrsRecord(models.Model):
     _name = 'lancer.handle.attrs.record'
     _rec_name = 'name'
-    _description = '用來保存品項材質的集合後續應用'
+    _description = '材質特徵質集合'
 
     name = fields.Char()
     # handle_material_id = fields.Many2one('lancer.main.item')

@@ -53,7 +53,7 @@ class LancerQuote(models.Model):
     subcontract_amount = fields.Integer(string="外購金額", required=False, )
     package_amount = fields.Integer(string="包裝金額", required=False, )
 
-    payment_term_id = fields.Many2one(comodel_name="payment.term", string="付款條件", required=False, )
+    payment_term_id = fields.Many2one(comodel_name="lancer.payment.term", string="付款條件", required=False, )
     moq = fields.Integer(string="MOQ", required=False, )
     shipping_term_id = fields.Many2one(comodel_name="lancer.shipping.term", string="貿易條件", required=False, )
     delivery_before = fields.Integer(string="交貨前置時間", required=False, )

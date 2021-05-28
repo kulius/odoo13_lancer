@@ -11,7 +11,7 @@
         'data/lancer_base_system.xml',
         'data/lancer_base_param.xml',
         'security/ir.model.access.csv',
-        'views/payment_term.xml',
+        'views/lancer_payment_term.xml',
         'views/lancer_incoterms.xml',
         'views/lancer_package_setting.xml',
         'views/lancer_package_expense.xml',
@@ -27,12 +27,11 @@
         'views/lancer_routing_outer.xml',
         'views/lancer_routing_handle.xml',
         'views/lancer_routing_series.xml',
-        'views/lancer_routing_version.xml',
+
         'views/lancer_routing_wages.xml',
         'views/lancer_routing_material.xml',
         'views/lancer_product.xml',
         'views/lancer_product_category.xml',
-        # 'views/lancer_product_series.xml',
         'views/lancer_main.xml',
         'views/lancer_main_item.xml',
         'views/lancer_quote.xml',
@@ -52,7 +51,9 @@
         'views/lancer_version_metal.xml',
         'views/lancer_attr_records.xml',
         'views/menu.xml',
+
         "report/report_py3o.xml",
+
     ],
     "active": False,
     "installable": True,

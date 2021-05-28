@@ -4,8 +4,8 @@
 from odoo import api, fields, models
 
 
-class PaymentTerm(models.Model):
-    _name = "payment.term"
+class LancerPaymentTerm(models.Model):
+    _name = "lancer.payment.term"
     _description = "Payment Terms"
     _order = "sequence, id"
     _description = '報價單-付款條件'

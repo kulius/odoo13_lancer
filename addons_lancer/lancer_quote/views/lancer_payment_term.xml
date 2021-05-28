@@ -4,7 +4,7 @@
 
         <record id="lancer_view_payment_term_search" model="ir.ui.view">
             <field name="name">lancer.payment.term.search</field>
-            <field name="model">payment.term</field>
+            <field name="model">lancer.payment.term</field>
             <field name="arch" type="xml">
                 <search string="Payment Terms">
                     <field name="name"/>
@@ -17,7 +17,7 @@
 
         <record id="lancer_view_payment_term_tree" model="ir.ui.view">
             <field name="name">lancer.payment.term.tree</field>
-            <field name="model">payment.term</field>
+            <field name="model">lancer.payment.term</field>
             <field name="arch" type="xml">
                 <tree string="Payment Terms">
                     <field name="sequence" widget="handle"/>
@@ -29,7 +29,7 @@
 
         <record id="lancer_view_payment_term_form" model="ir.ui.view">
             <field name="name">lancer.payment.term.form</field>
-            <field name="model">payment.term</field>
+            <field name="model">lancer.payment.term</field>
             <field name="arch" type="xml">
                 <form string="Payment Terms">
                     <sheet>
@@ -53,7 +53,7 @@
 
         <record id="lancer_view_account_payment_term_kanban" model="ir.ui.view">
             <field name="name">lancer.payment.term.kanban</field>
-            <field name="model">payment.term</field>
+            <field name="model">lancer.payment.term</field>
             <field name="arch" type="xml">
                 <kanban class="o_kanban_mobile">
                     <field name="name"/>
@@ -78,7 +78,7 @@
 
         <record id="action_lancer_payment_term_form" model="ir.actions.act_window">
             <field name="name">付款條件設定</field>
-            <field name="res_model">payment.term</field>
+            <field name="res_model">lancer.payment.term</field>
             <field name="view_mode">tree,kanban,form</field>
             <field name="search_view_id" ref="lancer_view_payment_term_search"/>
         </record>

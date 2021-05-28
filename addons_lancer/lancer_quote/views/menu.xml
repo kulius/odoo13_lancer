@@ -7,16 +7,20 @@
 
         <!-- 報價單 -->
         <menuitem id="menu_lancer_quote_menu" name="報價單"
-                  parent="lancer_quote.lancer_quote" sequence="0"/>
+                  parent="lancer_quote.lancer_quote" sequence="0"
+                  groups="lancer_quote.group_lancer_quote,lancer_quote.group_lancer_payment_term,lancer_quote.group_lancer_incoterms"/>
         <!--報價單 -->
         <menuitem id="menu_lancer_quote__menu" name="報價單" action="action_lancer_quote_form"
-                  parent="lancer_quote.menu_lancer_quote_menu" sequence="1"/>
+                  parent="lancer_quote.menu_lancer_quote_menu" sequence="1"
+                  groups="lancer_quote.group_lancer_quote"/>
 
         <menuitem id="menu_lancer_payment_term" name="付款條件" action="action_lancer_payment_term_form"
-                   parent="lancer_quote.menu_lancer_quote_menu" sequence="2"/>
+                  parent="lancer_quote.menu_lancer_quote_menu" sequence="2"
+                  groups="lancer_quote.group_lancer_payment_term"/>
 
         <menuitem id="menu_action_lancer_incoterm_open" name="貿易條件" action="action_lancer_incoterms_tree"
-                  parent="lancer_quote.menu_lancer_quote_menu" sequence="3"/>
+                  parent="lancer_quote.menu_lancer_quote_menu" sequence="3"
+                  groups="lancer_quote.group_lancer_incoterms"/>
 
 
         <!-- 基本資料 -->
