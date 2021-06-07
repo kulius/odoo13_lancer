@@ -26,3 +26,14 @@ class LancerPackageSetting(models.Model):
                 name = name
             res.append((rec.id, name))
         return res
+
+
+class LancerProductPackage(models.Model):
+    _name = 'lancer.product.package'
+    _rec_name = 'name'
+    _order = "sequence, id"
+    _description = '報價單-包装'
+
+    name = fields.Char(string='包裝材料名稱', translate=True)
+    active = fields.Boolean(default=True, string='是否啟用')
+    sequence = fields.Integer(required=True, default=10)

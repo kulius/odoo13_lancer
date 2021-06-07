@@ -60,5 +60,36 @@
         </record>
 
 
+        <record id="lancer_product_package_view_search" model="ir.ui.view">
+            <field name="name">lancer.product.package.search</field>
+            <field name="model">lancer.product.package</field>
+            <field name="arch" type="xml">
+                <search string="包裝方式">
+                    <field name="name"/>
+                    <field name="active"/>
+                    <separator/>
+                    <filter name="archived" string="已封存" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_lancer_product_package_tree" model="ir.ui.view">
+            <field name="name">lancer.product.package.search</field>
+            <field name="model">lancer.product.package</field>
+            <field name="arch" type="xml">
+                <tree string="包裝方式" editable="top">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_lancer_product_package_view" model="ir.actions.act_window">
+            <field name="name">包裝方式</field>
+            <field name="res_model">lancer.product.package</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="lancer_product_package_view_search"/>
+        </record>
+
     </data>
 </odoo>

@@ -52,6 +52,11 @@ class LancerMain(models.Model):
     # main_item_ids = fields.One2many(comodel_name='lancer.main.item', inverse_name='main_id', string='品項')
     order_line = fields.One2many('lancer.main.order.line', 'order_id')
     main_attrs_ids = fields.Many2many('lancer.attr.records', string='特徵值集合', compute='_compute_attrs_record')
+    packing_inbox = fields.Integer(string='內盒', required=False)
+    packing_outbox = fields.Integer(string='外箱', required=False)
+    packing_net_weight = fields.Float(string='淨重', required=False)
+    packing_gross_weight = fields.Float(string='毛重', required=False)
+    packing_bulk = fields.Float(string='材積', required=False)
 
 
 

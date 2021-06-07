@@ -157,11 +157,16 @@
                   id="menu_lancer_package_expense" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="2"/>
         <menuitem action="action_lancer_package_type_form" name="7.3.包裝分類" groups="group_lancer_73"
                   id="menu_lancer_package_type" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="3"/>
+        <menuitem action="action_lancer_product_package_view" name="7.4.包裝方式" groups="group_lancer_73"
+                  id="menu_lancer_product_package" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="4"/>
 
         <!-- 權限設定 -->
+        <!--<menuitem id="menu_lancer_quote_usergroup_main_menu" name="8.權限設定"-->
+                  <!--parent="lancer_quote.lancer_quote" sequence="7"-->
+                  <!--groups="group_lancer_81,group_lancer_82"/>-->
         <menuitem id="menu_lancer_quote_usergroup_main_menu" name="8.權限設定"
                   parent="lancer_quote.lancer_quote" sequence="7"
-                  groups="group_lancer_81,group_lancer_82"/>
+                  groups="group_lancer_81"/>
         <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="8.1.使用者權限"
                   parent="lancer_quote.menu_lancer_quote_usergroup_main_menu" sequence="1" groups="group_lancer_81"/>
 

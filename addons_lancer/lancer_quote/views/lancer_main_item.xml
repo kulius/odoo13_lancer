@@ -87,6 +87,7 @@
                                             <tree string="內置委外加工成本" editable="bottom">
                                                 <field name="process"/>
                                                 <field name="process_num"/>
+                                                <field name="process_name"/>
                                                 <field name="std_hour"/>
                                                 <field name="process_cost" sum="加工成本合計"/>
                                                 <field name="unit_price" />

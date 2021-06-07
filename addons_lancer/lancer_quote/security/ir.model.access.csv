@@ -56,6 +56,8 @@ access_lancer_package_setting_user,lancer.package.setting,model_lancer_package_s
 access_lancer_package_setting_manage,lancer.package.setting,model_lancer_package_setting,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_package_type_user,lancer.package.type,model_lancer_package_type,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_package_type_manage,lancer.package.type,model_lancer_package_type,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_product_package_user,lancer.product.package,model_lancer_product_package,lancer_quote.group_lancer_base_user,1,0,0,0
+access_lancer_product_package_manage,lancer.product.package,model_lancer_product_package,lancer_quote.group_lancer_base_manage,1,1,1,1
 
 
 access_lancer_package_expense_user,lancer.package.expense,model_lancer_package_expense,lancer_quote.group_lancer_base_user,1,0,0,0

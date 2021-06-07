@@ -134,7 +134,7 @@ class LancerMainItem(models.Model):
     metal_work_yield = fields.Float(string="良率", required=False, default=_get_metal_work_yield)
     metal_work_plating = fields.Float(string="+電鍍", required=False, )
     metal_work_dye_blackhead = fields.Float(string="+染黑頭", required=False, )
-    metal_work_spray_blackhead = fields.Float(string="+噴黑頭", required=False, )
+    metal_work_spray_blackhead = fields.Float(string="+噴砂頭", required=False, )
     metal_work_sum1 = fields.Float(string="合計1", required=False, )
     metal_work_sum2 = fields.Float(string="合計2", required=False, )
     metal_work_sum3 = fields.Float(string="合計3", required=False, )

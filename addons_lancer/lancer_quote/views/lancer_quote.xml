@@ -99,7 +99,7 @@
 
                                 </group>
                             </page>
-                            <page string="Picking">
+                            <page string="Packing">
                                 <group col="6">
                                     <field name="packing_inbox"/>
                                     <field name="packing_outbox"/>
