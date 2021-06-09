@@ -12,8 +12,9 @@ class LancerMain(models.Model):
 
     @api.depends('main_material_cost', 'main_process_cost', 'main_manufacture_cost')
     def _main_amount_all(self):
-        price = self.main_material_cost + self.main_process_cost + self.main_manufacture_cost
-        self.update({'main_total_cost': price})
+        for main in self:
+            price = main.main_material_cost + main.main_process_cost + main.main_manufacture_cost
+            main.update({'main_total_cost': price})
 
     @api.depends('order_line.material_cost')
     def _amount_all(self):

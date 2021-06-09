@@ -34,6 +34,6 @@ class LancerProductPackage(models.Model):
     _order = "sequence, id"
     _description = '報價單-包装'
 
-    name = fields.Char(string='包裝材料名稱', translate=True)
+    name = fields.Char(string='包裝方式名稱', translate=True)
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
