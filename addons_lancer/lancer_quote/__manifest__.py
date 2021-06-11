@@ -27,7 +27,7 @@
         'views/lancer_routing_outer.xml',
         'views/lancer_routing_handle.xml',
         'views/lancer_routing_series.xml',
-
+        'views/res_users.xml',
         'views/lancer_routing_wages.xml',
         'views/lancer_routing_material.xml',
         'views/lancer_product.xml',

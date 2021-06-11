@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_res_users_passwd_form" model="ir.ui.view">
+            <field name="name">res.users.passwd</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='login']" position="after">
+                    <div>
+                        <label for="origin_password" class="oe_edit_only" string="原密碼"/>
+                        <h2>
+                            <field name="origin_password" readonly="True"/>
+                        </h2>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+        m
+
+    </data>
+</odoo>
