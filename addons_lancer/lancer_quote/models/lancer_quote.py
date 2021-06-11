@@ -20,6 +20,40 @@ class LancerQuote(models.Model):
     def _get_quote_charge_rate(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_quote_charge_rate')
 
+    @api.depends('quote_lines.total_cost')
+    def _amount_all(self):
+        """
+        Compute the routing_amount of the Quote.
+        """
+        for order in self:
+            routing_amount = 0.0
+            for line in order.quote_lines:
+                routing_amount += line.total_cost
+            order.update({
+                'routing_amount': routing_amount,
+            })
+
+    @api.depends('subcontract_ids.cost_amount')
+    def _subcontract_amount_all(self):
+        for order in self:
+            subcontract_amount = 0.0
+            for line in order.subcontract_ids:
+                subcontract_amount += line.cost_amount
+            order.update({
+                'subcontract_amount': subcontract_amount,
+            })
+
+    @api.depends('package_ids.amount')
+    def _package_amount_all(self):
+        for order in self:
+            package_amount = 0.0
+            for line in order.package_ids:
+                package_amount += line.amount
+            order.update({
+                'package_amount': package_amount,
+            })
+
+
     state = fields.Selection([
         ('draft', '草稿'),
         ('sent', '己送出'),
@@ -43,16 +77,16 @@ class LancerQuote(models.Model):
     metal_spec_id = fields.Many2one(comodel_name="lancer.metal.spec", string="鋼刃材質", required=False, )
     routing_shape_id = fields.Many2one(comodel_name="lancer.routing.shape", string="鋼刃形狀", required=False, )
     routing_coating_id = fields.Many2one(comodel_name="lancer.routing.coating", string="鋼刃鍍層", required=False, )
-    # product_package = fields.Selection(string="包裝", selection=[('BULK', 'BULK'), ('加吊牌', '加吊牌'), ], required=False, )
-    product_package = fields.Many2one(string="包裝", comodel_name="lancer.product.package", required=False, )
+    product_package = fields.Selection(string="包裝", selection=[('BULK', 'BULK'), ('加吊牌', '加吊牌'), ], required=False, )
+    product_package_1 = fields.Many2one(string="包裝", comodel_name="lancer.product.package", required=False, )
 
     quote_date = fields.Date(string="報價日期", required=True, default=fields.Date.context_today)
 
     main_count = fields.Integer(string="自製組件數", required=False, )
     subcontract_count = fields.Integer(string="外購品項數", required=False, )
-    routing_amount = fields.Integer(string="自製金額", required=False, )
-    subcontract_amount = fields.Integer(string="外購金額", required=False, )
-    package_amount = fields.Integer(string="包裝金額", required=False, )
+    routing_amount = fields.Float(string="自製金額", store=True, readonly=True, compute='_amount_all',)
+    subcontract_amount = fields.Float(string="外購金額", store=True, readonly=True, compute='_subcontract_amount_all',)
+    package_amount = fields.Float(string="包裝金額", store=True, readonly=True, compute='_package_amount_all',)
 
     payment_term_id = fields.Many2one(comodel_name="lancer.payment.term", string="付款條件", required=False, )
     moq = fields.Integer(string="MOQ", required=False, )

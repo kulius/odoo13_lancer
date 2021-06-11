@@ -61,7 +61,7 @@
                                     <field name="metal_spec_id"/>
                                     <field name="routing_shape_id" />
                                     <field name="routing_coating_id"/>
-                                    <field name="product_package"/>
+                                    <field name="product_package_1"/>
                                 </group>
                             </page>
                             <page string="報價內容">
