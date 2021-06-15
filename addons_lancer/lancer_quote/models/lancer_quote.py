@@ -127,6 +127,42 @@ class LancerQuote(models.Model):
         result = super(LancerQuote, self).create(vals)
         return result
 
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        if not self.product_id:
+            return
+        product_record = self.env['lancer.product'].search([('id', '=', self.product_id.id)])
+        if product_record:
+            new_lines = []
+            self.product_series_id = product_record.product_series_id.id
+            self.product_category_id = product_record.product_category_id.id
+            self.handle_material_id = product_record.handle_material_id.id
+            self.metal_spec_id = product_record.metal_spec_id.id
+            self.routing_shape_id = product_record.routing_shape_id.id
+            self.routing_coating_id = product_record.routing_coating_id.id
+            self.product_package_1 = product_record.product_package_1.id
+            self.write({'quote_lines': [(5, 0, 0)]})
+            if product_record.product_quote_lines:
+                for line in product_record.product_quote_lines:
+                    vals = {
+                        'main_id': line.main_id.id,
+                        'routing_cutting_id': line.routing_cutting_id.id,
+                        'routing_outer_id': line.routing_outer_id.id,
+                        'exposed_long_id': line.exposed_long_id.id,
+                        # 'main_category_id': line.main_category_id.id,
+                        # 'metal_cost': line.metal_cost,
+                        # 'handle_cost': line.handle_cost,
+                        # 'assembly_cost': line.assembly_cost,
+                        # 'total_cost': line.total_cost,
+                        # 'packing_inbox': line.packing_inbox,
+                        # 'packing_outbox': line.packing_outbox,
+                        # 'line': line.packing_net_weight,
+                        # 'packing_gross_weight': line.packing_gross_weight,
+                        # 'packing_bulk': line.packing_bulk,
+                    }
+                    new_lines.append((0, 0, vals))
+            self.quote_lines = new_lines
+
     @api.onchange('product_series_id')
     def onchange_product_series_id(self):
         if not self.product_series_id:
@@ -264,7 +300,7 @@ class LancerQuoteLine(models.Model):
             if record.total_cost > 0:
                 # 台幣報價=總成本/1-管銷/1-利潤
                 record.total_amount = record.total_cost / (1 - record.quote_id.manage_rate) / (
-                            1 - record.quote_id.profit_rate)
+                        1 - record.quote_id.profit_rate)
                 # 美金報價=台幣報價/手續費/匯率
                 record.total_amount_usd = record.total_amount / record.quote_id.charge_rate / record.quote_id.exchange_rate
 
