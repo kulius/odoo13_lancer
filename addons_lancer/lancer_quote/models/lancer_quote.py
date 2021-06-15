@@ -13,10 +13,13 @@ class LancerQuote(models.Model):
 
     def _get_quote_exchange_rate(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_quote_exchange_rate')
+
     def _get_quote_manage_rate(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_quote_manage_rate')
+
     def _get_quote_profit_rate(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_quote_profit_rate')
+
     def _get_quote_charge_rate(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_quote_charge_rate')
 
@@ -53,7 +56,6 @@ class LancerQuote(models.Model):
                 'package_amount': package_amount,
             })
 
-
     state = fields.Selection([
         ('draft', '草稿'),
         ('sent', '己送出'),
@@ -70,7 +72,7 @@ class LancerQuote(models.Model):
     contact_id = fields.Many2one('res.partner', '連絡人', domain="[('parent_id','=',partner_id)]")
     product_series_id = fields.Many2one(comodel_name="lancer.routing.series", string="產品系列", required=False, )
     product_category_id = fields.Many2one(comodel_name="lancer.product.category", string="產品分類", required=False, )
-    product_id = fields.Many2one(comodel_name="lancer.product", string="產品名稱" )
+    product_id = fields.Many2one(comodel_name="lancer.product", string="產品名稱")
 
     # handle_material_id = fields.Many2one(comodel_name="lancer.handlematerial.material", string="手柄材質", required=False, )
     handle_material_id = fields.Many2one(comodel_name="lancer.handle.attrs.record", string="手柄材質", required=False, )
@@ -84,9 +86,9 @@ class LancerQuote(models.Model):
 
     main_count = fields.Integer(string="自製組件數", required=False, )
     subcontract_count = fields.Integer(string="外購品項數", required=False, )
-    routing_amount = fields.Float(string="自製金額", store=True, readonly=True, compute='_amount_all',)
-    subcontract_amount = fields.Float(string="外購金額", store=True, readonly=True, compute='_subcontract_amount_all',)
-    package_amount = fields.Float(string="包裝金額", store=True, readonly=True, compute='_package_amount_all',)
+    routing_amount = fields.Float(string="自製金額", store=True, readonly=True, compute='_amount_all', )
+    subcontract_amount = fields.Float(string="外購金額", store=True, readonly=True, compute='_subcontract_amount_all', )
+    package_amount = fields.Float(string="包裝金額", store=True, readonly=True, compute='_package_amount_all', )
 
     payment_term_id = fields.Many2one(comodel_name="lancer.payment.term", string="付款條件", required=False, )
     moq = fields.Integer(string="MOQ", required=False, )
@@ -156,7 +158,7 @@ class LancerQuote(models.Model):
                 new_lines.append((0, 0, vals))
             self.quote_lines = new_lines
 
-        #依報價明細，決定手柄下拉內容
+        # 依報價明細，決定手柄下拉內容
         list = []
         result = {}
         for line in self.quote_lines:
@@ -165,12 +167,11 @@ class LancerQuote(models.Model):
         result['domain'] = {'handle_material_id': [('id', 'in', list)]}
         return result
 
-
     @api.onchange('handle_material_id')
     def onchange_handle_material_id(self):
         if not self.handle_material_id:
             return
-        #尋找手抦成本
+        # 尋找手抦成本
         for line in self.quote_lines:
             for main_item in line.main_id.order_line:
                 if main_item.main_item_id.item_routing == 'assembly':
@@ -188,8 +189,7 @@ class LancerQuote(models.Model):
                 if main_item.handle_attrs_record.id == self.handle_material_id.id:
                     line.handle_cost = main_item.item_total_cost
 
-
-        #依報價明細，決定	鋼刃材質下拉內容
+        # 依報價明細，決定	鋼刃材質下拉內容
         list1 = []
         list2 = []
         list3 = []
@@ -199,10 +199,9 @@ class LancerQuote(models.Model):
                 list1.append(main_item.main_item_id.metal_spec_id.id)
                 list2.append(main_item.main_item_id.metal_shape_id.id)
                 list3.append(main_item.main_item_id.metal_coating_id.id)
-        result['domain'] = {'metal_spec_id': [('id', 'in', list1)], 'routing_shape_id': [('id', 'in', list2)], 'routing_coating_id': [('id', 'in', list3)]}
+        result['domain'] = {'metal_spec_id': [('id', 'in', list1)], 'routing_shape_id': [('id', 'in', list2)],
+                            'routing_coating_id': [('id', 'in', list3)]}
         return result
-
-
 
 
 class LancerQuoteLine(models.Model):
@@ -237,9 +236,10 @@ class LancerQuoteLine(models.Model):
     packing_bulk = fields.Float(string='材積', required=False)
     cutting_ids = fields.Many2many('lancer.routing.cutting', string='刃口', compute='_compute_attrs_ids', store=True)
     outer_ids = fields.Many2many("lancer.routing.outer", string="外徑", compute='_compute_attrs_ids', store=True)
-    exposed_long_ids = fields.Many2many('lancer.metal.exposed.long', string="長度", compute='_compute_attrs_ids', store=True)
+    exposed_long_ids = fields.Many2many('lancer.metal.exposed.long', string="長度", compute='_compute_attrs_ids',
+                                        store=True)
 
-    #依主件，決定下拉值內容
+    # 依主件，決定下拉值內容
     @api.depends('main_id')
     def _compute_attrs_ids(self):
         attrs_ids1 = []
@@ -263,14 +263,15 @@ class LancerQuoteLine(models.Model):
             record.total_cost = record.metal_cost + record.handle_cost + record.assembly_cost
             if record.total_cost > 0:
                 # 台幣報價=總成本/1-管銷/1-利潤
-                record.total_amount = record.total_cost / (1- record.quote_id.manage_rate) / (1-record.quote_id.profit_rate)
-                #美金報價=台幣報價/手續費/匯率
+                record.total_amount = record.total_cost / (1 - record.quote_id.manage_rate) / (
+                            1 - record.quote_id.profit_rate)
+                # 美金報價=台幣報價/手續費/匯率
                 record.total_amount_usd = record.total_amount / record.quote_id.charge_rate / record.quote_id.exchange_rate
 
     @api.onchange('routing_cutting_id', 'routing_outer_id', 'exposed_long_id')
     def get_item_total_cost(self):
         for line in self.main_id.order_line:
-            if line.main_item_id.metal_cutting_id.id == self.routing_cutting_id.id and line.main_item_id.metal_outer_id.id == self.routing_outer_id.id  and line.main_item_id.metal_exposed_long_id.id == self.exposed_long_id.id :
+            if line.main_item_id.metal_cutting_id.id == self.routing_cutting_id.id and line.main_item_id.metal_outer_id.id == self.routing_outer_id.id and line.main_item_id.metal_exposed_long_id.id == self.exposed_long_id.id:
                 self.metal_cost = line.item_total_cost
 
     # @api.onchange('main_id', 'handle_cost')
@@ -285,6 +286,7 @@ class LancerQuoteLine(models.Model):
     #         list3.append(line.main_item_id.metal_exposed_long_id.id)
     #     result['domain'] = {'routing_cutting_id': [('id', 'in', list1)], 'routing_outer_id': [('id', 'in', list2)], 'exposed_long_id': [('id', 'in', list3)]}
     #     return result
+
 
 class LancerQuoteSubcontract(models.Model):
     _name = 'lancer.quote.subcontract'

@@ -55,13 +55,25 @@
                             </group>
                         </group>
                         <notebook>
+                            <page string="產品選擇">
+                                <group col="6">
+                                    <!--<field name="product_series_id"/>-->
+                                    <!--<field name="product_category_id"/>-->
+                                    <!--<field name="product_id"/>-->
+                                    <field name="handle_material_id"/>
+                                    <field name="metal_spec_id"/>
+                                    <field name="routing_shape_id"/>
+                                    <field name="routing_coating_id"/>
+                                    <field name="product_package_1"/>
+                                </group>
+                            </page>
                             <page string="主件列表">
                                 <field name="product_line">
                                     <tree editable="bottom">
                                         <field name="id" invisible="1"/>
                                         <field name="product_id" invisible="1"/>
                                         <field name="sequence" widget="handle"/>
-                                        <field name="main_id" options="{'no_create': True, 'no_create_edit':True}" />
+                                        <field name="main_id" options="{'no_create': True, 'no_create_edit':True}"/>
                                         <field name="material_cost"/>
                                         <field name="process_cost"/>
                                         <field name="manufacture_cost"/>
@@ -71,7 +83,49 @@
 
                             </page>
                         </notebook>
+                        <notebook>
+                            <page string="自製">
+                                <field name="product_quote_lines" widget="one2many">
+                                    <tree string="自製明細" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="main_id" string="　　ITEM主件　　"/>
+                                        <field name="routing_cutting_id" string="　刃口　"
+                                               domain="[('id', 'in', cutting_ids)]"/>
+                                        <field name="routing_outer_id" string="　外徑　"
+                                               domain="[('id', 'in', outer_ids)]"/>
+                                        <field name="exposed_long_id" string="外露長度"
+                                               domain="[('id', 'in', exposed_long_ids)]"/>
+                                        <field name="metal_cost" optional="hide"/>
+                                        <field name="handle_cost" optional="hide"/>
+                                        <field name="assembly_cost" optional="hide"/>
+                                        <field name="total_cost" optional="show"/>
+                                        <!--<field name="total_amount"/>-->
+                                        <!--<field name="total_amount_usd" optional="hide"/>-->
+                                        <field name="packing_inbox"/>
+                                        <field name="packing_outbox"/>
+                                        <field name="packing_net_weight"/>
+                                        <field name="packing_gross_weight"/>
+                                        <field name="packing_bulk"/>
+                                        <field name="cutting_ids" optional="hide"/>
+                                        <field name="outer_ids" optional="hide"/>
+                                        <field name="exposed_long_ids" optional="hide"/>
 
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="包裝">
+                                <field name="product_package_lines">
+                                    <tree string="包裝明細" editable="bottom">
+                                        <field name="package_type_id"/>
+                                        <field name="package_setting_id"/>
+                                        <field name="quant"/>
+                                        <field name="amount"/>
+                                        <field name="mould_amount"/>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
