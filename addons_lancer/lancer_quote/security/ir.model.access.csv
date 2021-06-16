@@ -121,6 +121,8 @@ access_lancer_version_processcost_manage,lancer.version.processcost,model_lancer
 
 access_lancer_handle_attrs_record_user,lancer.handle.attrs.record,model_lancer_handle_attrs_record,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_handle_attrs_record_manager,lancer.handle.attrs.record,model_lancer_handle_attrs_record,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_team_user,lancer.team,model_lancer_team,lancer_quote.group_lancer_base_user,1,0,0,0
+access_lancer_team_manager,lancer.team,model_lancer_team,lancer_quote.group_lancer_base_manage,1,1,1,1
 
 access_lancer_product_quote_line_user,lancer.product.quote.line,model_lancer_product_quote_line,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_product_quote_line_manager,lancer.product.quote.line,model_lancer_product_quote_line,lancer_quote.group_lancer_base_manage,1,1,1,1

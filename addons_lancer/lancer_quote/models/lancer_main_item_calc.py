@@ -160,7 +160,7 @@ class LancerMainItemCalcMetal(models.Model):
             self.metal_item_processcost_ids = [(0, 0, vals)]
 
         #染黑頭
-        outer_size = self.metal_outer_id.outer_size # 外徑長度
+        outer_size = self.oo.outer_size # 外徑長度
         # 下料長度*換算率+0.5
         cos_cost4 = self.metal_outer_id.outer_rate * self.metal_cutting_long_id.name + self.metal_outer_id.outer_dye_blackhead_price
         #鍍層單價

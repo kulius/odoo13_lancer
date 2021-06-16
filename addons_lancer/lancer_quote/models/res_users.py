@@ -8,15 +8,18 @@ import datetime
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    origin_password = fields.Char(string='原始密碼')
+    def _get_password(self):
+        str = datetime.datetime.now()
+        password = (str.strftime('%Y%m%d%H%M'))
+        return password
+
+    origin_password = fields.Char(string='預設密碼', default=_get_password)
+    lancer_team_id = fields.Many2one('lancer.team', string='所屬義成團隊')
 
     @api.model
     def create(self, vals):
         res = super(ResUsers, self).create(vals)
-        str = datetime.datetime.now()
-        password = (str.strftime('%Y%m%d%H%M'))
-        res.password = (str.strftime('%Y%m%d%H%M'))
-        res.origin_password = password
+        res.password = res.origin_password
         return res
 
     @api.model
@@ -37,3 +40,16 @@ class ChangePasswordUser(models.TransientModel):
         # don't keep temporary passwords in the database longer than necessary
         self.write({'new_passwd': False})
 
+
+class LancerTeam(models.Model):
+    _name = "lancer.team"
+    _description = "義成銷售團隊"
+    _order = "sequence"
+
+    name = fields.Char('名稱', required=True)
+    sequence = fields.Integer('Sequence', default=10)
+    active = fields.Boolean(default=True, help="If the active field is set to false, it will allow you to hide the Sales Team without removing it.")
+    user_id = fields.Many2one('res.users', string='團隊主管')
+    member_ids = fields.One2many(
+        'res.users', 'lancer_team_id', string='所屬義成團隊',
+        domain=lambda self: [('groups_id', 'in', self.env.ref('base.group_user').id)])

@@ -169,6 +169,8 @@
                   groups="group_lancer_81"/>
         <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="8.1.使用者權限"
                   parent="lancer_quote.menu_lancer_quote_usergroup_main_menu" sequence="1" groups="group_lancer_81"/>
+        <menuitem action="action_lancer_team_form" name="8.2.團隊設定" groups="group_lancer_82"
+                  id="menu_lancer_team" parent="lancer_quote.menu_lancer_quote_usergroup_main_menu" sequence="2"/>
 
 <!--        <record id="action_res_groups_lancer" model="ir.actions.act_window">-->
 <!--            <field name="name">資料維護群組設定</field>-->
