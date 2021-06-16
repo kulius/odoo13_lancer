@@ -141,6 +141,11 @@ class LancerQuote(models.Model):
             self.routing_shape_id = product_record.routing_shape_id.id
             self.routing_coating_id = product_record.routing_coating_id.id
             self.product_package_1 = product_record.product_package_1.id
+            self.packing_inbox = product_record.packing_inbox
+            self.packing_outbox = product_record.packing_outbox
+            self.packing_net_weight = product_record.packing_net_weight
+            self.packing_gross_weight = product_record.packing_gross_weight
+            self.packing_bulk = product_record.packing_bulk
             self.write({'quote_lines': [(5, 0, 0)]})
             if product_record.product_quote_lines:
                 for line in product_record.product_quote_lines:
@@ -163,6 +168,7 @@ class LancerQuote(models.Model):
                     new_lines.append((0, 0, vals))
             self.quote_lines = new_lines
 
+    #產品系列下拉
     @api.onchange('product_series_id')
     def onchange_product_series_id(self):
         if not self.product_series_id:
@@ -177,7 +183,7 @@ class LancerQuote(models.Model):
                 }
                 new_lines.append((0, 0, vals))
             self.quote_lines = new_lines
-
+    # 產品分類下拉
     @api.onchange('product_category_id')
     def onchange_product_category_id(self):
         if not self.product_category_id:
@@ -194,13 +200,20 @@ class LancerQuote(models.Model):
                 new_lines.append((0, 0, vals))
             self.quote_lines = new_lines
 
+        product_record = self.env['lancer.product'].search([('product_series_id', '=', self.product_series_id.id),
+                                                      ('product_category_id', '=', self.product_category_id.id)])
+        productlist = []
+        for line in product_record:
+            productlist.append(line.id)
+
+
         # 依報價明細，決定手柄下拉內容
         list = []
         result = {}
         for line in self.quote_lines:
             for main_item in line.main_id.order_line:
                 list.append(main_item.handle_attrs_record.id)
-        result['domain'] = {'handle_material_id': [('id', 'in', list)]}
+        result['domain'] = {'handle_material_id': [('id', 'in', list)], 'product_id': [('id', 'in', productlist)]}
         return result
 
     @api.onchange('handle_material_id')

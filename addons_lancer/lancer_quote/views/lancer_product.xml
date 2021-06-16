@@ -55,36 +55,15 @@
                             </group>
                         </group>
                         <notebook>
-                            <page string="產品選擇">
+                            <page string="自製主件">
                                 <group col="6">
-                                    <!--<field name="product_series_id"/>-->
-                                    <!--<field name="product_category_id"/>-->
-                                    <!--<field name="product_id"/>-->
-                                    <field name="handle_material_id"/>
+                                     <field name="handle_material_id"/>
                                     <field name="metal_spec_id"/>
                                     <field name="routing_shape_id"/>
                                     <field name="routing_coating_id"/>
                                     <field name="product_package_1"/>
                                 </group>
-                            </page>
-                            <page string="主件列表">
-                                <field name="product_line">
-                                    <tree editable="bottom">
-                                        <field name="id" invisible="1"/>
-                                        <field name="product_id" invisible="1"/>
-                                        <field name="sequence" widget="handle"/>
-                                        <field name="main_id" options="{'no_create': True, 'no_create_edit':True}"/>
-                                        <field name="material_cost"/>
-                                        <field name="process_cost"/>
-                                        <field name="manufacture_cost"/>
-                                        <field name="total_cost"/>
-                                    </tree>
-                                </field>
 
-                            </page>
-                        </notebook>
-                        <notebook>
-                            <page string="自製">
                                 <field name="product_quote_lines" widget="one2many">
                                     <tree string="自製明細" editable="bottom">
                                         <field name="sequence" widget="handle"/>
@@ -109,7 +88,6 @@
                                         <field name="cutting_ids" optional="hide"/>
                                         <field name="outer_ids" optional="hide"/>
                                         <field name="exposed_long_ids" optional="hide"/>
-
                                     </tree>
                                 </field>
                             </page>
@@ -124,6 +102,15 @@
                                         <field name="name"/>
                                     </tree>
                                 </field>
+                            </page>
+                            <page string="Packing">
+                                <group col="6">
+                                    <field name="packing_inbox"/>
+                                    <field name="packing_outbox"/>
+                                    <field name="packing_net_weight"/>
+                                    <field name="packing_gross_weight"/>
+                                    <field name="packing_bulk"/>
+                                </group>
                             </page>
                         </notebook>
                     </sheet>

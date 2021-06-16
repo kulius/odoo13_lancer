@@ -36,6 +36,12 @@ class LancerProduct(models.Model):
                                             inverse_name="product_quote_id",
                                             string="包裝明細")
 
+    packing_inbox = fields.Integer(string='內盒', required=False)
+    packing_outbox = fields.Integer(string='外箱', required=False)
+    packing_net_weight = fields.Float(string='淨重', required=False)
+    packing_gross_weight = fields.Float(string='毛重', required=False)
+    packing_bulk = fields.Float(string='材積', required=False)
+
     @api.onchange('product_series_id')
     def onchange_product_series_id(self):
         if not self.product_series_id:

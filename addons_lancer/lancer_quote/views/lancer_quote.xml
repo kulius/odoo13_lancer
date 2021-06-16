@@ -23,11 +23,12 @@
             <field name="arch" type="xml">
                 <tree string="報價單">
                     <field name="state"/>
-<!--                    <field name='quote_image' optional="show" widget="image"/>-->
+                    <field name='quote_image' optional="show" widget="image" options='{"size": [80, 80]}'/>
                     <field name="quote_date" />
                     <field name="name"/>
                     <field name="partner_id"/>
                     <field name="product_id"/>
+                    <field name="user_id"/>
                 </tree>
             </field>
         </record>
@@ -182,6 +183,7 @@
                         <group>
                             <field name="quote_memo"/>
                             <field name="user_id"/>
+                            <field name="quote_image" widget="image" options='{"size": [120, 120]}'/>
                         </group>
 
                     </sheet>
