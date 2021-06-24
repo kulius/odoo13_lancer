@@ -119,10 +119,10 @@ class LancerMainItem(models.Model):
     metal_exposed_long_id = fields.Many2one('lancer.metal.exposed.long', string="外露長度(mm)", required=False, )
 
     metal_cut = fields.Float(string="切料節數", required=False, )
-    metal_weight = fields.Float(string="鋼刃單隻重量", required=False, )
-    metal_material = fields.Float(string="材料(元/KG)", required=False, )
-    metal_price = fields.Float(string="單隻價格", required=False, )
-    metal_count = fields.Float(string="支數(支/KG)", required=False, )
+    metal_weight = fields.Float(string="鋼刃單隻重量", size=16, digits=(11, 5), required=False, )
+    metal_material = fields.Float(string="材料(元/KG)", size=16, digits=(11, 5), required=False, )
+    metal_price = fields.Float(string="單隻價格", size=16, digits=(11, 5), required=False, )
+    metal_count = fields.Float(string="支數(支/KG)", size=16, digits=(11, 5), required=False, )
 
     metal_is_std_hour = fields.Boolean(string="依標工計算", )
     metal_item_processcost_ids = fields.One2many(comodel_name="lancer.main.item.processcost",

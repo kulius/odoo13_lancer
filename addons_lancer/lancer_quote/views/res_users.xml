@@ -23,7 +23,7 @@
 
             </field>
         </record>
-        
+
         <record id="lancer_team_view_search" model="ir.ui.view">
             <field name="name">lancer.team.search</field>
             <field name="model">lancer.team</field>

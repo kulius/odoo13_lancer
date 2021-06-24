@@ -261,10 +261,6 @@
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
-
-
-
-
         <record id="module_category_lancer_data" model="ir.module.category" >
             <field name="name">義成資料權限設定</field>
             <field name="sequence" eval="0"/>
@@ -285,7 +281,6 @@
            <field name="category_id" ref="lancer_base_security_root"/>
            <field name="implied_ids" eval="[(4, ref('lancer_quote.group_lancer_base_user'))]"/>
        </record>
-
 
         <record id="lancer_quote_team_lead_rule" model="ir.rule">
             <field name="name">quote team lead</field>

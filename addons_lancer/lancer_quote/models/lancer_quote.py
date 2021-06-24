@@ -79,8 +79,8 @@ class LancerQuote(models.Model):
     metal_spec_id = fields.Many2one(comodel_name="lancer.metal.spec", string="鋼刃材質", required=False, )
     routing_shape_id = fields.Many2one(comodel_name="lancer.routing.shape", string="鋼刃形狀", required=False, )
     routing_coating_id = fields.Many2one(comodel_name="lancer.routing.coating", string="鋼刃鍍層", required=False, )
-    product_package = fields.Selection(string="包裝", selection=[('BULK', 'BULK'), ('加吊牌', '加吊牌'), ], required=False, )
-    product_package_1 = fields.Many2one(string="包裝", comodel_name="lancer.product.package", required=False, )
+    # product_package = fields.Selection(string="包裝", selection=[('BULK', 'BULK'), ('加吊牌', '加吊牌'), ], required=False, )
+    product_package = fields.Many2one(string="包裝", comodel_name="lancer.product.package", required=False, )
 
     quote_date = fields.Date(string="報價日期", required=True, default=fields.Date.context_today)
 
