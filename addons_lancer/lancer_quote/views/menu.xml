@@ -47,7 +47,7 @@
         </record>
         <menuitem id="menu_lancer_partner_main_menu" name="2.4.客戶" action="action_res_partner_lancer"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="4" groups="group_lancer_24"/>
-        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users" name="2.5.員工"
+        <menuitem action="base.action_res_users" id="lancer_menu_action_res_users_2" name="2.5.員工"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="5" groups="group_lancer_25"/>
 
 

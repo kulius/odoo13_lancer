@@ -110,11 +110,13 @@ class LancerMainOrderLine(models.Model):
                 series_name = self.env['lancer.attr.records'].search(
                     [('name', '=', rec.main_item_id.handle_series_id.name), ('type', '=', 'a')])
                 if series_name:
-                    attr_ids.append(series_name.id)
+                    for x in series_name:
+                        attr_ids.append(x.id)
                 handle_name = self.env['lancer.attr.records'].search(
                     [('name', '=', rec.main_item_id.handle_handle_id.name), ('type', '=', 'b')])
                 if handle_name:
-                    attr_ids.append(handle_name.id)
+                    for r in handle_name:
+                        attr_ids.append(r.id)
             self.item_attrs_ids = [(6, False, attr_ids)]
             self.handle_attrs_record = self.main_item_id.handle_attrs_id.id
             return {'domain': {'item_attrs_ids': [('type', 'in', ['a', 'b',])]}}
