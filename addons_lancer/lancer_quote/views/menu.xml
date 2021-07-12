@@ -158,7 +158,7 @@
                   id="menu_lancer_package_expense" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="2"/>
         <menuitem action="action_lancer_package_type_form" name="7.3.包裝分類" groups="group_lancer_73"
                   id="menu_lancer_package_type" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="3"/>
-        <menuitem action="action_lancer_product_package_view" name="7.4.包裝方式" groups="group_lancer_73"
+        <menuitem action="action_lancer_product_package_form" name="7.4.包裝方式" groups="group_lancer_74"
                   id="menu_lancer_product_package" parent="lancer_quote.menu_lancer_quote_package_main_menu" sequence="4"/>
 
         <!-- 權限設定 -->
