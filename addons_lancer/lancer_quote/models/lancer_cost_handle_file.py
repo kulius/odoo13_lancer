@@ -21,6 +21,6 @@ class LancerCostHandleFile(models.Model):
     original_price = fields.Float(string='原枓單價')
     dyeing = fields.Float (string='染色(打粒)')
     net_weight = fields.Float(string='淨重(G)')
-    gross_weight = fields.Float(string='毛重(G)')
-    material_cost = fields.Float(string='材料成本')
+    gross_weight = fields.Float(string='毛重(G)', size=10, digits=(6, 4))
+    material_cost = fields.Float(string='材料成本', size=10, digits=(6, 4))
 

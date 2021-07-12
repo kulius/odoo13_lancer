@@ -218,8 +218,8 @@ class LancerMainItemHandleMaterial(models.Model):
     original_price = fields.Float(string='原枓單價')
     dyeing = fields.Float(string='染色(打粒)')
     net_weight = fields.Float(string='淨重(G)')
-    gross_weight = fields.Float(string='毛重(G)')
-    material_cost = fields.Float(string='材料成本')
+    gross_weight = fields.Float(string='毛重(G)', size=10, digits=(6, 4))
+    material_cost = fields.Float(string='材料成本', size=10, digits=(6, 4))
 
     process_hour = fields.Float(string='加工時間')
     wage = fields.Float(string='工資', default=_get_handle_process_wage)
@@ -247,17 +247,19 @@ class LancerMainItemHandleMaterial(models.Model):
              ('material', '=', self.material.id),
              ], limit=1)
         if cost_handle_file:
+            self.cavity_num =  cost_handle_file.cavity_num
+            self.dyeing = cost_handle_file.dyeing
             self.original_price = cost_handle_file.original_price
             self.net_weight = cost_handle_file.net_weight
 
     # 模穴數改變
-    @api.onchange('cavity_num', 'dyeing')
+    @api.onchange('cavity_num', 'dyeing', 'net_weight', 'original_price')
     def onchange_cavity_num(self):
         if self.cavity_num != 0:
             # 毛重=淨重+(20/模穴數)
             self.gross_weight = self.net_weight + (20 / self.cavity_num)
             # 材料成本=(毛重 * (原料成本+染色))/1000
-            self.material_cost = (self.gross_weight * (self.original_price + self.cavity_num)) / 1000
+            self.material_cost = (self.gross_weight * (self.original_price + self.dyeing)) / 1000
 
     # 加工時間
     @api.onchange('process_hour', 'wage')
