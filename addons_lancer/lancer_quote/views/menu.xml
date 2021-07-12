@@ -36,15 +36,7 @@
 
         <menuitem id="menu_lancer_main_item_main_menu" name="2.3.品項" action="action_lancer_main_item_form"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="3" groups="group_lancer_23"/>
-        <!--客戶基本資料維護 -->
-        <record id="action_res_partner_lancer" model="ir.actions.act_window">
-            <field name="name">客戶</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">res.partner</field>
-<!--            <field name="context">{'search_default_no_share': 1}</field>-->
-            <field name="domain">[('user_ids', '=', False)]</field>
 
-        </record>
         <menuitem id="menu_lancer_partner_main_menu" name="2.4.客戶" action="action_res_partner_lancer"
                   parent="lancer_quote.menu_lancer_base_main_menu" sequence="4" groups="group_lancer_24"/>
         <menuitem action="base.action_res_users" id="lancer_menu_action_res_users_2" name="2.5.員工"
@@ -145,7 +137,8 @@
         <menuitem id="menu_lancer_quote_subcontract_main_menu" name="6.外購基本資料設定"
                   parent="lancer_quote.lancer_quote" sequence="5"
                   groups="group_lancer_61,group_lancer_62,group_lancer_63,group_lancer_64"/>
-        <menuitem id="menu_lancer_partner_supplier_main_menu" name="6.1.供應商" action="base.action_partner_supplier_form"
+<!--        <menuitem id="menu_lancer_partner_supplier_main_menu" name="6.1.供應商" action="base.action_partner_supplier_form"-->
+        <menuitem id="menu_lancer_partner_supplier_main_menu" name="6.1.供應商" action="action_res_partner_lancer_supplier"
                   parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="1" groups="group_lancer_61"/>
         <menuitem id="menu_lancer_subcontract_category_main_menu" name="6.2.品項分類" action="lancer_quote.action_lancer_subcontract_category_form"
                   parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="group_lancer_62"/>

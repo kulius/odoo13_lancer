@@ -43,4 +43,5 @@ from . import lancer_version_handle
 from . import lancer_attr_records
 
 from . import res_users
+from . import res_partner
 

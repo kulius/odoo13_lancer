@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="lancer_res_partner_form_customer" model="ir.ui.view">
+            <field name="name">lancer.res.partner.form.customer</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="is_customer"/>
+                    <field name="is_supplier"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="lancer_res_partner_view_search" model="ir.ui.view">
+            <field name="name">lancer.res.partner.view.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.res_partner_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='customer']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//filter[@name='supplier']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//filter[@name='inactive']" position="before">
+                   <filter string="是否為客戶" name="iscustomer" domain="[('is_customer','=', 1)]"/>
+                   <filter string="是否為供應商" name="issupplier" domain="[('is_supplier','=', 1)]"/>
+                   <separator/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--客戶基本資料維護 -->
+        <record id="action_res_partner_lancer" model="ir.actions.act_window">
+            <field name="name">客戶</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="context">{'search_default_iscustomer': 1,'default_is_customer': 1}</field>
+            <field name="domain">[('user_ids', '=', False)]</field>
+        </record>
+
+        <!--供應商資料維護 -->
+        <record id="action_res_partner_lancer_supplier" model="ir.actions.act_window">
+            <field name="name">供應商</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="context">{'search_default_issupplier': 1,'default_is_supplier': 1}</field>
+            <field name="domain">[('user_ids', '=', False)]</field>
+        </record>
+
+    </data>
+</odoo>

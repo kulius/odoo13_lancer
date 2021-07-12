@@ -49,7 +49,7 @@
                             <field name="name"/>
                             <field name="version"/>
                             <field name="quote_date" />
-                            <field name="partner_id"/>
+                            <field name="partner_id" domain="[('is_customer', '=', '1')]" context="{'search_default_iscustomer': 1}" />
                             <field name="contact_id"/>
                         </group>
                         <notebook>
@@ -142,7 +142,7 @@
                                 <field name="subcontract_ids">
                                     <tree string="外購明細" editable="bottom">
                                         <field name="sequence" />
-                                        <field name="partner_id" />
+                                        <field name="partner_id" domain="[('is_supplier', '=', '1')]" context="{'search_default_issupplier': 1}"/>
                                         <field name="subcontract_category_id" />
                                         <field name="name" />
                                         <field name="partno" />
