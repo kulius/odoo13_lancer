@@ -40,6 +40,15 @@
             <field name="value">0.95</field>
         </record>
 
+        <record id="config_lancer_assembly_manager_rate" model="ir.config_parameter">
+            <field name="key">lancer_assembly_manager_rate</field>
+            <field name="value">0.02</field>
+        </record>
+        <record id="config_handle_assembly_profit_rate" model="ir.config_parameter">
+            <field name="key">lancer_assembly_profit_rate</field>
+            <field name="value">0.02</field>
+        </record>
+
         <record id="config_quote_exchange_rate" model="ir.config_parameter">
             <field name="key">lancer_quote_exchange_rate</field>
             <field name="value">28</field>

@@ -167,6 +167,20 @@ class LancerQuote(models.Model):
                     }
                     new_lines.append((0, 0, vals))
             self.quote_lines = new_lines
+            new_lines = []
+            self.write({'package_ids': [(5, 0, 0)]})
+            if product_record.product_package_lines:
+                for line in product_record.product_package_lines:
+                    vals = {
+                        'package_type_id': line.package_type_id.id,
+                        'package_setting_id': line.package_setting_id.id,
+                        'name': line.name,
+                        'quant': line.quant,
+                        'amount': line.amount,
+                        'mould_amount': line.mould_amount,
+                    }
+                    new_lines.append((0, 0, vals))
+            self.package_ids = new_lines
 
     #產品系列下拉
     @api.onchange('product_series_id')

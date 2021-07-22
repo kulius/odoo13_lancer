@@ -10,12 +10,11 @@ class LancerCostHandleFile(models.Model):
 
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
+    process = fields.Many2one('lancer.handlematerial.process', string='加工工序')
+    material = fields.Many2one('lancer.handlematerial.material', string='材質')
 
     handle_series_id = fields.Many2one(comodel_name="lancer.routing.series", string="系列別", required=False, )
     handle_handle_id = fields.Many2one(comodel_name="lancer.routing.handle", string="手柄尺吋", required=False, )
-
-    process = fields.Many2one('lancer.handlematerial.process', string='加工工序')
-    material = fields.Many2one('lancer.handlematerial.material', string='材質')
 
     cavity_num = fields.Float(string='模穴數')
     original_price = fields.Float(string='原枓單價')

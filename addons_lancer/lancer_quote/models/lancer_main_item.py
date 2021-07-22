@@ -36,6 +36,12 @@ class LancerMainItem(models.Model):
     def _get_handle_work_yield(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_handle_work_yield')
 
+    def _get_assembly_manager_rate(self):
+        return self.env['ir.config_parameter'].sudo().get_param('lancer_assembly_manager_rate')
+
+    def _get_assembly_profit_rate(self):
+        return self.env['ir.config_parameter'].sudo().get_param('lancer_assembly_profit_rate')
+
     @api.depends('material_cost', 'process_cost', 'manufacture_cost')
     def _amount_all(self):
         price = self.material_cost + self.process_cost + self.manufacture_cost
@@ -173,8 +179,8 @@ class LancerMainItem(models.Model):
                                         string="選擇工資項目", required=False, )
     assembly_material_ids = fields.One2many(comodel_name="lancer.main.item.assemblymaterial",
                                             inverse_name="main_item_id", string="選擇材料", required=False, )
-    assembly_manage_rate = fields.Float(string="管銷百分比", required=False, )
-    assembly_profit_rate = fields.Float(string="利潤百分比", required=False, )
+    assembly_manage_rate = fields.Float(string="管銷百分比", required=False, default=_get_assembly_manager_rate )
+    assembly_profit_rate = fields.Float(string="利潤百分比", required=False, default=_get_assembly_profit_rate )
 
 class LancerMainItemProcesscost(models.Model):
     _name = 'lancer.main.item.processcost'

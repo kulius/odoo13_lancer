@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # Author: Jason Wu (jaronemo@msn.com)
-
 from odoo import api, fields, models
 
 
@@ -86,6 +85,18 @@ class LancerProduct(models.Model):
     def onchange_handle_material_id(self):
         if not self.handle_material_id:
             return
+
+        #self.write({'product_quote_lines': [(2, line.id, 0) for line in self.mapped('product_quote_lines')]})
+
+        for line in self.product_quote_lines :
+            delete_id = True
+            for main_item in line.main_id.order_line:
+                if main_item.handle_attrs_record.id == self.handle_material_id.id:
+                    delete_id = False
+            if delete_id == True :
+                self.write({'product_quote_lines': [(2, line.id, 0)]})
+
+
         # 尋找手抦成本
         for line in self.product_quote_lines:
             for main_item in line.main_id.order_line:
@@ -103,6 +114,7 @@ class LancerProduct(models.Model):
                     line.packing_bulk = main_item.order_id.packing_bulk
                 if main_item.handle_attrs_record.id == self.handle_material_id.id:
                     line.handle_cost = main_item.item_total_cost
+            line.total_cost = line.assembly_cost+line.metal_cost+line.handle_cost
 
         # 依報價明細，決定	鋼刃材質下拉內容
         list1 = []
@@ -118,6 +130,26 @@ class LancerProduct(models.Model):
                             'routing_coating_id': [('id', 'in', list3)]}
         return result
 
+    @api.onchange('product_quote_lines')
+    def onchange_product_quote_lines(self):
+        total_packing_inbox = 0
+        total_packing_outbox = 0
+        total_packing_net_weight = 0
+        total_packing_gross_weight = 0
+        total_packing_bulk = 0
+        for line in self.product_quote_lines:
+            line.total_cost = line.assembly_cost + line.metal_cost + line.handle_cost
+            total_packing_inbox += line.packing_inbox
+            total_packing_outbox += line.packing_outbox
+            total_packing_net_weight += line.packing_net_weight
+            total_packing_gross_weight += line.packing_gross_weight
+            total_packing_bulk += line.packing_bulk
+
+        self.packing_inbox = total_packing_inbox
+        self.packing_outbox = total_packing_outbox
+        self.packing_net_weight = total_packing_net_weight
+        self.packing_gross_weight = total_packing_gross_weight
+        self.packing_bulk = total_packing_bulk
 
 class LancerProductLine(models.Model):
     _name = 'lancer.product.line'
