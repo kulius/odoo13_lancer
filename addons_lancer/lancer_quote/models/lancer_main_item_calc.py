@@ -362,7 +362,7 @@ class LancerMainItemCalcMetal(models.Model):
     #取得組立料工費
     @api.onchange('assembly_wage_ids', 'assembly_material_ids', 'assembly_manage_rate', 'assembly_profit_rate')
     def onchange_assembly_wage_ids(self):
-        self.material_cost =  sum(self.assembly_wage_ids.mapped('price'))
-        self.process_cost = sum(self.assembly_material_ids.mapped('price'))
+        self.process_cost =  sum(self.assembly_wage_ids.mapped('amount'))
+        self.material_cost = sum(self.assembly_material_ids.mapped('price'))
         self.manufacture_cost = (self.material_cost+self.process_cost)*(self.assembly_manage_rate+self.assembly_profit_rate)
 

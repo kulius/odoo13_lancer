@@ -104,7 +104,7 @@ class LancerMainItem(models.Model):
     main_item_category_id = fields.Many2one(comodel_name="lancer.main.item.category", string="品項分類", required=True, )
 
     item_routing = fields.Selection(string="加工製程段",
-                                    selection=[('metal', '金屬加工'), ('handle', '手柄射出'), ('assembly', '組裝')],
+                                    selection=[('metal', '金屬加工'), ('handle', '手柄射出'), ('assembly', '組裝'), ('subcontract', '外購品')],
                                     required=True, )
     material_cost = fields.Float(string='料')
     process_cost = fields.Float(string='工')
@@ -302,8 +302,19 @@ class LancerMainItemAssemblyWage(models.Model):
 
     routing_wages_id = fields.Many2one(comodel_name="lancer.routing.wages", string="工資項目", required=False,
                                        ondelete='cascade')
-    num = fields.Float(string='次數/面數')
+    num = fields.Float(string='次數/面數', default=1)
     price = fields.Float(string='價格')
+    amount = fields.Float(string='金額', compute='_compute_amount', store=True)
+
+    @api.onchange('routing_wages_id')
+    def onchange_routing_wages_id(self):
+        if self.routing_wages_id:
+            self.price=self.routing_wages_id.price
+
+    @api.depends('num', 'price')
+    def _compute_amount(self):
+        for record in self :
+            record.amount = record.num * record.price
 
 
 # 組裝-選擇材料
@@ -318,6 +329,10 @@ class LancerMainItemAssemblyMaterial(models.Model):
     routing_material_id = fields.Many2one(comodel_name="lancer.routing.material", string="材料", required=False, )
     price = fields.Float(string='價格')
 
+    @api.onchange('routing_material_id')
+    def onchange_routing_material_id(self):
+        if self.routing_material_id:
+            self.price=self.routing_material_id.price
 
 class LancerHandleAttrsRecord(models.Model):
     _name = 'lancer.handle.attrs.record'

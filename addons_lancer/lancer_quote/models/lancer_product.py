@@ -99,6 +99,7 @@ class LancerProduct(models.Model):
 
         # 尋找手抦成本
         for line in self.product_quote_lines:
+            line.subcontract_cost = 0
             for main_item in line.main_id.order_line:
                 if main_item.main_item_id.item_routing == 'assembly':
                     line.assembly_cost = main_item.item_total_cost
@@ -114,7 +115,9 @@ class LancerProduct(models.Model):
                     line.packing_bulk = main_item.order_id.packing_bulk
                 if main_item.handle_attrs_record.id == self.handle_material_id.id:
                     line.handle_cost = main_item.item_total_cost
-            line.total_cost = line.assembly_cost+line.metal_cost+line.handle_cost
+                if main_item.main_item_id.item_routing == 'subcontract':
+                    line.subcontract_cost += main_item.item_total_cost
+            line.total_cost = line.assembly_cost+line.metal_cost+line.handle_cost+line.subcontract_cost
 
         # 依報價明細，決定	鋼刃材質下拉內容
         list1 = []
@@ -138,7 +141,7 @@ class LancerProduct(models.Model):
         total_packing_gross_weight = 0
         total_packing_bulk = 0
         for line in self.product_quote_lines:
-            line.total_cost = line.assembly_cost + line.metal_cost + line.handle_cost
+            line.total_cost = line.assembly_cost + line.metal_cost + line.handle_cost + line.subcontract_cost
             total_packing_inbox += line.packing_inbox
             total_packing_outbox += line.packing_outbox
             total_packing_net_weight += line.packing_net_weight
@@ -186,6 +189,7 @@ class LancerProductQuoteLine(models.Model):
     metal_cost = fields.Float(string="鋼刃成本", required=False, )
     handle_cost = fields.Float(string="手柄成本", required=False, )
     assembly_cost = fields.Float(string="組立成本", required=False, )
+    subcontract_cost = fields.Float(string="外購成本", required=False, )
     # total_cost = fields.Float(string="總成本", required=False, compute='_compute_total_cost', store=True)
     total_cost = fields.Float(string="總成本", required=False, store=True)
     # total_amount = fields.Float(string="台幣", required=False)

@@ -194,7 +194,8 @@
                                     <tree string="選擇工資項目" editable="bottom">
                                         <field name="routing_wages_id"/>
                                         <field name="num"/>
-                                        <field name="price" sum="總金額"/>
+                                        <field name="price"/>
+                                        <field name="amount" sum="總金額"/>
                                     </tree>
                                 </field>
                             </group>

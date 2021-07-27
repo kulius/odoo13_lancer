@@ -123,6 +123,7 @@
                                         <field name="metal_cost" optional="hide"/>
                                         <field name="handle_cost" optional="hide"/>
                                         <field name="assembly_cost" optional="hide"/>
+                                        <field name="subcontract_cost" optional="hide"/>
                                         <field name="total_cost" optional="show"/>
                                         <field name="total_amount" />
                                         <field name="total_amount_usd" optional="hide"/>

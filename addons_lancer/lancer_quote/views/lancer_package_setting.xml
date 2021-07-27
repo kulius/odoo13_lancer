@@ -26,6 +26,7 @@
                     <field name="package_type_id"/>
                     <field name="code"/>
                     <field name="name"/>
+                    <field name="price"/>
                 </tree>
             </field>
         </record>
@@ -44,6 +45,7 @@
                                 <field name="package_type_id"/>
                                 <field name="code"/>
                                 <field name="name"/>
+                                <field name="price"/>
                             </group>
                         </group>
 

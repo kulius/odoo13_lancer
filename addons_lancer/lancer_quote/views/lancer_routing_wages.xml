@@ -22,6 +22,7 @@
                 <tree string="製程工資項目設定" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
+                    <field name="price"/>
                 </tree>
             </field>
         </record>
@@ -38,6 +39,7 @@
                             <group>
                                 <field name="active" invisible="1"/>
                                 <field name="name"/>
+                                <field name="price"/>
                             </group>
                         </group>
 

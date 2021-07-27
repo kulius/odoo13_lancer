@@ -158,6 +158,7 @@ class LancerQuote(models.Model):
                         'metal_cost': line.metal_cost,
                         'handle_cost': line.handle_cost,
                         'assembly_cost': line.assembly_cost,
+                        'subcontract_cost': line.subcontract_cost,
                         'total_cost': line.total_cost,
                         'packing_inbox': line.packing_inbox,
                         'packing_outbox': line.packing_outbox,
@@ -236,6 +237,7 @@ class LancerQuote(models.Model):
             return
         # 尋找手抦成本
         for line in self.quote_lines:
+            line.subcontract_cost=0
             for main_item in line.main_id.order_line:
                 if main_item.main_item_id.item_routing == 'assembly':
                     line.assembly_cost = main_item.item_total_cost
@@ -251,6 +253,8 @@ class LancerQuote(models.Model):
                     line.packing_bulk = main_item.order_id.packing_bulk
                 if main_item.handle_attrs_record.id == self.handle_material_id.id:
                     line.handle_cost = main_item.item_total_cost
+                if main_item.main_item_id.item_routing == 'subcontract':
+                    line.subcontract_cost += main_item.item_total_cost
 
         # 依報價明細，決定	鋼刃材質下拉內容
         list1 = []
@@ -287,10 +291,11 @@ class LancerQuoteLine(models.Model):
     metal_cost = fields.Float(string="鋼刃成本", required=False, )
     handle_cost = fields.Float(string="手柄成本", required=False, )
     assembly_cost = fields.Float(string="組立成本", required=False, )
+    subcontract_cost = fields.Float(string="外購成本", required=False, )
     total_cost = fields.Float(string="總成本", required=False, compute='_compute_total_cost', store=True)
 
-    total_amount = fields.Float(string="台幣", required=False)
-    total_amount_usd = fields.Float(string="美金", required=False)
+    total_amount = fields.Float(string="台幣", required=False, size=16, digits=(11, 3))
+    total_amount_usd = fields.Float(string="美金", required=False, size=16, digits=(11, 3))
     quote_attrs_ids = fields.Many2many('lancer.attr.records', string='主件特徵值')
     packing_inbox = fields.Integer(string='內盒', required=False)
     packing_outbox = fields.Integer(string='外箱', required=False)
@@ -323,7 +328,7 @@ class LancerQuoteLine(models.Model):
     def _compute_total_cost(self):
         for record in self:
             # 總成本=手柄成本+金屬成本+組立成本
-            record.total_cost = record.metal_cost + record.handle_cost + record.assembly_cost
+            record.total_cost = record.metal_cost + record.handle_cost + record.assembly_cost + record.subcontract_cost
             if record.total_cost > 0:
                 # 台幣報價=總成本/1-管銷/1-利潤
                 record.total_amount = record.total_cost / (1 - record.quote_id.manage_rate) / (
@@ -387,7 +392,7 @@ class LancerQuotePackage(models.Model):
     name = fields.Char(string='說明')
     quant = fields.Float(string="數量", required=False, )
     amount = fields.Float(string="價格", required=False, )
-    mould_amount = fields.Float(string="模具/版費", required=False, )
+    mould_amount = fields.Float(string="模具/版費", required=False, compute='_compute_amount', store=True )
 
     @api.onchange('package_type_id')
     def onchange_package_type_id(self):
@@ -401,6 +406,15 @@ class LancerQuotePackage(models.Model):
         result['domain'] = {'package_setting_id': [('id', 'in', list)]}
         return result
 
+    @api.onchange('package_setting_id')
+    def onchange_package_setting_id(self):
+        if self.package_setting_id:
+            self.amount = self.package_setting_id.price
+
+    @api.depends('quant', 'amount')
+    def _compute_amount(self):
+        for record in self :
+            record.mould_amount = record.quant * record.amount
 
 class LancerQuotExpense(models.Model):
     _name = 'lancer.quote.expense'

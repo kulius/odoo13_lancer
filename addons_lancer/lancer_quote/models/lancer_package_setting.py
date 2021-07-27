@@ -15,6 +15,7 @@ class LancerPackageSetting(models.Model):
     package_type_id = fields.Many2one(comodel_name="lancer.package.type", string="包裝大分類", required=False, )
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
+    price = fields.Char(string='單價')
 
     def name_get(self):
         res = []
