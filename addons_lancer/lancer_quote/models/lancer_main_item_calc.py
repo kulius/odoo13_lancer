@@ -113,6 +113,7 @@ class LancerMainItemCalcMetal(models.Model):
         cal_change = cost_cal_file.cal_change #單重換算
         self.metal_long = cost_cal_file.calc_long #物料長
         self.metal_cut = self.metal_long / self.metal_cutting_long_id.name #切料節數= 物料長/下料長度
+        a=(self.metal_long * cal_change / self.metal_cut) * 0.001
         self.metal_weight = (self.metal_long * cal_change / self.metal_cut) * 0.001 #單支重量=(物料長(mm) * 單重換算 / 切料節數) * 0.001
         self.metal_price = self.metal_material * self.metal_weight #單支價格=單價 * 單支重量
         self.metal_count = 1000/(cal_change * self.metal_cutting_long_id.name)  # 支數 = 1000 / (單重換算 * 下料長 )
@@ -175,6 +176,9 @@ class LancerMainItemCalcMetal(models.Model):
             self.metal_work_dye_blackhead = cost_plat_file.plat_cost + cos_cost4
         self.metal_work_spray_blackhead = cost_plat_file.plat_cost + 0.3
 
+    # 電鍍計算
+    @api.onchange('plating_select', 'metal_work_plating', 'metal_work_dye_blackhead', 'metal_work_spray_blackhead')
+    def onchange_plating_select(self):
         #電鍍成本=((單支價格+人工成本+製造費)/效率/良率)+電鍍單價
         sum_process_cost = sum([l.process_cost for l in self.metal_item_processcost_ids])
         sum_out_price = sum([l.out_price for l in self.metal_item_processcost_ids])

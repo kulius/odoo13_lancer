@@ -125,9 +125,9 @@ class LancerMainItem(models.Model):
     metal_exposed_long_id = fields.Many2one('lancer.metal.exposed.long', string="外露長度(mm)", required=False, )
 
     metal_cut = fields.Float(string="切料節數", required=False, )
-    metal_weight = fields.Float(string="鋼刃單隻重量", size=16, digits=(11, 5), required=False, )
+    metal_weight = fields.Float(string="鋼刃單隻重量", size=16, digits=(11, 3), required=False, )
     metal_material = fields.Float(string="材料(元/KG)", size=16, digits=(11, 5), required=False, )
-    metal_price = fields.Float(string="單隻價格", size=16, digits=(11, 5), required=False, )
+    metal_price = fields.Float(string="單隻價格", size=16, digits=(11, 3), required=False, )
     metal_count = fields.Float(string="支數(支/KG)", size=16, digits=(11, 5), required=False, )
 
     metal_is_std_hour = fields.Boolean(string="依標工計算", )
@@ -138,6 +138,9 @@ class LancerMainItem(models.Model):
     metal_work_make = fields.Float(string="製造費", required=False, default=_get_metal_work_make)
     metal_work_efficiency = fields.Float(string="效率", required=False, default=_get_metal_work_efficiency)
     metal_work_yield = fields.Float(string="良率", required=False, default=_get_metal_work_yield)
+    plating_select = fields.Selection(string="電鍍方式",
+                                    selection=[('1', '+電鍍'), ('2', '+染黑頭'), ('3', '+噴砂頭'), ('0', '不電鍍')],
+                                    required=True, default='1')
     metal_work_plating = fields.Float(string="+電鍍", required=False, )
     metal_work_dye_blackhead = fields.Float(string="+染黑頭", required=False, )
     metal_work_spray_blackhead = fields.Float(string="+噴砂頭", required=False, )

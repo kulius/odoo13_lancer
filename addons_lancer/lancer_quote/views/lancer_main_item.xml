@@ -104,6 +104,9 @@
                                             <field name="metal_work_efficiency"/>
                                             <field name="metal_work_yield"/>
                                         </group>
+                                        <group>
+                                            <field name="plating_select"/>
+                                        </group>
                                         <group col="6">
                                             <field name="metal_work_plating"/>
                                             <field name="metal_work_dye_blackhead"/>
