@@ -111,9 +111,9 @@
                                             <field name="metal_work_plating"/>
                                             <field name="metal_work_dye_blackhead"/>
                                             <field name="metal_work_spray_blackhead"/>
-                                            <field name="metal_work_sum1"/>
-                                            <field name="metal_work_sum2"/>
-                                            <field name="metal_work_sum3"/>
+<!--                                            <field name="metal_work_sum1"/>-->
+<!--                                            <field name="metal_work_sum2"/>-->
+<!--                                            <field name="metal_work_sum3"/>-->
                                         </group>
                                     </page>
                                 </notebook>

@@ -183,17 +183,58 @@ class LancerMainItemCalcMetal(models.Model):
         sum_process_cost = sum([l.process_cost for l in self.metal_item_processcost_ids])
         sum_out_price = sum([l.out_price for l in self.metal_item_processcost_ids])
 
-        self.metal_work_sum1 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_plating
-        self.metal_work_sum2 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_dye_blackhead
-        self.metal_work_sum3 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_spray_blackhead
+        # self.metal_work_sum1 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_plating
+        # self.metal_work_sum2 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_dye_blackhead
+        # self.metal_work_sum3 = ((self.metal_price + sum_process_cost + self.metal_work_make) / self.metal_work_efficiency /self.metal_work_yield) + self.metal_work_spray_blackhead
 
         #料工費 計算及取得
         self.material_cost = self.metal_price
         self.process_cost = sum_process_cost
-        self.manufacture_cost = self.metal_work_make
 
 
-#------------------------------------------------------------------------------------
+        if self.plating_select == '1':
+            self.manufacture_cost = self.metal_work_make + self.metal_work_plating
+        elif self.plating_select == '2':
+            self.manufacture_cost = self.metal_work_make + self.metal_work_dye_blackhead
+        elif self.plating_select == '3':
+            self.manufacture_cost = self.metal_work_make + self.metal_work_spray_blackhead
+        else:
+            self.manufacture_cost = self.metal_work_make
+
+    #----------------------------------------------------------------
+    # 取得手柄料工費
+    @api.depends('handle_moldcost1', 'handle_moldcost2', 'handle_moldcost3', 'handle_moldcost4', 'handle_moldcost5',
+                 'handle_moldcost6', 'handle_mandrel', 'handle_elecmandrel')
+    def _handle_mold_total(self):
+        price = self.handle_moldcost1 + self.handle_moldcost2 + self.handle_moldcost3 + self.handle_moldcost4 + self.handle_moldcost5 + self.handle_moldcost6 + self.handle_mandrel + self.handle_elecmandrel
+        self.update({'handle_mold_total': price})
+
+    # 手柄射出-總成本計算
+    @api.depends('handle_materialcost_ids', 'handle_work_make', 'handle_work_mould')
+    def _handle_work_sum(self):
+        #料
+        self.material_cost = sum([l.material_cost  for l in self.handle_materialcost_ids])
+        #工
+        self.process_cost = sum([l.process_price for l in self.handle_materialcost_ids])
+        #費
+        self.manufacture_cost = self.handle_work_make + self.handle_work_mould
+
+        #sumcost = (sum1 + self.handle_work_make + self.handle_work_mould) / self.handle_work_efficiency / self.handle_work_yield
+        # Math.Round(((txt_Matall.Text + txt_Proall.Text + txt_Cost03.Text + txt_Cost05.Text) / txt_Cost02.Text / txt_Cost04.Text), 3, MidpointRounding.AwayFromZero).ToString();
+        self.update({'handle_work_sum': self.handle_work_make + self.handle_work_mould})
+        # if sum1 > 0:
+        #     self.update({'manufacture_cost': self.handle_work_make + self.handle_work_mould})
+
+    #----------------------------------------------------------------
+    # 取得組立料工費
+    @api.onchange('assembly_wage_ids', 'assembly_material_ids', 'assembly_manage_rate', 'assembly_profit_rate')
+    def onchange_assembly_wage_ids(self):
+        self.process_cost = sum(self.assembly_wage_ids.mapped('amount'))
+        self.material_cost = sum(self.assembly_material_ids.mapped('price'))
+        self.manufacture_cost = (self.material_cost + self.process_cost) * (
+                    self.assembly_manage_rate + self.assembly_profit_rate)
+
+    #------------------------------------------------------------------------------------
     #取得 手柄版本 並覆蓋 目前所有資料
     @api.onchange('handle_version_id')
     def set_handle_version(self):
@@ -363,10 +404,4 @@ class LancerMainItemCalcMetal(models.Model):
 
 
 
-    #取得組立料工費
-    @api.onchange('assembly_wage_ids', 'assembly_material_ids', 'assembly_manage_rate', 'assembly_profit_rate')
-    def onchange_assembly_wage_ids(self):
-        self.process_cost =  sum(self.assembly_wage_ids.mapped('amount'))
-        self.material_cost = sum(self.assembly_material_ids.mapped('price'))
-        self.manufacture_cost = (self.material_cost+self.process_cost)*(self.assembly_manage_rate+self.assembly_profit_rate)
 

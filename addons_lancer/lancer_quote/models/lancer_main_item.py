@@ -45,25 +45,15 @@ class LancerMainItem(models.Model):
     @api.depends('material_cost', 'process_cost', 'manufacture_cost')
     def _amount_all(self):
         price = self.material_cost + self.process_cost + self.manufacture_cost
-        self.update({'item_total_cost': price})
+        if price == 0:
+            return  False
+        if self.item_routing == 'metal':
+            self.update({'item_total_cost': price/ self.metal_work_efficiency / self.metal_work_yield })
+        if self.item_routing == 'handle':
+            self.update({'item_total_cost': price/ self.handle_work_efficiency / self.handle_work_yield })
+        else:
+            self.update({'item_total_cost': price})
 
-    @api.depends('handle_moldcost1', 'handle_moldcost2', 'handle_moldcost3', 'handle_moldcost4', 'handle_moldcost5',
-                 'handle_moldcost6', 'handle_mandrel', 'handle_elecmandrel')
-    def _handle_mold_total(self):
-        price = self.handle_moldcost1 + self.handle_moldcost2 + self.handle_moldcost3 + self.handle_moldcost4 + self.handle_moldcost5 + self.handle_moldcost6 + self.handle_mandrel + self.handle_elecmandrel
-        self.update({'handle_mold_total': price})
-
-    # 手柄射出-總成本計算
-    @api.depends('handle_materialcost_ids', 'handle_mold_total')
-    def _handle_work_sum(self):
-        sum1 = sum([l.material_cost + l.process_price for l in self.handle_materialcost_ids])
-        # sum2 = sum([l.process_price for l in self.handle_processcost_ids])
-        sumcost = (
-                          sum1 + self.handle_work_make + self.handle_work_mould) / self.handle_work_efficiency / self.handle_work_yield
-        # Math.Round(((txt_Matall.Text + txt_Proall.Text + txt_Cost03.Text + txt_Cost05.Text) / txt_Cost02.Text / txt_Cost04.Text), 3, MidpointRounding.AwayFromZero).ToString();
-        self.update({'handle_work_sum': sumcost})
-        if sum1 > 0:
-            self.update({'manufacture_cost': sumcost})
 
     # 將品項明細中的特徵值集合呈現
     # @api.depends('handle_materialcost_ids.main_item_id')
