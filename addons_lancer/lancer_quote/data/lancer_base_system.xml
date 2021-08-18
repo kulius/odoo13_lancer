@@ -211,7 +211,7 @@
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
         <record id="group_lancer_62" model="res.groups">
-            <field name="name">6. 2-品項分類</field>
+            <field name="name">6. 2-外購品名維護</field>
             <field name="category_id" ref="module_category_lancer_6"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>

@@ -140,7 +140,7 @@
 <!--        <menuitem id="menu_lancer_partner_supplier_main_menu" name="6.1.供應商" action="base.action_partner_supplier_form"-->
         <menuitem id="menu_lancer_partner_supplier_main_menu" name="6.1.供應商" action="action_res_partner_lancer_supplier"
                   parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="1" groups="group_lancer_61"/>
-        <menuitem id="menu_lancer_subcontract_category_main_menu" name="6.2.品項分類" action="lancer_quote.action_lancer_subcontract_category_form"
+        <menuitem id="menu_lancer_subcontract_category_main_menu" name="6.2.外購品名維護" action="lancer_quote.action_lancer_subcontract_category_form"
                   parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="group_lancer_62"/>
         <menuitem id="menu_lancer_subcontract_material_main_menu" name="6.3.材質" action="lancer_quote.action_lancer_subcontract_material_form"
                   parent="lancer_quote.menu_lancer_quote_subcontract_main_menu" sequence="2" groups="group_lancer_63"/>

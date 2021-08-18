@@ -6,7 +6,7 @@
             <field name="name">lancer.subcontract.category.search</field>
             <field name="model">lancer.subcontract.category</field>
             <field name="arch" type="xml">
-                <search string="品項分類">
+                <search string="外購品名維護">
                     <field name="name"/>
                     <field name="active"/>
                     <separator/>
@@ -19,9 +19,19 @@
             <field name="name">lancer.subcontract.category.tree</field>
             <field name="model">lancer.subcontract.category</field>
             <field name="arch" type="xml">
-                <tree string="品項分類設定" editable="top">
+                <tree string="外購品名維護" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="spec" />
+                    <field name="partno" />
+                    <field name="material_id" />
+                    <field name="treatment_id" />
+                    <field name="handle_amount" />
+                    <field name="subcontract_amount" />
+                    <field name="build_amount" />
+                    <field name="cost_amount" />
+                    <field name="mould_amount" />
                 </tree>
             </field>
         </record>
@@ -30,7 +40,7 @@
             <field name="name">lancer.subcontract.category.form</field>
             <field name="model">lancer.subcontract.category</field>
             <field name="arch" type="xml">
-                <form string="品項分類設定">
+                <form string="外購品名維護">
                     <sheet>
                         <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
                                 attrs="{'invisible': [('active', '=', True)]}"/>
@@ -38,6 +48,16 @@
                             <group>
                                 <field name="active" invisible="1"/>
                                 <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="spec" />
+                                <field name="partno" />
+                                <field name="material_id" />
+                                <field name="treatment_id" />
+                                <field name="handle_amount" />
+                                <field name="subcontract_amount" />
+                                <field name="build_amount" />
+                                <field name="cost_amount" />
+                                <field name="mould_amount" />
                             </group>
                         </group>
 
@@ -47,7 +67,7 @@
         </record>
 
         <record id="action_lancer_subcontract_category_form" model="ir.actions.act_window">
-            <field name="name">品項分類設定</field>
+            <field name="name">外購品名維護</field>
             <field name="res_model">lancer.subcontract.category</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="lancer_subcontract_category_view_search"/>
