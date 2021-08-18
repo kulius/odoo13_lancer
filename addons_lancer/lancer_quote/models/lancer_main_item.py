@@ -42,6 +42,7 @@ class LancerMainItem(models.Model):
     def _get_assembly_profit_rate(self):
         return self.env['ir.config_parameter'].sudo().get_param('lancer_assembly_profit_rate')
 
+    #計算成本
     @api.depends('material_cost', 'process_cost', 'manufacture_cost')
     def _amount_all(self):
         price = self.material_cost + self.process_cost + self.manufacture_cost
@@ -175,6 +176,7 @@ class LancerMainItem(models.Model):
     assembly_manage_rate = fields.Float(string="管銷百分比", required=False, default=_get_assembly_manager_rate )
     assembly_profit_rate = fields.Float(string="利潤百分比", required=False, default=_get_assembly_profit_rate )
 
+#金屬加工-內製委外成本
 class LancerMainItemProcesscost(models.Model):
     _name = 'lancer.main.item.processcost'
     _rec_name = 'process'
