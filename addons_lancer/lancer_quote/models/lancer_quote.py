@@ -25,9 +25,6 @@ class LancerQuote(models.Model):
 
     @api.depends('quote_lines.total_cost')
     def _amount_all(self):
-        """
-        Compute the routing_amount of the Quote.
-        """
         for order in self:
             routing_amount = 0.0
             for line in order.quote_lines:
@@ -36,14 +33,14 @@ class LancerQuote(models.Model):
                 'routing_amount': routing_amount,
             })
 
-    @api.depends('subcontract_ids.cost_amount')
+    @api.depends('subcontract_ids.quote_subcontract_amount')
     def _subcontract_amount_all(self):
         for order in self:
-            subcontract_amount = 0.0
+            quote_subcontract_amount = 0.0
             for line in order.subcontract_ids:
-                subcontract_amount += line.cost_amount
+                quote_subcontract_amount += line.quote_subcontract_amount
             order.update({
-                'subcontract_amount': subcontract_amount,
+                'subcontract_amount': quote_subcontract_amount,
             })
 
     @api.depends('package_ids.amount')
@@ -92,7 +89,7 @@ class LancerQuote(models.Model):
 
     payment_term_id = fields.Many2one(comodel_name="lancer.payment.term", string="付款條件", required=False, )
     moq = fields.Integer(string="MOQ", required=False, )
-    shipping_term_id = fields.Many2one(comodel_name="lancer.shipping.term", string="貿易條件", required=False, )
+    shipping_term_id = fields.Many2one(comodel_name="lancer.incoterms", string="貿易條件", required=False, )
     delivery_before = fields.Integer(string="交貨前置時間", required=False, )
     quote_validdate = fields.Date(string="報價有效期", required=False, )
     mov = fields.Integer(string="MOV", required=False, )
@@ -362,22 +359,55 @@ class LancerQuoteSubcontract(models.Model):
     _order = "name"
     _description = '報價單-外購'
 
+    def _get_quote_manage_rate(self):
+        return self.env['ir.config_parameter'].sudo().get_param('lancer_quote_manage_rate')
+
+    def _get_quote_profit_rate(self):
+        return self.env['ir.config_parameter'].sudo().get_param('lancer_quote_profit_rate')
+
     quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, ondelete='cascade')
     sequence = fields.Integer(string='項次', required=True, default=10)
     partner_id = fields.Many2one(comodel_name="res.partner", string="廠商", required=False, )
-    subcontract_category_id = fields.Many2one(comodel_name="lancer.subcontract.category", string="品項大類",
+    subcontract_category_id = fields.Many2one(comodel_name="lancer.subcontract.category", string="品名",
                                               required=False, )
-    name = fields.Char(string="品名規格", required=False, )
+    name = fields.Char(string="規格", required=False, )
     partno = fields.Char(string="參考料號", required=False, )
     material_id = fields.Many2one(comodel_name="lancer.subcontract.material", string="材質", required=False, )
     treatment_id = fields.Many2one(comodel_name="lancer.subcontract.treatment", string="表面處理", required=False, )
     handle_amount = fields.Float(string="柄價", required=False, )
     subcontract_amount = fields.Float(string="單價", required=False, )
     build_amount = fields.Float(string="組工", required=False, )
-    cost_amount = fields.Float(string="成本", required=False, )
+    cost_amount = fields.Float(string="成本", required=False, compute='_compute_cost_amount', store=True )
     mould_amount = fields.Float(string="模具費用", required=False, )
-    manage_rate = fields.Float(string="管銷百分比", required=False, )
-    profit_rate = fields.Float(string="利潤百分比", required=False, )
+    manage_rate = fields.Float(string="管銷%", required=False, default=_get_quote_manage_rate)
+    profit_rate = fields.Float(string="利潤%", required=False, default=_get_quote_profit_rate )
+    quantity = fields.Float(string="數量", required=False, default= 1)
+    quote_subcontract_amount = fields.Float(string="外購報價", required=False, compute='_compute_compute_cost_amount', store=True )
+
+    @api.onchange('subcontract_category_id')
+    def get_subcontract(self):
+        self.partner_id = self.subcontract_category_id.partner_id.id
+        self.name = self.subcontract_category_id.spec
+        self.partno = self.subcontract_category_id.partno
+        self.material_id = self.subcontract_category_id.material_id.id
+        self.treatment_id = self.subcontract_category_id.treatment_id.id
+        self.handle_amount = self.subcontract_category_id.handle_amount
+        self.subcontract_amount = self.subcontract_category_id.subcontract_amount
+        self.build_amount = self.subcontract_category_id.build_amount
+        self.cost_amount = self.subcontract_category_id.cost_amount
+        self.mould_amount = self.subcontract_category_id.mould_amount
+        self._compute_cost_amount()
+
+    @api.depends('handle_amount', 'build_amount', 'quantity', 'manage_rate', 'profit_rate')
+    def _compute_cost_amount(self):
+        #柄價＋單價+組工＝成本 成本*數量/(100%-管銷)/(100%-利潤)＝報價
+        for data in self:
+            data.cost_amount = data.handle_amount + data.subcontract_amount + data.build_amount
+            data.quote_subcontract_amount = (data.cost_amount * data.quantity) / (1 - data.manage_rate) / (
+                        1 - data.profit_rate)
+
+
+
 
 
 class LancerQuotePackage(models.Model):

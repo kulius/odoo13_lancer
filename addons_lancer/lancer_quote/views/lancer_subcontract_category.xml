@@ -22,7 +22,7 @@
                 <tree string="外購品名維護" editable="top">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
-                    <field name="partner_id"/>
+                    <field name="partner_id" domain="[('is_supplier', '=', '1')]" context="{'search_default_issupplier': 1}"/>
                     <field name="spec" />
                     <field name="partno" />
                     <field name="material_id" />

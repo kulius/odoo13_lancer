@@ -51,6 +51,10 @@
                             <field name="quote_date" />
                             <field name="partner_id" domain="[('is_customer', '=', '1')]" context="{'search_default_iscustomer': 1}" />
                             <field name="contact_id"/>
+                            <field name="active" invisible="1"/>
+                            <field name="routing_amount"/>
+                            <field name="subcontract_amount"/>
+                            <field name="package_amount"/>
                         </group>
                         <notebook>
                             <page string="產品選擇">
@@ -63,18 +67,6 @@
                                     <field name="routing_shape_id" />
                                     <field name="routing_coating_id"/>
                                     <field name="product_package"/>
-                                </group>
-                            </page>
-                            <page string="報價內容">
-                                <group col="6">
-                                    <field name="main_count"/>
-                                    <field name="subcontract_count"/>
-                                    <field name="active" invisible="1"/>
-                                </group>
-                                <group col="6">
-                                    <field name="routing_amount"/>
-                                    <field name="subcontract_amount"/>
-                                    <field name="package_amount"/>
                                 </group>
                             </page>
                             <page string="報價條件">
@@ -142,9 +134,9 @@
                             <page string="外購">
                                 <field name="subcontract_ids">
                                     <tree string="外購明細" editable="bottom">
-                                        <field name="sequence" />
-                                        <field name="partner_id" domain="[('is_supplier', '=', '1')]" context="{'search_default_issupplier': 1}"/>
+                                        <field name="sequence" optional="hide"/>
                                         <field name="subcontract_category_id" />
+                                        <field name="partner_id" domain="[('is_supplier', '=', '1')]" context="{'search_default_issupplier': 1}"/>
                                         <field name="name" />
                                         <field name="partno" />
                                         <field name="material_id" />
@@ -154,8 +146,10 @@
                                         <field name="build_amount" />
                                         <field name="cost_amount" />
                                         <field name="mould_amount" />
-                                        <field name="manage_rate" />
-                                        <field name="profit_rate" />
+                                        <field name="manage_rate" optional="hide"/>
+                                        <field name="profit_rate" optional="hide"/>
+                                        <field name="quantity" />
+                                        <field name="quote_subcontract_amount" sum="外購報偎合計" />
                                     </tree>
                                 </field>
                             </page>

@@ -14,7 +14,7 @@ class LancerSubcontractCategory(models.Model):
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)
 
-    partner_id = fields.Many2one(comodel_name="res.partner", string="廠商", required=False, domain="[('is_supplier','=',1)]")
+    partner_id = fields.Many2one(comodel_name="res.partner", string="廠商", required=False)
     name = fields.Char(string="品名", required=False, )
     spec = fields.Char(string="規格", required=False, )
     partno = fields.Char(string="參考料號", required=False, )

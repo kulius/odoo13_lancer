@@ -34,12 +34,14 @@ class LancerMain(models.Model):
     @api.depends('order_line')
     def _compute_attrs_record(self):
         self.update({'main_attrs_ids': None})
-        if self.order_line:
-            attrs_ids = []
-            for rec in self.order_line:
-                for x in rec.item_attrs_ids:
-                    attrs_ids.append(x.id)
-            self.update({'main_attrs_ids': [(6, 0, attrs_ids)]})
+        for record in self:
+            record.update({'main_attrs_ids': None})
+            if record.order_line:
+                attrs_ids = []
+                for rec in record.order_line:
+                    for x in rec.item_attrs_ids:
+                        attrs_ids.append(x.id)
+                record.update({'main_attrs_ids': [(6, 0, attrs_ids)]})
 
     name = fields.Char(string='主件品名規格')
     main_category_id = fields.Many2one(comodel_name="lancer.main.category", string="主件分類")
