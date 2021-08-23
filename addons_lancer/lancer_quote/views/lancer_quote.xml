@@ -176,7 +176,7 @@
                             </page>
                         </notebook>
                         <group>
-                            <field name="quote_memo"/>
+                            <field name="quote_memo" widget="html"/>
                             <field name="user_id"/>
                             <field name="quote_image" widget="image" options='{"size": [120, 120]}'/>
                         </group>

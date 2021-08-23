@@ -382,7 +382,7 @@ class LancerQuoteSubcontract(models.Model):
     manage_rate = fields.Float(string="管銷%", required=False, default=_get_quote_manage_rate)
     profit_rate = fields.Float(string="利潤%", required=False, default=_get_quote_profit_rate )
     quantity = fields.Float(string="數量", required=False, default= 1)
-    quote_subcontract_amount = fields.Float(string="外購報價", required=False, compute='_compute_compute_cost_amount', store=True )
+    quote_subcontract_amount = fields.Float(string="外購報價", required=False, compute='_compute_cost_amount', store=True )
 
     @api.onchange('subcontract_category_id')
     def get_subcontract(self):
