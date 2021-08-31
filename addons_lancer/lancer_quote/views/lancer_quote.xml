@@ -49,8 +49,8 @@
                             <field name="name"/>
                             <field name="version"/>
                             <field name="quote_date" />
-                            <field name="partner_id" domain="[('is_customer', '=', '1')]" context="{'search_default_iscustomer': 1}" />
-                            <field name="contact_id"/>
+                            <field name="partner_id" domain="[('is_customer', '=', '1')]" context="{'search_default_iscustomer': 1, 'search_default_company_type': 'company', 'default_is_customer': 1, 'default_company_type': 'company'}" />
+                            <field name="contact_id" context="{'search_default_iscustomer': 1, 'default_parent_id': partner_id, 'default_is_customer': 1, 'default_company_type': 'person'}"/>
                             <field name="active" invisible="1"/>
                             <field name="routing_amount"/>
                             <field name="subcontract_amount"/>
@@ -176,7 +176,7 @@
                             </page>
                         </notebook>
                         <group>
-                            <field name="quote_memo" widget="html"/>
+                            <field name="quote_memo"/>
                             <field name="user_id"/>
                             <field name="quote_image" widget="image" options='{"size": [120, 120]}'/>
                         </group>

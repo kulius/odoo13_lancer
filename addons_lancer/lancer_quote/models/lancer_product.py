@@ -230,7 +230,7 @@ class LancerProductQuotePackage(models.Model):
 
     product_quote_id = fields.Many2one(comodel_name="lancer.product", string="產品", required=True, ondelete='cascade')
     package_type_id = fields.Many2one(comodel_name="lancer.package.type", string="包裝分類", required=False, )
-    package_setting_id = fields.Many2one(comodel_name="lancer.package.setting", string="包裝料件", required=True, )
+    package_setting_id = fields.Many2one(comodel_name="lancer.package.setting", string="包裝料件", required=False, )
     name = fields.Char(string='說明')
     quant = fields.Float(string="數量", required=False, )
     amount = fields.Float(string="價格", required=False, )

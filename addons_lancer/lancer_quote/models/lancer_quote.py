@@ -48,7 +48,7 @@ class LancerQuote(models.Model):
         for order in self:
             package_amount = 0.0
             for line in order.package_ids:
-                package_amount += line.amount
+                package_amount += line.mould_amount
             order.update({
                 'package_amount': package_amount,
             })
@@ -123,6 +123,11 @@ class LancerQuote(models.Model):
 
         result = super(LancerQuote, self).create(vals)
         return result
+
+    @api.onchange('contact_id')
+    def onchange_contact_id(self):
+        if self.contact_id:
+            self.contact_id.partner_id = self.partner_id.id
 
     @api.onchange('product_id')
     def onchange_product_id(self):
@@ -418,7 +423,7 @@ class LancerQuotePackage(models.Model):
 
     quote_id = fields.Many2one(comodel_name="lancer.quote", string="報價單", required=True, ondelete='cascade')
     package_type_id = fields.Many2one(comodel_name="lancer.package.type", string="包裝分類", required=False, )
-    package_setting_id = fields.Many2one(comodel_name="lancer.package.setting", string="包裝料件", required=True, )
+    package_setting_id = fields.Many2one(comodel_name="lancer.package.setting", string="包裝料件", required=False, )
     name = fields.Char(string='說明')
     quant = fields.Float(string="數量", required=False, )
     amount = fields.Float(string="價格", required=False, )
