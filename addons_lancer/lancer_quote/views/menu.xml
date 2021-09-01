@@ -22,6 +22,10 @@
                   parent="lancer_quote.menu_lancer_quote_menu" sequence="3"
                   groups="group_lancer_13"/>
 
+        <menuitem id="menu_action_lancer_delivery_open" name="1.4.交貨條件" action="action_lancer_delivery_tree"
+                  parent="lancer_quote.menu_lancer_quote_menu" sequence="3"
+                  groups="group_lancer_14"/>
+
 
         <!-- 基本資料 -->
         <menuitem id="menu_lancer_base_main_menu" name="2.基本資料設定"

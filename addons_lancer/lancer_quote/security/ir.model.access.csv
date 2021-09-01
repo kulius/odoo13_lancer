@@ -52,6 +52,8 @@ access_lancer_payment_term_user,lancer.payment.term,model_lancer_payment_term,la
 access_lancer_payment_term_manager,lancer.payment.term,model_lancer_payment_term,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_incoterms_user,lancer.incoterms,model_lancer_incoterms,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_incoterms_manage,lancer.incoterms,model_lancer_incoterms,lancer_quote.group_lancer_base_manage,1,1,1,1
+access_lancer_delivery_user,lancer.delivery,model_lancer_delivery,lancer_quote.group_lancer_base_user,1,0,0,0
+access_lancer_delivery_manage,lancer.delivery,model_lancer_delivery,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_package_setting_user,lancer.package.setting,model_lancer_package_setting,lancer_quote.group_lancer_base_user,1,0,0,0
 access_lancer_package_setting_manage,lancer.package.setting,model_lancer_package_setting,lancer_quote.group_lancer_base_manage,1,1,1,1
 access_lancer_package_type_user,lancer.package.type,model_lancer_package_type,lancer_quote.group_lancer_base_user,1,0,0,0

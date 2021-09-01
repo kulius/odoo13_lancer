@@ -2,6 +2,8 @@
 # Author: Jason Wu (jaronemo@msn.com)
 
 from odoo import api, fields, models, _
+import datetime
+from dateutil.relativedelta import relativedelta
 
 
 class LancerQuote(models.Model):
@@ -70,6 +72,10 @@ class LancerQuote(models.Model):
     product_series_id = fields.Many2one(comodel_name="lancer.routing.series", string="產品系列", required=False, )
     product_category_id = fields.Many2one(comodel_name="lancer.product.category", string="產品分類", required=False, )
     product_id = fields.Many2one(comodel_name="lancer.product", string="產品名稱")
+    quote_currency = fields.Selection([
+        ('NT$', 'NT$'),
+        ('US$', 'US$')
+    ], string='報價單幣別', copy=False, default='NT$', tracking=True)
 
     # handle_material_id = fields.Many2one(comodel_name="lancer.handlematerial.material", string="手柄材質", required=False, )
     handle_material_id = fields.Many2one(comodel_name="lancer.handle.attrs.record", string="手柄材質", required=False, )
@@ -81,6 +87,7 @@ class LancerQuote(models.Model):
 
     quote_date = fields.Date(string="報價日期", required=True, default=fields.Date.context_today)
 
+
     main_count = fields.Integer(string="自製組件數", required=False, )
     subcontract_count = fields.Integer(string="外購品項數", required=False, )
     routing_amount = fields.Float(string="自製金額", store=True, readonly=True, compute='_amount_all', )
@@ -90,9 +97,11 @@ class LancerQuote(models.Model):
     payment_term_id = fields.Many2one(comodel_name="lancer.payment.term", string="付款條件", required=False, )
     moq = fields.Integer(string="MOQ", required=False, )
     shipping_term_id = fields.Many2one(comodel_name="lancer.incoterms", string="貿易條件", required=False, )
-    delivery_before = fields.Integer(string="交貨前置時間", required=False, )
-    quote_validdate = fields.Date(string="報價有效期", required=False, )
+    delivery_id = fields.Many2one(comodel_name="lancer.delivery", string="交貨條件", required=False, )
+    quote_validdate = fields.Date(string="報價有效期", required=False, default= datetime.datetime.now() + relativedelta(months=+3))
     mov = fields.Integer(string="MOV", required=False, )
+    mov_add = fields.Integer(string="MOV附加費用", required=False, )
+    delivery_before = fields.Integer(string="交貨前置時間", required=False, )
 
     certification_amount = fields.Float(string="認證費用", required=False, )
     customs_rate = fields.Float(string="報關費率", required=False, )

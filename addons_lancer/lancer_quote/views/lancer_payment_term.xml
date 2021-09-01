@@ -22,7 +22,6 @@
                 <tree string="Payment Terms">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
-                    <field name="company_id" groups="base.group_multi_company"/>
                 </tree>
             </field>
         </record>
@@ -39,12 +38,12 @@
                             <group>
                                 <field name="active" invisible="1"/>
                                 <field name="name"/>
-                                <field name="company_id" options="{'no_create': True}"
-                                       groups="base.group_multi_company"/>
+                                <field name="note"/>
+                                <field name="note_en"/>
                             </group>
                         </group>
-                        <label for="note"/>
-                        <field name="note" placeholder="客戶付款期限說明...."/>
+<!--                        <label for="note"/>-->
+<!--                        <field name="note" placeholder="客戶付款期限說明...."/>-->
 
                     </sheet>
                 </form>

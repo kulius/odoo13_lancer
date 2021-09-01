@@ -13,6 +13,7 @@
         'security/ir.model.access.csv',
         'views/lancer_payment_term.xml',
         'views/lancer_incoterms.xml',
+        'views/lancer_delivery.xml',
         'views/lancer_package_setting.xml',
         'views/lancer_package_expense.xml',
         'views/lancer_package_type.xml',
