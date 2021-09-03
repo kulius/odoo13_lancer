@@ -13,7 +13,6 @@
         <field name="module">lancer_quote</field>
         <field name="py3o_template_fallback">report/lancer_quote_tw.odt</field>
         <field name="binding_model_id" ref="lancer_quote.model_lancer_quote" />
-        <field name="binding_type">report</field>
     </record>
 
     <record id="lancer_quote_tw_report_odt" model="ir.actions.report">
@@ -68,6 +67,34 @@
         <field name="py3o_filetype">pdf</field>
         <field name="module">lancer_quote</field>
         <field name="py3o_template_fallback">report/lancer_quote_group_tw.odt</field>
+        <field name="binding_model_id" ref="lancer_quote.model_lancer_quote" />
+        <field name="binding_type">report</field>
+    </record>
+    
+    <record id="lancer_quote_en_report_group_odt" model="ir.actions.report">
+        <field name="name">組套英文報價單</field>
+        <field name="print_report_name">'組套英文報價單 - %s' % (object.name)</field>
+        <field name="type">ir.actions.report</field>
+        <field name="model">lancer.quote</field>
+        <field name="report_name">lancer_quote_en_report_group_odt</field>
+        <field name="report_type">py3o</field>
+        <field name="py3o_filetype">odt</field>
+        <field name="module">lancer_quote</field>
+        <field name="py3o_template_fallback">report/lancer_quote_group_en.odt</field>
+        <field name="binding_model_id" ref="lancer_quote.model_lancer_quote" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="lancer_quote_en_report_group_pdf" model="ir.actions.report">
+        <field name="name">組套英文報價單PDF</field>
+        <field name="print_report_name">'組套英文報價單 - %s' % (object.name)</field>
+        <field name="type">ir.actions.report</field>
+        <field name="model">lancer.quote</field>
+        <field name="report_name">lancer_quote_en_report_group_pdf</field>
+        <field name="report_type">py3o</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">lancer_quote</field>
+        <field name="py3o_template_fallback">report/lancer_quote_group_en.odt</field>
         <field name="binding_model_id" ref="lancer_quote.model_lancer_quote" />
         <field name="binding_type">report</field>
     </record>
