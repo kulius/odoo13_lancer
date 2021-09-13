@@ -22,7 +22,7 @@
             <field name="model">lancer.quote</field>
             <field name="arch" type="xml">
                 <tree string="報價單">
-                    <field name="state"/>
+<!--                    <field name="state"/>-->
                     <field name='quote_image' optional="show" widget="image" options='{"size": [80, 80]}'/>
                     <field name="quote_date" />
                     <field name="name"/>
@@ -39,7 +39,7 @@
             <field name="arch" type="xml">
                 <form string="報價單">
                     <header>
-                        <field name="state" widget="statusbar"/>
+<!--                        <field name="state" widget="statusbar"/>-->
                     </header>
                     <sheet>
                         <widget name="web_ribbon" title="已封存" bg_color="bg-danger"
@@ -119,9 +119,10 @@
                                         <field name="handle_cost" optional="hide"/>
                                         <field name="assembly_cost" optional="hide"/>
                                         <field name="subcontract_cost" optional="hide"/>
-                                        <field name="total_cost" optional="show"/>
-                                        <field name="total_amount" />
-                                        <field name="total_amount_usd" optional="hide"/>
+                                        <field name="total_cost" optional="show" sum="總成本"/>
+                                        <field name="total_amount" sum="台幣"/>
+                                        <field name="total_amount_usd" optional="hide" sum="美金"/>
+                                        <field name="total_gross" optional="show" />
                                         <field name="packing_inbox"/>
                                         <field name="packing_outbox"/>
                                         <field name="packing_net_weight"/>

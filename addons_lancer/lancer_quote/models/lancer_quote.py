@@ -307,6 +307,7 @@ class LancerQuoteLine(models.Model):
 
     total_amount = fields.Float(string="台幣", required=False, size=16, digits=(11, 3))
     total_amount_usd = fields.Float(string="美金", required=False, size=16, digits=(11, 3))
+    total_gross = fields.Float(string="毛利率", required=False, size=16, digits=(11, 3), compute='_compute_total_gross', store=True)
     quote_attrs_ids = fields.Many2many('lancer.attr.records', string='主件特徵值')
     packing_inbox = fields.Integer(string='內盒', required=False)
     packing_outbox = fields.Integer(string='外箱', required=False)
@@ -335,7 +336,7 @@ class LancerQuoteLine(models.Model):
         self.update({'outer_ids': [(6, 0, attrs_ids2)]})
         self.update({'exposed_long_ids': [(6, 0, attrs_ids3)]})
 
-    @api.depends('metal_cost', 'handle_cost', 'assembly_cost')
+    @api.depends('metal_cost', 'handle_cost', 'assembly_cost', )
     def _compute_total_cost(self):
         for record in self:
             # 總成本=手柄成本+金屬成本+組立成本
@@ -346,6 +347,14 @@ class LancerQuoteLine(models.Model):
                         1 - record.quote_id.profit_rate)
                 # 美金報價=台幣報價/手續費/匯率
                 record.total_amount_usd = record.total_amount / record.quote_id.charge_rate / record.quote_id.exchange_rate
+
+    @api.depends('total_amount', 'total_cost', 'total_amount', )
+    def _compute_total_gross(self):
+        for record in self:
+            if record.total_amount != 0:
+                record.total_gross = (record.total_amount - record.total_cost) / record.total_amount
+            else:
+                record.total_gross = 0
 
     @api.onchange('routing_cutting_id', 'routing_outer_id', 'exposed_long_id')
     def get_item_total_cost(self):
