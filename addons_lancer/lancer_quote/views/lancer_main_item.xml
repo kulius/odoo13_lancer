@@ -21,8 +21,9 @@
             <field name="arch" type="xml">
                 <tree string="品項">
                     <field name="name"/>
-                    <!--<field name="main_id"/>-->
                     <field name="main_item_category_id"/>
+                    <field name="item_attrs_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="handle_attrs_id"/>
                 </tree>
             </field>
         </record>
