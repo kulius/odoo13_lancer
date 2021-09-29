@@ -178,7 +178,7 @@ class LancerMainItem(models.Model):
 
     item_attrs_ids = fields.Many2many('lancer.attr.records', string='特徵值集合', compute='_compute_item_attrs_ids')
 
-    @api.depends('metal_shape_id', 'metal_coating_id', 'metal_cutting_id', 'metal_outer_id')
+    @api.depends('metal_shape_id', 'metal_coating_id', 'metal_cutting_id', 'metal_outer_id', 'handle_handle_id', 'handle_series_id')
     def _compute_item_attrs_ids(self):
         for rec in self:
             attr_ids = []
@@ -186,20 +186,23 @@ class LancerMainItem(models.Model):
                 shape_name = self.env['lancer.attr.records'].search(
                     [('name', '=', rec.metal_shape_id.name), ('type', '=', 'c')])
                 if shape_name:
-                    attr_ids.append(shape_name.id)
+                    for x in shape_name:
+                        attr_ids.append(x.id)
                 coating_name = self.env['lancer.attr.records'].search(
                     [('name', '=', rec.metal_coating_id.name), ('type', '=', 'd')])
                 if coating_name:
-                    attr_ids.append(coating_name.id)
+                    for x in coating_name:
+                        attr_ids.append(x.id)
                 cutting_name = self.env['lancer.attr.records'].search(
                     [('name', '=', rec.metal_cutting_id.name), ('type', '=', 'e')])
                 if cutting_name:
-                    attr_ids.append(cutting_name.id)
+                    for x in cutting_name:
+                        attr_ids.append(x.id)
                 outer_name = self.env['lancer.attr.records'].search(
                     [('name', '=', rec.metal_outer_id.name), ('type', '=', 'f')])
                 if outer_name:
-                    attr_ids.append(outer_name.id)
-                rec.item_attrs_ids = [(6, False, attr_ids)]
+                    for x in outer_name:
+                        attr_ids.append(x.id)
             elif rec.item_routing == 'handle':
                 series_name = self.env['lancer.attr.records'].search(
                     [('name', '=', rec.handle_series_id.name), ('type', '=', 'a')])
@@ -213,7 +216,10 @@ class LancerMainItem(models.Model):
                     for r in handle_name:
                         attr_ids.append(r.id)
                         break;
-                rec.item_attrs_ids = [(6, False, attr_ids)]
+
+            rec.item_attrs_ids = [(6, False, attr_ids)]
+
+
 
 #金屬加工-內製委外成本
 class LancerMainItemProcesscost(models.Model):
