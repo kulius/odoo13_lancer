@@ -9,7 +9,7 @@ class LancerMetalCuttingLong(models.Model):
     _rec_name = 'name'
     _description = '金屬加工-鋼刄外徑'
 
-    metal_outer_id = fields.Many2one(comodel_name="lancer.routing.outer", string="鋼刄外徑", required=True, )
+    metal_outer_id = fields.Many2one(comodel_name="lancer.routing.outer", string="鋼刄外徑")
     name = fields.Integer(string='下料長度(mm)')
     active = fields.Boolean(default=True, string='是否啟用')
     sequence = fields.Integer(required=True, default=10)

@@ -33,6 +33,7 @@ class LancerRoutingShape(models.Model):
             'name': res.name,
             'code': res.shape_code,
             'type': 'c',
+            'origin_id': res.id,
         }
         self.env['lancer.attr.records'].create(vals)
         return res
@@ -52,6 +53,7 @@ class LancerRoutingShape(models.Model):
                 'name': self.name,
                 'code': self.shape_code,
                 'type': 'c',
+                'origin_id': self.id,
             }
             self.env['lancer.attr.records'].create(vals)
         return res

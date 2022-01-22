@@ -34,6 +34,7 @@ class LancerRoutingCutting(models.Model):
             'name': res.display_name,
             'code': res.cutting_code,
             'type': 'e',
+            'origin_id': res.id,
         }
         self.env['lancer.attr.records'].create(vals)
         return res
@@ -50,6 +51,7 @@ class LancerRoutingCutting(models.Model):
                 'name': self.name,
                 'code': self.cutting_code,
                 'type': 'e',
+                'origin_id': self.id,
             }
             self.env['lancer.attr.records'].create(vals)
         return res

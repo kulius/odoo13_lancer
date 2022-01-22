@@ -38,6 +38,7 @@ class LancerRoutingOuter(models.Model):
             'name': res.name,
             'code': res.outer_code,
             'type': 'f',
+            'origin_id': res.id,
         }
         self.env['lancer.attr.records'].create(vals)
         return res
@@ -53,6 +54,7 @@ class LancerRoutingOuter(models.Model):
                 'name': self.name,
                 'code': self.outer_code,
                 'type': 'f',
+                'origin_id': self.id,
             }
             self.env['lancer.attr.records'].create(vals)
         return res

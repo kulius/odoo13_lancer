@@ -33,6 +33,7 @@ class LancerRoutingHandle(models.Model):
             'name': res.display_name,
             'code': res.handle_code,
             'type': 'b',
+            'origin_id': res.id,
         }
         self.env['lancer.attr.records'].create(vals)
         return res
@@ -49,6 +50,7 @@ class LancerRoutingHandle(models.Model):
                 'name': self.name,
                 'code': self.handle_code,
                 'type': 'b',
+                'origin_id': self.id,
             }
             self.env['lancer.attr.records'].create(vals)
         return res

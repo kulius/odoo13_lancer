@@ -33,6 +33,7 @@ class LancerRoutingSeries(models.Model):
             'name': res.name,
             'code': res.series_code,
             'type': 'a',
+            'origin_id': res.id,
         }
         self.env['lancer.attr.records'].create(vals)
         return res
@@ -48,6 +49,7 @@ class LancerRoutingSeries(models.Model):
                 'name': self.name,
                 'code': self.series_code,
                 'type': 'a',
+                'origin_id': self.id,
             }
             self.env['lancer.attr.records'].create(vals)
         return res

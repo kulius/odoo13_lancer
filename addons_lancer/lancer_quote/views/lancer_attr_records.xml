@@ -23,6 +23,7 @@
                     <field name="code"/>
                     <field name="name"/>
                     <field name="ename"/>
+                    <field name="origin_id"/>
                 </tree>
             </field>
         </record>
@@ -38,6 +39,7 @@
                                 <field name="type"/>
                                 <field name="code"/>
                                 <field name="name"/>
+                                <field name="origin_id"/>
                             </group>
                         </group>
 
@@ -51,6 +53,17 @@
             <field name="res_model">lancer.attr.records</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="lancer_attr_records_view_search"/>
+        </record>
+
+        <record id="action_lancer_attr_records_rewrite" model="ir.actions.server">
+            <field name="name">重新寫入 特徵值</field>
+            <field name="model_id" ref="model_lancer_attr_records"/>
+            <field name="binding_model_id" ref="lancer_quote.model_lancer_attr_records"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.action_rewrite()
+            </field>
         </record>
 
 

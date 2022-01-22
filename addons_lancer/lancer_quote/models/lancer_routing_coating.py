@@ -34,6 +34,7 @@ class LancerRoutingCoating(models.Model):
             'name': res.name,
             'code': res.coating_code,
             'type': 'd',
+            'origin_id': res.id,
         }
         self.env['lancer.attr.records'].create(vals)
         return res
@@ -49,6 +50,7 @@ class LancerRoutingCoating(models.Model):
                 'name': self.name,
                 'code': self.coating_code,
                 'type': 'd',
+                'origin_id': self.id,
             }
             self.env['lancer.attr.records'].create(vals)
         return res

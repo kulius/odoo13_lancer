@@ -67,7 +67,7 @@ class LancerQuote(models.Model):
     version = fields.Char(string='版次')
     active = fields.Boolean(default=True, string='是否啟用')
     user_id = fields.Many2one('res.users', string='報價者', default=lambda self: self.env.user)
-    partner_id = fields.Many2one(comodel_name="res.partner", string="客戶", required=True, )
+    partner_id = fields.Many2one(comodel_name="res.partner", string="客戶")
     contact_id = fields.Many2one('res.partner', '客戶業務', domain="[('parent_id','=',partner_id)]")
     product_series_id = fields.Many2one(comodel_name="lancer.routing.series", string="產品系列", required=False, )
     product_category_id = fields.Many2one(comodel_name="lancer.product.category", string="產品分類", required=False, )
